@@ -1,2 +1,2 @@
-# telestion
-The entry point for the telestion project.
+# Telestion
+The entry point for the Telestion project.
