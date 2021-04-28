@@ -1,6 +1,0 @@
-[submodule "telestion-client"]
-	url = https://github.com/wuespace/telestion-client
-[submodule "telestion-core"]
-	url = https://github.com/wuespace/telestion-core
-[submodule "telestion-docs"]
-	url = https://github.com/wuespace/telestion-docs
