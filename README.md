@@ -1,2 +1,59 @@
 # Telestion
-The entry point for the Telestion project.
+
+Telestion is a modular groundstation software for various projects.
+This repository highlights the various project repositories and serves as an entry point.
+
+## Telestion Structure
+
+The project is structured in two main repositories and project specific repositories.
+
+### [Telestion Core](https://github.com/wuespace/telestion-core)
+
+The core repository contains libraries and services which build the backbone of the groundstation.
+
+### [Telestion Client](https://github.com/wuespace/telestion-client)
+
+The client repositories contains libraries for building project specific user interfaces.
+
+## Specialised User Project Structure
+
+For every project a specialised version is build out of the libraries.
+The following template serves as the starting point for a new Telestion project.
+
+### [Telestion Project Template](https://github.com/wuespace/telestion-project-template)
+
+The template contains three components in the coresponding subfolders.
+
+#### Definitions
+
+Definitions contains project general definitions and configurations like message types.
+
+#### Application
+
+In the application folder the backbone is extended and the used services are defined and configured.
+
+#### Client
+
+The client folder contains the configuration of the user interface and project specific gui elements.
+
+## Telestion Projects
+
+Notable Telestion projects are Telestion Central, RocketSound and Daedalus2.
+
+### Telestion Central
+
+For the WüSpace we provide a central infrastructure to synchronise the data between our projects.
+It is an own Telestion project with specialised services.
+
+#### Telestion RocketSound
+
+Telestion RocketSound provides a groundstation for a student experiment about estimating the state of a rocket based on sound measurements.
+
+#### Telestion Daedalus2
+
+Telestion Daedalus2 provides a groundstation for a REXUS experiment which tests a recovery mechanism on a sounding rocket.
+
+## Additional Documentation
+
+Our documentation can be found in the [telestion-docs](https://github.com/wuespace/telestion-docs) repository.
+Also the [website](https://telestion.wuespace.de) provides some information about the project.
