@@ -2,6 +2,7 @@
 
 Telestion is a modular groundstation software for various projects.
 This repository highlights the various project repositories and serves as an entry point.
+It gives a fast overview and helps for a fast start into the project.
 
 ## Telestion Structure
 
