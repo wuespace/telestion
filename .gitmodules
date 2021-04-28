@@ -1,3 +1,6 @@
 [submodule "telestion-core"]
 	path = telestion-core
 	url = git@github.com:wuespace/telestion-core.git
+[submodule "telestion-client"]
+	path = telestion-client
+	url = git@github.com:wuespace/telestion-client.git
