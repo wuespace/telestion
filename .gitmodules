@@ -13,3 +13,6 @@
 [submodule "telestion-templates/telestion-project-template"]
 	path = telestion-templates/telestion-project-template
 	url = git@github.com:wuespace/telestion-project-template.git
+[submodule "telestion-extensions/telestion-extension-sample"]
+	path = telestion-extensions/telestion-extension-sample
+	url = git@github.com:wuespace/telestion-extension-sample.git
