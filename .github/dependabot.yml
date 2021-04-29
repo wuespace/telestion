@@ -11,16 +11,19 @@ updates:
       interval: 'daily'
       time: '04:00'
     open-pull-requests-limit: 30
+    default_labels: "automerge"
 
   - package-ecosystem: 'gradle'
     directory: '/'
     schedule:
       interval: 'daily'
       time: '04:00'
-    open-pull-requests-limit: 99
+    open-pull-requests-limit: 99    
+    default_labels: "automerge"
 
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'daily'
     open-pull-requests-limit: 10
+    default_labels: "automerge"
