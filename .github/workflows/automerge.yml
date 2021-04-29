@@ -10,7 +10,7 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           MERGE_LABELS: "dependencies"
-          MERGE_REMOVE_LABELS: "automerge"
+          MERGE_REMOVE_LABELS: ""
           MERGE_METHOD: "rebase"
           MERGE_COMMIT_MESSAGE: "pull-request-description"
           MERGE_FORKS: "false"
