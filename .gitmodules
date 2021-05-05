@@ -20,3 +20,6 @@
 	path = telestion-extensions/telestion-extension-mavlink
 	url = git@github.com:wuespace/telestion-extension-mavlink.git
 
+[submodule "telestion-projects/telestion-project-daedalus2"]
+	path = telestion-projects/telestion-project-daedalus2
+	url = git@github.com:wuespace/telestion-project-daedalus2.git
