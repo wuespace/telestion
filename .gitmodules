@@ -16,3 +16,7 @@
 [submodule "telestion-extensions/telestion-extension-sample"]
 	path = telestion-extensions/telestion-extension-sample
 	url = git@github.com:wuespace/telestion-extension-sample.git
+[submodule "telestion-extensions/telestion-extension-mavlink"]
+	path = telestion-extensions/telestion-extension-mavlink
+	url = git@github.com:wuespace/telestion-extension-mavlink.git
+
