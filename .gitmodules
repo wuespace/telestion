@@ -19,10 +19,9 @@
 [submodule "telestion-extensions/telestion-extension-mavlink"]
 	path = telestion-extensions/telestion-extension-mavlink
 	url = git@github.com:wuespace/telestion-extension-mavlink.git
-
 [submodule "telestion-projects/telestion-project-daedalus2"]
 	path = telestion-projects/telestion-project-daedalus2
 	url = git@github.com:wuespace/telestion-project-daedalus2.git
 [submodule "telestion-extensions/telestion-extension-matlab"]
 	path = telestion-extensions/telestion-extension-matlab
-	url = git@github.com:jvpichowski/telestion-extension-matlab.git
+	url = git@github.com:wuespace/telestion-extension-matlab.git
