@@ -1,3 +1,5 @@
+<p><img src="./branding/telestion-logo.png" alt="The logo of Telestion"></p>
+
 # Telestion
 
 Telestion is a modular groundstation software for various projects.
@@ -37,6 +39,10 @@ In the application folder the backbone is extended and the used services are def
 
 The client folder contains the configuration of the user interface and project specific gui elements.
 
+### [Telestion Extension Template](https://github.com/wuespace/telestion-extension-template)
+
+The template contains the base structure for an extension.
+
 ## Telestion Projects
 
 Notable Telestion projects are Telestion Central, RocketSound and Daedalus2.
@@ -46,13 +52,21 @@ Notable Telestion projects are Telestion Central, RocketSound and Daedalus2.
 For the WüSpace we provide a central infrastructure to synchronise the data between our projects.
 It is an own Telestion project with specialised services.
 
-#### Telestion RocketSound
+### [Telestion RocketSound](https://github.com/wuespace/telestion-project-rocketsound)
 
 Telestion RocketSound provides a groundstation for a student experiment about estimating the state of a rocket based on sound measurements.
 
-#### Telestion Daedalus2
+### [Telestion Daedalus2](https://github.com/wuespace/telestion-project-daedalus2)
 
 Telestion Daedalus2 provides a groundstation for a REXUS experiment which tests a recovery mechanism on a sounding rocket.
+
+## Extensions
+
+Extensions are too specialized for the Telestiob Core and therefore need an extra space for their implementation.
+
+### [MavLink Extension](https://github.com/wuespace/telestion-extension-mavlink)
+
+This extension provides libraries that can interpret and create MavLink messages.
 
 ## Additional Documentation
 
