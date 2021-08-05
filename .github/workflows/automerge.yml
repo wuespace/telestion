@@ -9,7 +9,7 @@ jobs:
         uses: "pascalgn/automerge-action@v0.14.2"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          MERGE_LABELS: "dependencies"
+          MERGE_LABELS: "automerge"
           MERGE_REMOVE_LABELS: ""
           MERGE_METHOD: "rebase"
           MERGE_COMMIT_MESSAGE: "pull-request-description"
