@@ -62,7 +62,7 @@ Telestion Daedalus2 provides a groundstation for a REXUS experiment which tests 
 
 ## Extensions
 
-Extensions are too specialized for the Telestiob Core and therefore need an extra space for their implementation.
+Extensions are too specialized for the Telestion Core and therefore need an extra space for their implementation.
 
 ### [MavLink Extension](https://github.com/wuespace/telestion-extension-mavlink)
 
