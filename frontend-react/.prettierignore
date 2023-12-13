@@ -1,0 +1,56 @@
+# See https://prettier.io/docs/en/ignore.html#ignoring-files-prettierignore for more about ignoring files.
+
+# OS specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE specific
+nbproject
+.~lock.*
+.buildpath
+.idea
+.project
+.settings
+.vscode
+composer.lock
+*.sublime-workspace
+*.swp
+*.swo
+
+# dependencies
+/node_modules
+/packages/**/node_modules
+/.pnp
+.pnp.js
+
+# log files
+*.log
+
+# environment files
+.env
+.env.*
+.npmrc
+
+# cache
+.eslintcache
+.parcel-cache
+
+# build output
+/packages/**/dist
+/packages/**/types
+/docs
+
+# coverage reports
+/coverage
+jest.results.json
+
+# prettier specific
+CHANGELOG.md
+pnpm-lock.yaml
+.gitignore
+.prettierignore

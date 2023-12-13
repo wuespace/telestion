@@ -1,0 +1,4 @@
+.widgetRenderer {
+	--id: loading;
+	grid-area: var(--id);
+}

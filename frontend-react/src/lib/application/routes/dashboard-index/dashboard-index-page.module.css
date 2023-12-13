@@ -1,0 +1,9 @@
+.container {
+	width: 640px;
+	height: calc(100vh - var(--navbar-height) - var(--gutter));
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+}

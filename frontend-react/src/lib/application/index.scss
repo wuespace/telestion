@@ -1,0 +1,55 @@
+@import '../../../node_modules/bootstrap/scss/functions';
+@import '../../../node_modules/bootstrap/scss/variables';
+
+/*
+@include color-mode(light) {
+  --bs-body-bg: pink;
+}
+
+@include color-mode(dark) {
+  --bs-body-bg: #363a3f;
+}
+*/
+
+$wuespace: #452897;
+
+$wuespace-100: tint-color($wuespace, 80%) !default;
+$wuespace-200: tint-color($wuespace, 60%) !default;
+$wuespace-300: tint-color($wuespace, 40%) !default;
+$wuespace-400: tint-color($wuespace, 20%) !default;
+$wuespace-500: $wuespace !default;
+$wuespace-600: shade-color($wuespace, 20%) !default;
+$wuespace-700: shade-color($wuespace, 40%) !default;
+$wuespace-800: shade-color($wuespace, 60%) !default;
+$wuespace-900: shade-color($wuespace, 80%) !default;
+
+$wuespaces: (
+	'wuespace-100': $wuespace-100,
+	'wuespace-200': $wuespace-200,
+	'wuespace-300': $wuespace-300,
+	'wuespace-400': $wuespace-400,
+	'wuespace-500': $wuespace-500,
+	'wuespace-600': $wuespace-600,
+	'wuespace-700': $wuespace-700,
+	'wuespace-800': $wuespace-800,
+	'wuespace-900': $wuespace-900
+);
+
+$theme-colors: map-merge(
+	$theme-colors,
+	(
+		'primary': $wuespace
+	)
+);
+
+body {
+	// TODO: Add sizing variables
+	--gutter: 1.5rem;
+	--navbar-height: 56px;
+	--bs-wuespace: #{$wuespace};
+	@each $name, $value in $wuespaces {
+		--bs-#{$name}: #{$value};
+	}
+}
+
+@import '../../../node_modules/bootstrap/scss/bootstrap';

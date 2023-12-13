@@ -1,0 +1,10 @@
+.grid {
+	--layout: 'loading';
+
+	height: calc(100vh - var(--navbar-height) - var(--gutter));
+	display: grid;
+	grid-gap: var(--gutter);
+	grid-template-areas: var(--layout);
+	grid-auto-columns: 1fr;
+	grid-auto-rows: 1fr;
+}

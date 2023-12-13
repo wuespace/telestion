@@ -1,0 +1,17 @@
+.container {
+	width: 640px;
+	height: 100vh;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+	padding: var(--gutter);
+}
+
+.logo {
+	width: 96px;
+	height: 96px;
+	display: block;
+	margin: 0 auto var(--gutter);
+}

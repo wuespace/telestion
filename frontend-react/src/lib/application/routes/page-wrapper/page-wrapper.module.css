@@ -1,0 +1,25 @@
+.nav {
+	height: var(--navbar-height);
+}
+
+.main {
+	min-height: calc(100vh - var(--navbar-height));
+	margin-bottom: var(--navbar-height);
+	padding-block: calc(var(--bs-gutter-x) * 0.5);
+}
+
+.logoutContainer {
+	height: 100vh;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+	padding: var(--gutter);
+}
+
+.spinner {
+	width: 3rem !important;
+	height: 3rem !important;
+}

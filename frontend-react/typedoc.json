@@ -1,0 +1,17 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"plugin": [
+		"typedoc-plugin-markdown",
+		"typedoc-plugin-mdn-links",
+		"typedoc-plugin-zod"
+	],
+	"entryPoints": ["./src/lib/index.ts"],
+	"out": "doc",
+	"githubPages": false,
+	"validation": {
+		"notDocumented": true,
+		"invalidLink": true,
+		"notExported": true
+	},
+	"readme": "none"
+}
