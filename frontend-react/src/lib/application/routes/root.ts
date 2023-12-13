@@ -5,14 +5,14 @@ import { getUserData } from '../../user-data';
 import { isUserDataUpToDate } from '../../utils.ts';
 import { TelestionOptions } from '../model.ts';
 
-export function rootLoader({ currentVersion }: TelestionOptions) {
+export function rootLoader({ version }: TelestionOptions) {
 	return () => {
 		if (!isLoggedIn()) {
 			return redirect('/login');
 		}
 
 		const userData = getUserData();
-		if (!isUserDataUpToDate(userData, currentVersion)) {
+		if (!isUserDataUpToDate(userData, version)) {
 			return redirect('/migration');
 		}
 

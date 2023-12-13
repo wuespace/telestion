@@ -11,14 +11,14 @@ import { isUserDataUpToDate } from '../../../utils.ts';
 
 import { dashboardCreateAction } from '../dashboard.ts';
 
-export function dashboardPageLoader({ currentVersion }: TelestionOptions) {
+export function dashboardPageLoader({ version }: TelestionOptions) {
 	return ({ params }: LoaderFunctionArgs) => {
 		if (!isLoggedIn()) {
 			return redirect('/login');
 		}
 
 		const userData = getUserData();
-		if (!isUserDataUpToDate(userData, currentVersion) || !userData) {
+		if (!isUserDataUpToDate(userData, version) || !userData) {
 			return redirect('/');
 		}
 
@@ -42,7 +42,7 @@ export function dashboardPageLoader({ currentVersion }: TelestionOptions) {
 }
 
 export function dashboardPageAction(options: TelestionOptions) {
-	const { currentVersion } = options;
+	const { version } = options;
 
 	const createAction = dashboardCreateAction(options);
 	const deleteAction = ({ params }: ActionFunctionArgs) => {
@@ -51,7 +51,7 @@ export function dashboardPageAction(options: TelestionOptions) {
 		}
 
 		const oldUserData = getUserData();
-		if (!isUserDataUpToDate(oldUserData, currentVersion) || !oldUserData) {
+		if (!isUserDataUpToDate(oldUserData, version) || !oldUserData) {
 			return redirect('/');
 		}
 

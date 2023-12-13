@@ -25,7 +25,7 @@ const defaultUserData: UserData = {
 registerWidgets(simpleWidget);
 
 await initTelestion({
-	currentVersion: '0.0.1',
+	version: '0.0.1',
 	defaultBackendUrl: 'ws://localhost:9222',
 	defaultUserData
 });

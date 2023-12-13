@@ -4,14 +4,14 @@ import { generatePath, redirect } from 'react-router-dom';
 import { getEmptyDashboard, getUserData, setUserData } from '../../user-data';
 import { isUserDataUpToDate } from '../../utils.ts';
 
-export function dashboardCreateAction({ currentVersion }: TelestionOptions) {
+export function dashboardCreateAction({ version }: TelestionOptions) {
 	return () => {
 		if (!isLoggedIn()) {
 			return redirect('/login');
 		}
 
 		const oldUserData = getUserData();
-		if (!isUserDataUpToDate(oldUserData, currentVersion) || !oldUserData) {
+		if (!isUserDataUpToDate(oldUserData, version) || !oldUserData) {
 			return redirect('/');
 		}
 

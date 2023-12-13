@@ -15,7 +15,7 @@ import { getWidgetById } from '../../../widget';
 import { promptActionSchema } from './model.ts';
 
 export function migrationLoader({
-	currentVersion,
+	version,
 	defaultUserData
 }: TelestionOptions) {
 	return () => {
@@ -24,7 +24,7 @@ export function migrationLoader({
 		}
 
 		const userData = getUserData();
-		if (isUserDataUpToDate(userData, currentVersion)) {
+		if (isUserDataUpToDate(userData, version)) {
 			return redirect('/');
 		}
 
@@ -32,7 +32,7 @@ export function migrationLoader({
 			migrationState: userData
 				? {
 						previousVersion: userData.version,
-						currentVersion,
+						version: version,
 						oldUserData: userData
 				  }
 				: undefined,
@@ -43,7 +43,7 @@ export function migrationLoader({
 
 export function migrationAction({
 	defaultUserData,
-	currentVersion
+	version
 }: TelestionOptions) {
 	return async ({ request }: ActionFunctionArgs) => {
 		if (!isLoggedIn()) {
@@ -81,7 +81,7 @@ export function migrationAction({
 				}
 
 			case 'blank':
-				setUserData(getBlankUserData(currentVersion));
+				setUserData(getBlankUserData(version));
 				return redirect('/');
 			case 'existing': {
 				const oldUserData = getUserData();
@@ -97,7 +97,7 @@ export function migrationAction({
 
 				setUserData({
 					...oldUserData,
-					version: currentVersion,
+					version: version,
 					widgetInstances: {
 						...Object.fromEntries(newInstances)
 					}

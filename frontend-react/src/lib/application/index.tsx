@@ -20,7 +20,7 @@ export * from './hooks';
 export async function initTelestion(options: TelestionOptions) {
 	// override default current version
 	if (options.defaultUserData) {
-		options.defaultUserData.version = options.currentVersion;
+		options.defaultUserData.version = options.version;
 	}
 
 	if (options.widgets) {

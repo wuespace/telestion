@@ -14,14 +14,14 @@ import {
 import { isUserDataUpToDate } from '../../../utils.ts';
 import { TelestionOptions } from '../../model.ts';
 
-export function dashboardEditorLoader({ currentVersion }: TelestionOptions) {
+export function dashboardEditorLoader({ version }: TelestionOptions) {
 	return ({ params }: LoaderFunctionArgs) => {
 		if (!isLoggedIn()) {
 			return redirect('/login');
 		}
 
 		const userData = getUserData();
-		if (!isUserDataUpToDate(userData, currentVersion) || !userData) {
+		if (!isUserDataUpToDate(userData, version) || !userData) {
 			return redirect('/');
 		}
 
@@ -45,14 +45,14 @@ export function dashboardEditorLoader({ currentVersion }: TelestionOptions) {
 	};
 }
 
-export function dashboardEditorAction({ currentVersion }: TelestionOptions) {
+export function dashboardEditorAction({ version }: TelestionOptions) {
 	return async ({ request, params }: ActionFunctionArgs) => {
 		if (!isLoggedIn()) {
 			return redirect('/login');
 		}
 
 		const userData = getUserData();
-		if (!isUserDataUpToDate(userData, currentVersion) || !userData) {
+		if (!isUserDataUpToDate(userData, version) || !userData) {
 			return redirect('/');
 		}
 

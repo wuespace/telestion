@@ -8,7 +8,7 @@ export interface TelestionOptions {
 	/**
 	 * Represents the current version of the software.
 	 */
-	currentVersion: string;
+	version: string;
 	/**
 	 * The backend URL that should be inserted by default on first page load.
 	 */

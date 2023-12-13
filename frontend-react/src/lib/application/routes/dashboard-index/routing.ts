@@ -4,14 +4,14 @@ import { getUserData } from '../../../user-data';
 import { isUserDataUpToDate } from '../../../utils.ts';
 import { TelestionOptions } from '../../model.ts';
 
-export function dashboardIndexLoader({ currentVersion }: TelestionOptions) {
+export function dashboardIndexLoader({ version }: TelestionOptions) {
 	return () => {
 		if (!isLoggedIn()) {
 			return redirect('/login');
 		}
 
 		const userData = getUserData();
-		if (!isUserDataUpToDate(userData, currentVersion) || !userData) {
+		if (!isUserDataUpToDate(userData, version) || !userData) {
 			return redirect('/');
 		}
 
