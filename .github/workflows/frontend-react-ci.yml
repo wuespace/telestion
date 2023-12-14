@@ -85,7 +85,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.3
         with:
           name: package.tgz
-          path: ./wuespace-telestion-*.tgz
+          path: ./frontend-react/wuespace-telestion-*.tgz
           retention-days: 7
 
   unit-test:
