@@ -28,6 +28,7 @@ jobs:
         with:
           node-version: ${{ env.node }}
           cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
 
       - name: Install dependencies 📚
         run: pnpm install
@@ -49,6 +50,7 @@ jobs:
         with:
           node-version: ${{ env.node }}
           cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
 
       - name: Install dependencies 📚
         run: pnpm install
@@ -70,6 +72,7 @@ jobs:
         with:
           node-version: ${{ env.node }}
           cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
 
       - name: Install dependencies 📚
         run: pnpm install
@@ -100,6 +103,7 @@ jobs:
         with:
           node-version: ${{ env.node }}
           cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
 
       - name: Install dependencies 📚
         run: pnpm install
