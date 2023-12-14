@@ -24,7 +24,9 @@ import {
 	dashboardCreateAction
 } from './routes';
 
-export function createTelestionRouter(options: TelestionOptions): ReturnType<typeof createBrowserRouter> {
+export function createTelestionRouter(
+	options: TelestionOptions
+): ReturnType<typeof createBrowserRouter> {
 	return createBrowserRouter([
 		{
 			path: '/',

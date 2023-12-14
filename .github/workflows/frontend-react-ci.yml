@@ -1,0 +1,114 @@
+name: Frontend React CI
+
+# Events that trigger this workflow
+on: [push, pull_request]
+
+# Defines which tool versions should be used in all workflow jobs
+env:
+  node: '20'
+  pnpm: '8'
+
+jobs:
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+      - name: Setup PNPM 💿
+        uses: pnpm/action-setup@v2.4.0
+        with:
+          version: ${{ env.pnpm }}
+      - name: Setup Node 💿
+        uses: actions/setup-node@v3.8.2
+        with:
+          node-version: ${{ env.node }}
+          cache: 'pnpm'
+
+      - name: Install dependencies 📚
+        run: pnpm install
+        working-directory: ./frontend-react
+      - name: Check code style 🧽
+        run: pnpm run ci:style
+        working-directory: ./frontend-react
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+      - name: Setup PNPM 💿
+        uses: pnpm/action-setup@v2.4.0
+        with:
+          version: ${{ env.pnpm }}
+      - name: Setup Node 💿
+        uses: actions/setup-node@v3.8.2
+        with:
+          node-version: ${{ env.node }}
+          cache: 'pnpm'
+
+      - name: Install dependencies 📚
+        run: pnpm install
+        working-directory: ./frontend-react
+      - name: Run Linter 📑
+        run: pnpm run lint
+        working-directory: ./frontend-react
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+      - name: Setup PNPM 💿
+        uses: pnpm/action-setup@v2.4.0
+        with:
+          version: ${{ env.pnpm }}
+      - name: Setup Node 💿
+        uses: actions/setup-node@v3.8.2
+        with:
+          node-version: ${{ env.node }}
+          cache: 'pnpm'
+
+      - name: Install dependencies 📚
+        run: pnpm install
+        working-directory: ./frontend-react
+      - name: Build library 📦
+        run: pnpm run build
+        working-directory: ./frontend-react
+      - name: Pack library 📦
+        run: pnpm pack
+        working-directory: ./frontend-react
+
+      - name: Upload package artifact 📤
+        uses: actions/upload-artifact@v3.1.3
+        with:
+          name: package.tgz
+          path: ./frontend-react/wuespace-telestion-*.tgz
+          retention-days: 7
+
+  unit-test:
+    name: Unit Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+      - name: Setup PNPM 💿
+        uses: pnpm/action-setup@v2.4.0
+        with:
+          version: ${{ env.pnpm }}
+      - name: Setup Node 💿
+        uses: actions/setup-node@v3.8.2
+        with:
+          node-version: ${{ env.node }}
+          cache: 'pnpm'
+
+      - name: Install dependencies 📚
+        run: pnpm install
+        working-directory: ./frontend-react
+      - name: Run unit tests 🛃
+        run: |
+          pnpm run build
+          pnpm run ci:test
+        working-directory: ./frontend-react

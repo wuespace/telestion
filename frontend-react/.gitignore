@@ -24,3 +24,6 @@ doc
 *.njsproj
 *.sln
 *.sw?
+
+# packages
+*.tgz

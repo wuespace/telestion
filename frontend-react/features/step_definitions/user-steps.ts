@@ -1,5 +1,3 @@
-import { When } from "@cucumber/cucumber";
+import { When } from '@cucumber/cucumber';
 
-When(/^I log in$/, function() {
-
-});
+When(/^I log in$/, function () {});

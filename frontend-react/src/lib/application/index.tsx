@@ -31,7 +31,9 @@ export async function initTelestion(options: TelestionOptions) {
 
 	const element = document.getElementById('root');
 	if (!element) {
-		throw new Error('Root element not found. Please create a "div" HTML element with the id "root" and try again.');
+		throw new Error(
+			'Root element not found. Please create a "div" HTML element with the id "root" and try again.'
+		);
 	}
 
 	ReactDOM.createRoot(element).render(
