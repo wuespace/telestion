@@ -36,6 +36,7 @@ export type StartServiceConfig = z.infer<typeof StartServiceConfigSchema>;
  * @throws If the service couldn't be started.
  *
  * @example
+ * ```ts
  * import {startService, JSONCodec} from "./lib.ts";
  *
  * const {nc, serviceName} = await startService();
@@ -45,6 +46,7 @@ export type StartServiceConfig = z.infer<typeof StartServiceConfigSchema>;
  * console.log("Message published!");
  *
  * await nc.drain();
+ * ```
  */
 export async function startService(
     rawOptions: StartServiceConfig = StartServiceConfigSchema.parse({}),
