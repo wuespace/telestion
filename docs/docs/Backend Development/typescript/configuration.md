@@ -122,7 +122,7 @@ Create a file called `config.json` next to your `service.ts` file with the follo
 Now, let's adjust the `service.ts` file to use the configuration:
 
 ```typescript title="service.ts"
-import { startService } from "./lib.ts";
+import { startService } from "https://deno.land/x/telestion/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";// (1)!
 
 const { config: rawConfig/* (2)! */} = await startService({

@@ -14,7 +14,7 @@ This tutorial will explain step-by-step how to write a log service that will lis
 1. First, we need to import the `startService` function from our library (`lib.ts`) and the `encode` function from the standard Deno library.
 
 	```ts
-	import { startService } from "./lib.ts";
+	import { startService } from "https://deno.land/x/telestion/mod.ts";
 	import { encode } from "https://deno.land/std@0.186.0/encoding/hex.ts";
 	```
 
@@ -66,7 +66,7 @@ And that's it! Our service is now complete and ready to be used.
 ## Final Code
 
 ```ts
-import { startService } from "./lib.ts";
+import { startService } from "https://deno.land/x/telestion/mod.ts";
 import { encode } from "https://deno.land/std@0.186.0/encoding/hex.ts";
 
 const encoder = new TextEncoder();

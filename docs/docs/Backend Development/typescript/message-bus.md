@@ -21,7 +21,7 @@ All you need to do compared to the previous examples is to omit the `{ nats: fal
 ```typescript title="service.ts"
 import {
     startService
-} from "./lib.ts";
+} from "https://deno.land/x/telestion/mod.ts";
 
 const {nc/* (1)! */} = await startService(/* (2)! */);
 ```
@@ -58,7 +58,7 @@ To send a JSON message, you need to create a JSON object and pass it to the `pub
 import {
     JSONCodec,
     startService
-} from "./lib.ts";
+} from "https://deno.land/x/telestion/mod.ts";
 // or: import { JSONCodec } from "https://deno.land/x/nats/src/mod.ts";
 
 const {nc} = await startService();
@@ -82,7 +82,7 @@ To send a binary message, you need to create a `Uint8Array` containing the bytes
 ```typescript title="service.ts"
 import {
     startService
-} from "./lib.ts";
+} from "https://deno.land/x/telestion/mod.ts";
 
 const {nc} = await startService();
 
@@ -99,7 +99,7 @@ There are multiple ways to subscribe to messages on a subject. The most common w
 ```typescript title="service.ts"
 import {
     startService
-} from "./lib.ts";
+} from "https://deno.land/x/telestion/mod.ts";
 
 const {nc} = await startService();
 
@@ -121,7 +121,7 @@ Unfortunately, this won't decode our JSON messages automatically. We need to do 
 import {
     JSONCodec,
     startService
-} from "./lib.ts";
+} from "https://deno.land/x/telestion/mod.ts";
 
 const {nc} = await startService();
 

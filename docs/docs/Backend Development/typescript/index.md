@@ -45,15 +45,10 @@ touch service.ts
 
 ### Writing the Service
 
-!!! warning "Library functions"
-	The library for building TypeScript services is currently not hosted on a public registry. While this will change in the future, for now, simply place the [`lib.ts`](lib.ts) file in the same directory as your `service.ts` file.
-	
-	[:material-download: Download library file](lib.ts)
-
 Open `service.ts` in your favorite editor and add the following code:
 
 ```typescript title="service.ts"
-import { startService } from './lib.ts';// (1)!
+import { startService } from 'https://deno.land/x/telestion/mod.ts';// (1)!
 
 await startService/*(2)!*/({
 	nats: false,// (3)!
