@@ -45,7 +45,7 @@ import { initTelestion } from '@wuespace/telestion';
 import '@wuspace/telestion/telestion.css';
 
 initTelestion({
-  version: '0.1.0'
+	version: '0.1.0'
 });
 ```
 

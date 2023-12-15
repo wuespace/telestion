@@ -40,5 +40,11 @@ export default defineConfig({
 });
 
 function transformBanner(banner: Record<string, string>) {
-	return '/**\n' + Object.entries(banner).map(([key, value]) => ` * ${key}: ${value}\n`).join('') + '**/';
+	return (
+		'/**\n' +
+		Object.entries(banner)
+			.map(([key, value]) => ` * ${key}: ${value}\n`)
+			.join('') +
+		'**/'
+	);
 }
