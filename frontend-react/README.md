@@ -32,7 +32,7 @@ In a Vite project, you can use the library like this:
 	</head>
 	<body>
 		<div id="root"></div>
-		<script type="module" src="/src/main.ts"></script>
+		<script type="module" src="/main.ts"></script>
 	</body>
 </html>
 ```
@@ -42,7 +42,11 @@ In a Vite project, you can use the library like this:
 ```typescript
 import { initTelestion } from '@wuespace/telestion';
 
-initTelestion();
+import '@wuspace/telestion/telestion.css';
+
+initTelestion({
+  version: '0.1.0'
+});
 ```
 
 ## Development
