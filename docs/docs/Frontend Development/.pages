@@ -1,4 +1,6 @@
 nav:
     - index.md
+    - concepts.md
+    - "API Reference": api
     - ...
-#    - "API Reference ↗️": https://github.com
+    #- "API Reference ↗️": https://github.com

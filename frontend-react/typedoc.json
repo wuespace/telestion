@@ -5,13 +5,17 @@
 		"typedoc-plugin-mdn-links",
 		"typedoc-plugin-zod"
 	],
+	"titleLink": "/",
 	"entryPoints": ["./src/lib/index.ts"],
-	"out": "doc",
+	"out": "../docs/docs/Frontend Development/api",
 	"githubPages": false,
 	"validation": {
 		"notDocumented": true,
 		"invalidLink": true,
 		"notExported": true
 	},
+	"hideGenerator": true,
+	"disableSources": true,
+	"hideInPageTOC": true,
 	"readme": "none"
 }
