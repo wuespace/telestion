@@ -42,7 +42,7 @@ In a Vite project, you can use the library like this:
 ```typescript
 import { initTelestion } from '@wuespace/telestion';
 
-import '@wuspace/telestion/telestion.css';
+import '@wuespace/telestion/telestion.css';
 
 initTelestion({
 	version: '0.1.0'
