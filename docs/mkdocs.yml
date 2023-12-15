@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 site_name: Telestion Documentation
 
 theme:
@@ -33,7 +34,6 @@ extra_css:
 
 extra_javascript:
   - _js/main.js
-  - _js/mermaid/mermaid.min.js
 
 markdown_extensions:
   - smarty
@@ -43,8 +43,8 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.keys
   - pymdownx.highlight:
       anchor_linenums: true
@@ -65,6 +65,7 @@ plugins:
   - awesome-pages
   - tags
   - search
+  - privacy
 
 extra:
   social:

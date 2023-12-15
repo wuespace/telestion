@@ -1,0 +1,12 @@
+services:
+  mkdocs:
+    image: telestion/mkdocs
+    ports:
+      - 4044:4044
+    volumes:
+      - .:/docs
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DOCKER_BUILDKIT: 1

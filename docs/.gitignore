@@ -1,0 +1,12 @@
+# IDEs / Editors
+.idea
+
+# Vale
+styles
+
+# Build
+.cache
+site
+
+# OS X
+.DS_Store
