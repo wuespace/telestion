@@ -1,6 +1,9 @@
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 site_name: Telestion Documentation
 
+repo_url: https://github.com/wuespace/telestion
+edit_uri: edit/main/docs/docs/
+
 theme:
   name: material
   font: false
@@ -28,12 +31,14 @@ theme:
     - navigation.indexes
     - content.code.copy
     - content.code.annotate
+    - content.action.edit
 
 extra_css:
   - _css/custom.css
 
 extra_javascript:
   - _js/main.js
+  - _js/mermaid-js/mermaid.min.js
 
 markdown_extensions:
   - smarty
