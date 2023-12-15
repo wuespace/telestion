@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 21
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        run: npm install -g pnpm
       - name: Build API Reference for frontend-react
         working-directory: frontend-react
         run: |
