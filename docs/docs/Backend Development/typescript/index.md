@@ -57,8 +57,7 @@ await startService/*(2)!*/({
 console.log('Hello World!');// (4)!
 ```
 
-1. Import the `startService` function from the library. Note that the library is in the same directory as the `service.ts` file, so we can use a relative path.<p>
-	Later, when we publish the library to a registry, we will be able to use a URL instead.
+1. Import the `startService` function from the library.
 2. Start the service. This automatically connects to NATS and does some other setup.
 3. Disable NATS. We don't need it for this example and it would otherwise throw an error because we haven't configured it yet.
 4. Log a message to the console when the service starts.
