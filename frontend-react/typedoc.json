@@ -17,5 +17,9 @@
 	"hideGenerator": true,
 	"disableSources": true,
 	"hideInPageTOC": true,
+	"outputFileStrategy": "members",
+	"hidePageTitle": true,
+	"hidePageHeader": true,
+	"indexPageTitle": "API Reference",
 	"readme": "none"
 }

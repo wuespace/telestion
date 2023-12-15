@@ -68,6 +68,8 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.details
+  - pymdownx.smartsymbols
+  - pymdownx.escapeall # support for backslash escapes in typedoc output
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.superfences:
