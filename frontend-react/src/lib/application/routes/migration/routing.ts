@@ -32,7 +32,7 @@ export function migrationLoader({
 			migrationState: userData
 				? {
 						previousVersion: userData.version,
-						version: version,
+						currentVersion: version,
 						oldUserData: userData
 				  }
 				: undefined,
