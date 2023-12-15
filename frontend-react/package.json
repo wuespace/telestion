@@ -1,6 +1,7 @@
 {
 	"name": "@wuespace/telestion",
 	"description": "Telestion is a framework for building ground station / mission control applications.",
+	"homepage": "https://telestion.wuespace.de/",
 	"keywords": [
 		"telestion",
 		"ground station",
@@ -10,9 +11,24 @@
 		"spacecrafts",
 		"spaceflight"
 	],
-	"author": "WüSpace e.V.",
+	"author": {
+		"name": "WüSpace e. V.",
+		"email": "telestion@wuespace.de",
+		"url": "https://telestion.wuespace.de/"
+	},
+	"contributors": [
+		{
+			"name": "Zuri Klaschka",
+			"email": "zuri.klaschka@wuespace.de",
+			"url": "https://github.com/pklaschka"
+		},
+		{
+			"name": "Ludwig Richter",
+			"email": "ludwig.richter@wuespace.de",
+			"url": "https://github.com/fussel178"
+		}
+	],
 	"license": "MIT",
-	"private": true,
 	"version": "1.0.0-alpha.0",
 	"type": "module",
 	"files": [
@@ -39,6 +55,11 @@
 		"ci:style": "prettier --list-different .",
 		"ci:test": "vitest"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/wuespace/telestion.git",
+		"directory": "frontend-react"
+	},
 	"dependencies": {
 		"@popperjs/core": "^2.11.8",
 		"bootstrap": "^5.3.2",
@@ -51,8 +72,12 @@
 		"react-router-dom": "^6.19.0",
 		"zod": "^3.22.4"
 	},
+	"peerDependencies": {
+		"react": "18"
+	},
 	"devDependencies": {
 		"@cucumber/cucumber": "^10.0.1",
+		"@types/node": "^20.10.4",
 		"@types/react": "^18.2.37",
 		"@types/react-dom": "^18.2.15",
 		"@typescript-eslint/eslint-plugin": "^6.10.0",
@@ -73,6 +98,7 @@
 		"typedoc-plugin-zod": "^1.1.0",
 		"typescript": "^5.2.2",
 		"vite": "^5.0.5",
+		"vite-plugin-banner": "^0.7.1",
 		"vitest": "^1.0.4"
 	}
 }
