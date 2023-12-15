@@ -95,6 +95,14 @@ registerWidgets(...);// (5)!
 4. Set the version of your frontend. This is used to check if the user data needs to be migrated.
 5. Register your widgets in Telestion. This is explained in more detail in the next section.
 
+## Installing Dependencies
+
+To install the dependencies, run the following command:
+
+```bash
+pnpm install
+```
+
 ## Running the Frontend
 
 To run the frontend, run the following command:
