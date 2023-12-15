@@ -1,0 +1,12 @@
+collapse: true
+nav:
+  - Overview:
+      - index.md
+      - getting-started.md
+      - Concepts:
+        - service.md
+        - message-bus.md
+  - Backend Development
+  - Frontend Development
+  - Deployment
+  - "Project Homepage ↗️": https://telestion.wuespace.de

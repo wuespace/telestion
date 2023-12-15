@@ -1,0 +1,7 @@
+nav:
+    - index.md
+    - concepts.md
+    - Local Deployment: local
+    - Docker Deployment: docker
+    - Kubernetes Deployment: kubernetes
+    - NATS Configuration: nats
