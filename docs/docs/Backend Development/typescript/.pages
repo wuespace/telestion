@@ -4,3 +4,4 @@ nav:
   - configuration.md
   - message-bus.md
   - e2e-log-service.md
+  - "API Reference ↗️": https://deno.land/x/telestion/mod.ts
