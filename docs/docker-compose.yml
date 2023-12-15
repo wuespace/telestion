@@ -6,7 +6,7 @@ services:
     volumes:
       - .:/docs
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: docs/Dockerfile
       args:
         DOCKER_BUILDKIT: 1

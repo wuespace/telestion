@@ -2,7 +2,15 @@
 site_name: Telestion Documentation
 
 repo_url: https://github.com/wuespace/telestion
+repo_name: wuespace/telestion
 edit_uri: edit/main/docs/docs/
+copyright: |
+  <p>
+  &copy; 2023 WüSpace e. V.
+  <p>
+  <a href="https://www.wuespace.de/legal-notice/" target="_blank">Legal Notice</a> 
+  | <a href="https://www.wuespace.de/privacy-policy/" target="_blank">Privacy Policy</a>
+  </p>
 
 theme:
   name: material
@@ -32,6 +40,8 @@ theme:
     - content.code.copy
     - content.code.annotate
     - content.action.edit
+    - content.action.view
+    - search.highlight
 
 extra_css:
   - _css/custom.css
@@ -70,7 +80,10 @@ plugins:
   - awesome-pages
   - tags
   - search
+  - social
   - privacy
+  - git-revision-date-localized:
+      enable_creation_date: true
 
 extra:
   social:
