@@ -85,7 +85,7 @@ export function PageWrapper({ showSelector }: PageWrapperProps) {
 						<BSNav className="me-auto my-2 my-lg-0"></BSNav>
 						<BSNav className="d-flex">
 							<BSNav.Link className="d-flex" as={Link} to="/logout">
-								<i className="bi bi-box-arrow-right"></i>
+								<i className="bi bi-box-arrow-right" aria-label="Log out"></i>
 							</BSNav.Link>
 						</BSNav>
 					</Navbar.Collapse>
