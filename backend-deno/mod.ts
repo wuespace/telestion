@@ -1,15 +1,18 @@
 import * as nats from "https://deno.land/x/nats@v1.13.0/src/mod.ts";
-import { parse } from "https://deno.land/std@0.183.0/flags/mod.ts";
-import { parse as parseJSON } from "https://deno.land/std@0.183.0/jsonc/mod.ts";
-import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
-import { resolve } from "https://deno.land/std@0.183.0/path/mod.ts";
+import {parse} from "https://deno.land/std@0.183.0/flags/mod.ts";
+import {parse as parseJSON} from "https://deno.land/std@0.183.0/jsonc/mod.ts";
+import {z} from "https://deno.land/x/zod@v3.21.4/mod.ts";
+import {resolve} from "https://deno.land/std@0.183.0/path/mod.ts";
+
+let args = Deno.args;
+let natsModule = nats;
 
 export const JSONCodec = nats.JSONCodec;
 
-const flags = parse(Deno.args);
-
 const StartServiceConfigSchema = z.object({
   nats: z.boolean().default(true),
+  overwriteArgs: z.array(z.string()).optional(),
+  natsMock: z.unknown().optional(),
 });
 
 export const MinimalConfigSchema = z.object({
@@ -30,6 +33,8 @@ export type StartServiceConfig = z.infer<typeof StartServiceConfigSchema>;
  * Starts the service and returns the APIs available to the Telestion service.
  * @param rawOptions The configuration for the service.
  * @param rawOptions.nats Whether to enable NATS or not. Defaults to `true`.
+ * @param rawOptions.overwriteArgs An array of arguments that should overwrite the CLI arguments. Useful for testing.
+ * @param rawOptions.natsMock A mock for the NATS module. Useful for testing.
  *
  * @returns The APIs available to the Telestion service.
  *
@@ -52,6 +57,8 @@ export async function startService(
   rawOptions: z.input<typeof StartServiceConfigSchema> = StartServiceConfigSchema.parse({}),
 ) {
   const options = StartServiceConfigSchema.parse(rawOptions);
+  args = options.overwriteArgs ?? Deno.args;
+  natsModule = options.natsMock as typeof nats ?? nats;
 
   const config = assembleConfig();
 
@@ -76,6 +83,8 @@ export async function startService(
  * Assembles the configuration for the service.
  */
 function assembleConfig() {
+  const flags = parse(args);
+
   /**
    * Configuration parameters that are passed via environment variables or command line arguments.
    */
@@ -94,7 +103,7 @@ function assembleConfig() {
   }
 
   const config = parseJSON(
-      Deno.readTextFileSync(withoutConfigFile.CONFIG_FILE),
+    Deno.readTextFileSync(withoutConfigFile.CONFIG_FILE),
   );
 
   // Config file doesn't contain an object => throw error
@@ -111,8 +120,8 @@ function assembleConfig() {
 
   // Config key doesn't exist or doesn't lead to an object => throw error
   if (
-      typeof childConfig !== "object" || childConfig === null ||
-      Array.isArray(childConfig)
+    typeof childConfig !== "object" || childConfig === null ||
+    Array.isArray(childConfig)
   ) {
     throw new Error("Invalid config file");
   }
@@ -123,15 +132,15 @@ function assembleConfig() {
 
 function ensureMinimalConfig(rawConfig: unknown) {
   try {
-    const config = MinimalConfigSchema.parse(rawConfig);
-    return config;
+    return MinimalConfigSchema.parse(rawConfig);
   } catch (e) {
+    const flags = parse(args);
     console.error("Missing required configuration parameters.");
     console.info(`Details: ${e.message}`);
 
     if (!flags["dev"]) {
       console.info(
-          'Run with "--dev" to use default values for missing environment variables during development.',
+        'Run with "--dev" to use default values for missing environment variables during development.',
       );
     }
     Deno.exit(1);
@@ -139,12 +148,13 @@ function ensureMinimalConfig(rawConfig: unknown) {
 }
 
 function getDefaultConfig() {
+  const flags = parse(args);
   if (!flags["dev"]) {
     return {};
   }
 
   console.log(
-      "Running in development mode. Using default values for missing environment variables.",
+    "Running in development mode. Using default values for missing environment variables.",
   );
   return {
     NATS_URL: "localhost:4222",
@@ -155,7 +165,7 @@ function getDefaultConfig() {
 
 async function initializeNats(config: MinimalConfig) {
   try {
-    const nc = await nats.connect({
+    const nc = await natsModule.connect({
       servers: config.NATS_URL,
       user: config.NATS_USER,
       pass: config.NATS_PASSWORD,
@@ -168,16 +178,16 @@ async function initializeNats(config: MinimalConfig) {
           return;
         }
         msg.respond(
-            JSONCodec().encode({
-              name: config.SERVICE_NAME,
-            }),
+          JSONCodec().encode({
+            name: config.SERVICE_NAME,
+          }),
         );
       },
     });
     return { nc, messageBus: nc };
   } catch (e) {
     console.error(
-        `Error! Couldn't connect to the message bus. Details: ${e.message}`,
+      `Error! Couldn't connect to the message bus. Details: ${e.message}`,
     );
     throw e;
   }
