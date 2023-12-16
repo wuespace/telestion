@@ -1,0 +1,60 @@
+services:
+  vite:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    profiles:
+      - dev
+    depends_on: [ "nats" ]
+    restart: unless-stopped
+
+  vite-build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+        - .:/app
+        - /app/node_modules
+    command: "build"
+    profiles:
+      - build
+
+  vitest-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "51204:51204"
+    command: "test --reporter=dot --open=false --api.host 0.0.0.0"
+    profiles:
+      - test
+      - dev
+    restart: unless-stopped
+
+  nats:
+    image: nats:latest
+    command: [ "-c", "/etc/nats/nats.conf" ]
+    volumes:
+      - ./.nats.conf:/etc/nats/nats.conf
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+      - "6222:6222"
+      - "9222:9222"
+    networks:
+      - nats-network
+    profiles:
+      - dev
+    restart: unless-stopped
+
+networks:
+  nats-network:
+    name: nats-network
