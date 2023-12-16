@@ -1,0 +1,7 @@
+services:
+  backend-deno:
+    image: denoland/deno:1.39.0
+    command: ["test", "--allow-all", "/app/cucumber/test.ts"]
+    volumes:
+      - .:/app
+      - ../backend-features:/features
