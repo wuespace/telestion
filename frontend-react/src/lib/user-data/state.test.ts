@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 import { z } from 'zod';
 
 import { setUser } from '../auth';
@@ -42,35 +42,26 @@ describe('userData', () => {
 		expect(getUserData()).toEqual(testUserData);
 	});
 
-	test('setUserData writes to the console if no user is logged in', () => {
+	test('setUserData throws if no user is logged in', () => {
 		setUser(null);
 
-		// vitest spy
-		const spy = vi.spyOn(console, 'error');
-
-		setUserData({
-			version: '1.0.0',
-			dashboards: {},
-			widgetInstances: {}
-		});
-
-		expect(spy).toHaveBeenCalledWith(
-			'Cannot set user data without logged in user.'
-		);
+		expect(() => {
+			setUserData({
+				version: '1.0.0',
+				dashboards: {},
+				widgetInstances: {}
+			} as z.infer<typeof userDataSchema>);
+		}).toThrow();
 	});
 
-	test('setUserData writes to the console if invalid data is passed', () => {
-		const spy = vi.spyOn(console, 'error');
-
-		setUserData({
-			version: '1.jfowejf0.0',
-			dashboards: {},
-			widgetInstances: {}
-		} as z.infer<typeof userDataSchema>);
-
-		expect(spy).toHaveBeenCalledWith(
-			'Invalid user data passed to set - does not match schema.'
-		);
+	test('setUserData throws if invalid data is passed', () => {
+		expect(() => {
+			setUserData({
+				version: '1.jfowejf0.0',
+				dashboards: {},
+				widgetInstances: {}
+			} as z.infer<typeof userDataSchema>);
+		}).toThrow();
 	});
 
 	test('setUserData writes to localStorage if valid data is passed', () => {
