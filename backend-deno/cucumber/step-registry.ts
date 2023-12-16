@@ -1,14 +1,36 @@
-import { dirname, fromFileUrl, resolve } from "./deps.ts";
+import { resolve } from "./deps.ts";
 
-interface Step {
+/**
+ * A step definition
+ * 
+ * @see https://cucumber.io/docs/cucumber/step-definitions/?lang=javascript
+ */
+interface StepDefinition {
+  /**
+   * The name of the step definition that gets matched against the step name
+   */
   name: string;
+  /**
+   * Check if the step matches the step definition
+   * @param step The step name
+   * @returns `false` if the step does not match, otherwise an array of parameters
+   */
   matches: (step: string) => string[] | false;
+  /**
+   * The action to perform when the step is executed
+   * @param ctx A context object that can be used to share state between steps
+   * @param params Parameters extracted from the step name
+   * @returns potentially a promise that resolves when the step is done
+   */
   action: (
     ctx: Record<string, unknown>,
     ...params: string[]
   ) => void | Promise<void>;
 }
 
+/**
+ * A registry of parameters that can be used in step definition names
+ */
 const paramRegistry: Record<string, {
   regex: RegExp;
 }> = {
@@ -17,9 +39,17 @@ const paramRegistry: Record<string, {
   },
 };
 
-const stepRegistry: Step[] = [];
+/**
+ * A registry of step definitions
+ */
+const stepRegistry: StepDefinition[] = [];
 
-function registerStep(name: string, action: Step["action"]) {
+/**
+ * Register a step definition to be used in scenarios
+ * @param name the name of the step definition
+ * @param action the action to perform when the step is executed
+ */
+function registerStep(name: string, action: StepDefinition["action"]) {
   stepRegistry.push({
     name,
     action,
@@ -47,16 +77,26 @@ function registerStep(name: string, action: Step["action"]) {
   });
 }
 
+/**
+ * Escape special characters in a string to be used in a regular expression
+ * @param string input
+ * @returns `input` with all special characters escaped
+ * 
+ * @see https://stackoverflow.com/a/6969486/9276604 by user coolaj86 (CC BY-SA 4.0)
+ */
 function escapeRegExp(string: string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
 
-export async function importSteps() {
-  const stepsDir = resolve(dirname(fromFileUrl(import.meta.url)), "steps");
-  const files = Deno.readDirSync(stepsDir);
+/**
+ * Import all step definitions from a folder
+ * @param stepsFolderPath the path to the folder containing the step definitions
+ */
+export async function importStepDefinitions(stepsFolderPath: string) {
+  const files = Deno.readDirSync(stepsFolderPath);
 
   for (const file of files) {
-    const filePath = resolve(stepsDir, file.name);
+    const filePath = resolve(stepsFolderPath, file.name);
 
     if (file.isDirectory || !file.name.endsWith(".ts")) {
       continue;
@@ -69,21 +109,41 @@ export async function importSteps() {
   console.debug("Steps imported");
 }
 
-export function getStep(name: string): Step["action"] | undefined {
+/**
+ * Retrieve the action to perform when a step is executed
+ * @param name the name of the step
+ * @returns the `StepDefinition.action` function if a step definition matches the step name, otherwise `undefined`
+ */
+export function getStep(name: string): StepDefinition["action"] | undefined {
   const step = stepRegistry.find((step) => step.matches(name));
   return step
     ? (ctx) => step.action(ctx, ...step.matches(name) as string[])
     : undefined;
 }
 
-export function Given(name: string, action: Step["action"]) {
+/**
+ * Register a step definition to be used in scenarios
+ * @param name the name of the step definition. Can contain parameters.
+ * @param action the action to perform when the step is executed
+ */
+export function Given(name: string, action: StepDefinition["action"]) {
   registerStep(name, action);
 }
 
-export function When(name: string, action: Step["action"]) {
+/**
+ * Register a step definition to be used in scenarios
+ * @param name the name of the step definition. Can contain parameters.
+ * @param action the action to perform when the step is executed
+ */
+export function When(name: string, action: StepDefinition["action"]) {
   registerStep(name, action);
 }
 
-export function Then(name: string, action: Step["action"]) {
+/**
+ * Register a step definition to be used in scenarios
+ * @param name the name of the step definition. Can contain parameters.
+ * @param action the action to perform when the step is executed
+ */
+export function Then(name: string, action: StepDefinition["action"]) {
   registerStep(name, action);
 }

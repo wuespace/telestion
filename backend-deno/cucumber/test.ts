@@ -1,14 +1,37 @@
-import { AssertionError, resolve } from "./deps.ts";
-import { getStep, importSteps } from "./step-registry.ts";
+/*!
+  * Cucumber Implementation for Deno
+  *
+  * Call using: `deno test -A cucumber/test.ts --features [feature folder] --steps [steps folder]`
+  *
+  * Arguments:
+  *  --features [feature folder]  The folder containing the feature files, relative to the current working directory
+  *  --steps [steps folder]       The folder containing the step definitions, relative to the current working directory
+  *
+  * Copyright (2023) WüSpace e. V.
+  * Author: Zuri Klaschka
+  *
+  * MIT License (MIT)
+  */
 
-const featuresFolderPath = "/features"; // resolve(dirname(import.meta.url), "features");
-const featureFiles = [];
+import { AssertionError, parseArgs, resolve } from "./deps.ts";
+import { getStep, importStepDefinitions } from "./step-registry.ts";
 
-for await (const dirEntry of Deno.readDir(featuresFolderPath)) {
-  console.debug(`Found file: ${dirEntry.name}`);
-  if (dirEntry.isFile && dirEntry.name.endsWith(".feature")) {
-    const filePath = resolve(featuresFolderPath, dirEntry.name);
-    featureFiles.push(
+/// Determine steps and features folder from command line arguments
+
+const { steps, features } = parseArgs(Deno.args);
+const stepsFolderPath = resolve(Deno.cwd(), steps);
+const featuresFolderPath = resolve(Deno.cwd(), features);
+
+/// Import all features
+
+const featureDefinitions = [];
+
+for await (const potentialFeature of Deno.readDir(featuresFolderPath)) {
+  const isFeatureFile = potentialFeature.isFile &&
+    potentialFeature.name.endsWith(".feature");
+  if (isFeatureFile) {
+    const filePath = resolve(featuresFolderPath, potentialFeature.name);
+    featureDefinitions.push(
       Deno.readTextFileSync(
         filePath,
       ),
@@ -16,9 +39,13 @@ for await (const dirEntry of Deno.readDir(featuresFolderPath)) {
   }
 }
 
-await importSteps();
+/// Import all step definitions
 
-for (const featureFile of featureFiles) {
+await importStepDefinitions(stepsFolderPath);
+
+/// Run all features
+
+for (const featureFile of featureDefinitions) {
   const feature = parseFeature(featureFile);
 
   Deno.test(`Feature: ${feature.name}`, async (t) => {
@@ -30,7 +57,17 @@ for (const featureFile of featureFiles) {
   });
 }
 
+/**
+ * Run a scenario in a deno testing context
+ * @param scenario the scenario to run
+ * @param t the text context. Required to keep async steps in order
+ */
 async function runScenario(scenario: Scenario, t: Deno.TestContext) {
+  /**
+   * The context object passed to all steps
+   * 
+   * This is used to share data between steps
+   */
   const ctx = {};
   for (const step of scenario.steps) {
     const stepAction = getStep(step.name);
@@ -44,22 +81,54 @@ async function runScenario(scenario: Scenario, t: Deno.TestContext) {
   }
 }
 
+/**
+ * A Gherkin feature
+ */
 interface Feature {
+  /**
+   * The name of the feature
+   */
   name: string;
+  /**
+   * The scenarios in the feature
+   */
   scenarios: Scenario[];
 }
 
+/**
+ * A Gherkin scenario
+ */
 interface Scenario {
+  /**
+   * The name of the scenario
+   */
   name: string;
+  /**
+   * The steps in the scenario
+   */
   steps: Step[];
 }
 
+/**
+ * A Gherkin step
+ */
 interface Step {
-  type: string;
+  /**
+   * The type of the step
+   */
+  type: 'Given' | 'When' | 'Then';
+  /**
+   * The name of the step
+   */
   name: string;
 }
 
-function parseFeature(featureFile: string): Feature {
+/**
+ * Parse a Ghrekin feature
+ * @param featureCode The Ghrekin feature code
+ * @returns The parsed feature
+ */
+function parseFeature(featureCode: string): Feature {
   const lines = extractLines();
 
   let featureName = "";
@@ -116,14 +185,14 @@ function parseFeature(featureFile: string): Feature {
   };
 
   function extractLines() {
-    featureFile = featureFile.replace(/\r\n/g, "\n") // Normalize line endings
+    featureCode = featureCode.replace(/\r\n/g, "\n") // Normalize line endings
       .replace(/\r/g, "\n") // Normalize line endings
       .replace(/ {2,}/g, " ") // Normalize whitespace
       .replace(/\n{2,}/g, "\n") // Normalize multiple line endings
       .replace(/\t/g, "  ") // Normalize tabs
       .replace(/* indented */ /^ {2,}/gm, ""); // Remove indentation
 
-    const lines = featureFile.split("\n")
+    const lines = featureCode.split("\n")
       .map((line) => line.trim())
       .filter((line) => line.length > 0);
     return lines;
