@@ -7,10 +7,10 @@ services:
       - .:/app
       - /app/node_modules
     ports:
-      - "5173:5173"
+      - '5173:5173'
     profiles:
       - dev
-    depends_on: [ "nats" ]
+    depends_on: ['nats']
     restart: unless-stopped
 
   vite-build:
@@ -18,9 +18,9 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-        - .:/app
-        - /app/node_modules
-    command: "build"
+      - .:/app
+      - /app/node_modules
+    command: 'build'
     profiles:
       - build
 
@@ -32,8 +32,8 @@ services:
       - .:/app
       - /app/node_modules
     ports:
-      - "51204:51204"
-    command: "test --reporter=dot --open=false --api.host 0.0.0.0"
+      - '51204:51204'
+    command: 'test --reporter=dot --open=false --api.host 0.0.0.0'
     profiles:
       - test
       - dev
@@ -41,14 +41,14 @@ services:
 
   nats:
     image: nats:latest
-    command: [ "-c", "/etc/nats/nats.conf" ]
+    command: ['-c', '/etc/nats/nats.conf']
     volumes:
       - ./.nats.conf:/etc/nats/nats.conf
     ports:
-      - "4222:4222"
-      - "8222:8222"
-      - "6222:6222"
-      - "9222:9222"
+      - '4222:4222'
+      - '8222:8222'
+      - '6222:6222'
+      - '9222:9222'
     networks:
       - nats-network
     profiles:

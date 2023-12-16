@@ -41,6 +41,8 @@ export async function initTelestion(options: TelestionOptions) {
 			<RouterProvider router={router} />
 		</React.StrictMode>
 	);
+
+	await Promise.resolve(); // function is async for future use
 }
 
 declare module 'react' {

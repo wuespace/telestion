@@ -8,7 +8,9 @@ module.exports = {
 		'plugin:@typescript-eslint/stylistic-type-checked',
 		'plugin:react/recommended',
 		'plugin:react/jsx-runtime',
-		'plugin:react-hooks/recommended'
+		'plugin:react-hooks/recommended',
+		'plugin:prettier/recommended',
+		'plugin:jsx-a11y/strict'
 	],
 	parserOptions: {
 		ecmaFeatures: { jsx: true },
@@ -17,7 +19,13 @@ module.exports = {
 		project: ['./tsconfig.json', './tsconfig.node.json'],
 		tsconfigRootDir: __dirname
 	},
-	ignorePatterns: ['dist', '.eslintrc.cjs'],
+	ignorePatterns: [
+		'dist',
+		'.eslintrc.cjs',
+		'types',
+		'node_modules',
+		'features'
+	],
 	parser: '@typescript-eslint/parser',
 	plugins: ['eslint-plugin-tsdoc'],
 	// plugins: ['react-refresh'],
@@ -28,5 +36,8 @@ module.exports = {
 		'@typescript-eslint/no-confusing-void-expression': 'off',
 		'@typescript-eslint/consistent-type-definitions': 'off',
 		'tsdoc/syntax': 'warn'
+	},
+	settings: {
+		react: { version: 'detect' }
 	}
 };
