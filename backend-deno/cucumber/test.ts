@@ -153,7 +153,7 @@ function parseFeature(featureCode: string): Feature {
       continue;
     }
 
-    for (const keyword of ["Given", "When", "Then"]) {
+    for (const keyword of ["Given", "When", "Then"] satisfies Step['type'][]) {
       if (line.startsWith(keyword + " ")) {
         scenario.steps.push({
           type: keyword,
