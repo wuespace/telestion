@@ -49,7 +49,7 @@ export type StartServiceConfig = z.infer<typeof StartServiceConfigSchema>;
  * ```
  */
 export async function startService(
-    rawOptions: StartServiceConfig = StartServiceConfigSchema.parse({}),
+  rawOptions: z.input<typeof StartServiceConfigSchema> = StartServiceConfigSchema.parse({}),
 ) {
   const options = StartServiceConfigSchema.parse(rawOptions);
 
