@@ -3,3 +3,4 @@ nav:
   - typescript
   - rust
   - other-languages.md
+  - Service Behavior Specification: service-behavior

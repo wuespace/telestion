@@ -7,7 +7,7 @@
 	],
 	"titleLink": "/",
 	"entryPoints": ["./src/lib/index.ts"],
-	"out": "../docs/docs/Frontend Development/api",
+	"out": "docs",
 	"githubPages": false,
 	"validation": {
 		"notDocumented": true,

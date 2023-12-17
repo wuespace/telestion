@@ -1,6 +1,7 @@
 FROM node:21-alpine
 
 VOLUME /app
+VOLUME /docs
 RUN npm install -g pnpm
 
 COPY package.json /app/package.json

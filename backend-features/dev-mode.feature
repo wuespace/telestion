@@ -1,7 +1,7 @@
 Feature: Development mode
 
   Scenario: The service can be started in dev mode to use default parameters during development
-			During development, it is useful to start the service with default parameters, so that it can be used without any configuration.
+  During development, it is useful to start the service with default parameters, so that it can be used without any configuration.
 
     Given I have no service configuration
     And I have a NATS server running on "localhost:4222"
@@ -17,5 +17,5 @@ Feature: Development mode
     When I start the service with "--dev --DATA_DIR=/tmp"
     Then the service should start
     And the service should connect to NATS
-	And the service should be configured with "DATA_DIR" set to "/tmp"
-	And the service should be configured with "NATS_URL" set to "localhost:4255"
+    And the service should be configured with "DATA_DIR" set to "/tmp"
+    And the service should be configured with "NATS_URL" set to "localhost:4255"

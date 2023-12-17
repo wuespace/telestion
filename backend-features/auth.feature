@@ -22,7 +22,7 @@ Feature: NATS authentication
 		And I have an environment variable named "NATS_PASSWORD" with value "wrong"
 		Then the service should fail to start
 
-	Scenario: Starting the service without credentials fails when the NATS server requires authentication
+	Scenario: Starting the service without credentials fails when the authentication is required
 		Given I have the basic service configuration
 		And I have a NATS server running on "localhost:4222"
 		And the NATS server requires authentication

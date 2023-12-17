@@ -87,6 +87,9 @@ plugins:
   - git-revision-date-localized:
       enable_creation_date: true
 
+hooks:
+  - hooks/hide-edit-button.py
+
 extra:
   social:
     - link: /_writers-guide

@@ -1,3 +1,7 @@
+---
+hide_edit_button: true
+---
+
 # Telestion Developer Documentation
 
 ![Telestion logo](./_theme_img/logo.svg){align=left width=150px}
