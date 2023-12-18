@@ -86,7 +86,7 @@ await initTelestion/* (3)!*/({
 });
 
 // register your widget in Telestion
-registerWidgets(...);// (5)! 
+// registerWidgets(...);// (5)! 
 ```
 
 1. Import the `initTelestion` and `registerWidgets` functions from the `@wuespace/telestion` package.
