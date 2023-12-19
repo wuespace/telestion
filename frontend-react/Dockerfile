@@ -1,7 +1,9 @@
 FROM node:21-alpine
 
-VOLUME /app
-VOLUME /docs
+# creates an "invisible" docker volume during container startup
+# by retaining the node_modules from the image build
+# to support different cpu architectures
+VOLUME /app/node_modules
 RUN npm install -g pnpm
 
 COPY package.json /app/package.json

@@ -30,7 +30,7 @@ Now, add the following files to your directory:
     "zod": "^3.22.4"// (2)!
   },
   "devDependencies": {
-    "@vitejs/plugin-react-swc": "^4.2.1",
+    "@vitejs/plugin-react-swc": "^3.5.0",
     "vite": "^5.0.8"
   }
 }
@@ -86,7 +86,7 @@ await initTelestion/* (3)!*/({
 });
 
 // register your widget in Telestion
-registerWidgets(...);// (5)! 
+// registerWidgets(...);// (5)! 
 ```
 
 1. Import the `initTelestion` and `registerWidgets` functions from the `@wuespace/telestion` package.
