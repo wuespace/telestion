@@ -14,4 +14,4 @@ jobs:
       - name: Checkout 📥
         uses: actions/checkout@v2
       - name: Run Linter 📑
-        run: docker-compose run lint
+        run: docker compose run lint

@@ -7,7 +7,7 @@ services:
       frontend-react:
         condition: service_completed_successfully
     ports:
-      - 4044:4044
+      - "0.0.0.0:4044:4044"
     volumes:
       - .:/docs
       - frontend-react-docs:/docs/docs/Frontend Development/api
@@ -48,7 +48,6 @@ services:
       "
     volumes:
       - ../frontend-react:/app
-      - /app/node_modules
       - frontend-react-docs:/docs
     profiles:
       - deps

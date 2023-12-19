@@ -9,7 +9,7 @@ This folder contains a custom implementation of Cucumber for Deno.
 Run the following command to run the tests:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 In the background, this uses `deno test` with the [`test.ts`](test.ts) file as entrypoint.
