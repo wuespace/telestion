@@ -1,0 +1,31 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Telestion
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Ludwig
+    family-names: Richter
+    email: ludwig.richter@wuespace.de
+    affiliation: WüSpace e. V.
+  - given-names: Zuri
+    family-names: Klaschka
+    email: zuri.klaschka@wuespace.de
+    affiliation: WüSpace e. V.
+    orcid: 'https://orcid.org/0009-0005-9995-5687'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.10407143
+repository-code: 'https://github.com/wuespace/telestion'
+url: 'https://telestion.wuespace.de/'
+keywords:
+  - Telestion
+  - Ground Station Software
+  - Mission Control Software
+  - Aerospace
+  - Computer Science
+license: MIT
