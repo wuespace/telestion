@@ -1,0 +1,32 @@
+{
+    "upload_type": "software",
+    "creators": [
+        {
+            "affiliation": "WüSpace e. V.",
+            "name": "Richter, Ludwig"
+        },
+        {
+            "orcid": "0009-0005-9995-5687",
+            "affiliation": "WüSpace e. V.",
+            "name": "Klaschka, Zuri"
+        }
+    ],
+
+    "license": "MIT",
+
+    "title": "Telestion: A framework for building Ground Station and Mission Control Software",
+
+    "related_identifiers": [],
+
+    "keywords": [
+        "Telestion",
+		"Ground Station Software",
+		"Mission Control Software",
+		"Aerospace",
+        "Computer Science"
+    ],
+
+    "communities": [
+        {"identifier": "wuespace"}
+    ]
+}
