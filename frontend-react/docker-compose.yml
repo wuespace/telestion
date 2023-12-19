@@ -5,9 +5,9 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/app
-      - /app/node_modules
+      - /app/node_modules  # supporting different cpu architectures
     ports:
-      - '5173:5173'
+      - '0.0.0.0:5173:5173'
     profiles:
       - dev
     depends_on: ['nats']
@@ -19,7 +19,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/app
-      - /app/node_modules
+      - /app/node_modules  # supporting different cpu architectures
     command: 'build'
     profiles:
       - build
@@ -30,9 +30,9 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/app
-      - /app/node_modules
+      - /app/node_modules  # supporting different cpu architectures
     ports:
-      - '51204:51204'
+      - '127.0.0.1:51204:51204'
     command: 'test --reporter=dot --open=false --api.host 0.0.0.0'
     profiles:
       - test
@@ -45,10 +45,10 @@ services:
     volumes:
       - ./.nats.conf:/etc/nats/nats.conf
     ports:
-      - '4222:4222'
-      - '8222:8222'
-      - '6222:6222'
-      - '9222:9222'
+      - '0.0.0.0:4222:4222'
+      - '127.0.0.1:8222:8222'
+      - '127.0.0.1:6222:6222'
+      - '0.0.0.0:9222:9222'
     networks:
       - nats-network
     profiles:
