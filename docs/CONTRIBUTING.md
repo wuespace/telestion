@@ -8,7 +8,7 @@
 
 ### Running locally
 
-1. Run `docker compose up --build` to start the local development server
+1. Run `docker compose up mkdocs` to start the local development server
 2. Open [http://localhost:4044](http://localhost:4044) in your browser
 
 ### Building

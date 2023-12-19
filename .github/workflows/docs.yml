@@ -14,22 +14,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 21
-      - name: Install pnpm
-        run: npm install -g pnpm
-      - name: Build API Reference for frontend-react
-        working-directory: frontend-react
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm run docs
+      - name: Build docs
+        working-directory: docs
+        run: docker compose run mkdocs build
       - name: Deploy docs
-        uses: mhausenblas/mkdocs-deploy-gh-pages@1.26
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CUSTOM_DOMAIN: docs.telestion.wuespace.de
-          CONFIG_FILE: docs/mkdocs.yml
-          EXTRA_PACKAGES: build-base
-          REQUIREMENTS: docs/requirements.txt
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/site

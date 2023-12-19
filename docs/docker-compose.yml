@@ -1,12 +1,58 @@
 services:
   mkdocs:
     image: telestion/mkdocs
+    depends_on:
+      backend-features:
+        condition: service_completed_successfully
+      frontend-react:
+        condition: service_completed_successfully
     ports:
-      - 4044:4044
+      - "0.0.0.0:4044:4044"
     volumes:
       - .:/docs
+      - frontend-react-docs:/docs/docs/Frontend Development/api
+      - backend-features:/docs/docs/Backend Development/service-behavior
+    profiles:
+      - dev
     build:
       context: ../
       dockerfile: docs/Dockerfile
       args:
         DOCKER_BUILDKIT: 1
+
+  backend-features:
+    build:
+      context: ../backend-features
+      dockerfile_inline: |
+        FROM docker:dind
+        RUN apk add --no-cache go
+        WORKDIR /features
+        RUN go install github.com/raviqqe/gherkin2markdown@latest
+    profiles:
+      - deps
+      - dev
+    volumes:
+      - ../backend-features:/features
+      - backend-features:/docs
+    entrypoint: 'sh -c "/root/go/bin/gherkin2markdown /features /docs && cp /features/README.md /docs/README.md"'
+
+  frontend-react:
+    build:
+      context: ../frontend-react
+      dockerfile: Dockerfile
+    entrypoint: >
+      sh -c "
+      pnpm run docs --out /tmp/docs-output 
+      && rm -rf /docs/* 
+      && mv /tmp/docs-output/* /docs
+      "
+    volumes:
+      - ../frontend-react:/app
+      - frontend-react-docs:/docs
+    profiles:
+      - deps
+      - dev
+
+volumes:
+  frontend-react-docs:
+  backend-features:

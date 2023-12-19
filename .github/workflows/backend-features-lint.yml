@@ -1,0 +1,17 @@
+name: Backend Features Lint
+
+on: [ push, pull_request ]
+
+defaults:
+  run:
+    working-directory: ./backend-features
+
+jobs:
+  lint:
+    name: Gherkin Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v2
+      - name: Run Linter 📑
+        run: docker compose run lint

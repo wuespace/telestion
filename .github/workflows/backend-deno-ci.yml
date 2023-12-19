@@ -1,0 +1,20 @@
+name: Backend Deno CI
+
+on: [ push, pull_request ]
+
+defaults:
+  run:
+    working-directory: ./backend-deno
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v2
+      - name: Run tests 🛃
+        run: docker compose up --abort-on-container-exit
+      - name: Stop containers 🛑
+        if: always()
+        run: docker compose down
