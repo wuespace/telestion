@@ -1,5 +1,10 @@
 # Telestion Frontend Library
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10407142.svg)](https://doi.org/10.5281/zenodo.10407142)
+![npm peer dependency version (scoped)](https://img.shields.io/npm/dependency-version/%40wuespace%2Ftelestion/peer/react)
+![GitHub License](https://img.shields.io/github/license/wuespace/telestion)
+![npm (scoped)](https://img.shields.io/npm/v/%40wuespace/telestion)
+
 This library contains all the components and utilities that are used in the Telestion Frontend.
 
 ## Installation
