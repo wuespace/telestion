@@ -3,6 +3,23 @@ import { isLoggedIn, login, LoginError } from '../../../auth';
 import { TelestionOptions } from '../../model.ts';
 import { wait } from '../../../utils.ts';
 
+let resumeAfterLogin: string | undefined = undefined;
+
+/**
+ * Sets a URL that the login action redirects after the user has logged in.
+ * @param url - the url the login action redirects after the user login
+ */
+export function setResumeAfterLogin(url: string) {
+	resumeAfterLogin = url;
+}
+
+/**
+ * Resets the url the login action redirects after the user has logged in.
+ */
+export function resetResumeAfterLogin() {
+	resumeAfterLogin = undefined;
+}
+
 export function loginLoader({ defaultBackendUrl }: TelestionOptions) {
 	return () => {
 		if (isLoggedIn()) {
@@ -52,7 +69,8 @@ export function loginAction() {
 				login(natsUrl, username, password as string),
 				wait(500)
 			]);
-			return redirect('/');
+			console.log('Resume after login url:', resumeAfterLogin);
+			return redirect(resumeAfterLogin ?? '/');
 		} catch (err) {
 			console.error(err);
 			if (err instanceof LoginError) {
