@@ -13,10 +13,18 @@ import {
 } from '../../../user-data';
 import { isUserDataUpToDate } from '../../../utils.ts';
 import { TelestionOptions } from '../../model.ts';
+import { setResumeAfterLogin } from '../login';
 
 export function dashboardEditorLoader({ version }: TelestionOptions) {
 	return ({ params }: LoaderFunctionArgs) => {
 		if (!isLoggedIn()) {
+			if (params.dashboardId) {
+				setResumeAfterLogin(
+					generatePath('/dashboards/:dashboardId', {
+						dashboardId: params.dashboardId
+					})
+				);
+			}
 			return redirect('/login');
 		}
 

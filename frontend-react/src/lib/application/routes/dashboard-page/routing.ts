@@ -1,5 +1,6 @@
 import {
 	ActionFunctionArgs,
+	generatePath,
 	LoaderFunctionArgs,
 	redirect
 } from 'react-router-dom';
@@ -10,10 +11,18 @@ import { getUserData, setUserData, UserData } from '../../../user-data';
 import { isUserDataUpToDate } from '../../../utils.ts';
 
 import { dashboardCreateAction } from '../dashboard.ts';
+import { setResumeAfterLogin } from '../login';
 
 export function dashboardPageLoader({ version }: TelestionOptions) {
 	return ({ params }: LoaderFunctionArgs) => {
 		if (!isLoggedIn()) {
+			if (params.dashboardId) {
+				setResumeAfterLogin(
+					generatePath('/dashboards/:dashboardId', {
+						dashboardId: params.dashboardId
+					})
+				);
+			}
 			return redirect('/login');
 		}
 
