@@ -95,9 +95,22 @@ export function migrationAction({
 						(entry): entry is [id: string, instance: WidgetInstance] => !!entry
 					);
 
+				const availableWidgetInstances = new Set(
+					newInstances.map(([widgetInstanceId]) => widgetInstanceId)
+				);
+
+				// filter dashboard layouts for no longer existing widgets
+				const newDashboards = Object.entries(oldUserData.dashboards).map(
+					dashboardTuple =>
+						migrateDashboardConfig(dashboardTuple, availableWidgetInstances)
+				);
+
 				setUserData({
 					...oldUserData,
 					version: version,
+					dashboards: {
+						...Object.fromEntries(newDashboards)
+					},
 					widgetInstances: {
 						...Object.fromEntries(newInstances)
 					}
@@ -129,6 +142,44 @@ async function parseUserData(
 	}
 
 	return userDataSchema.parse(JSON.parse(rawUserData));
+}
+
+/**
+ * Accepts a tuple of a dashboard id and the associated dashboard and performs a
+ * dashboard configuration migration by replacing all widget ids that are no
+ * longer registered with a dot (i.e., empty space).
+ * @param id - the id of the dashboard
+ * @param dashboard - the dashboard with the outdated widget ids
+ * @param availableWidgetInstances - a set of all available widget instance ids
+ * @returns a tuple of a dashboard with an up-to-date widget configuration
+ */
+function migrateDashboardConfig(
+	[id, dashboard]: [string, UserData['dashboards'][string]],
+	availableWidgetInstances: Set<string>
+): [string, UserData['dashboards'][string]] {
+	return [
+		id,
+		{
+			...dashboard,
+			layout: dashboard.layout.map(row =>
+				row.map(widgetInstanceId => {
+					if (widgetInstanceId === '.') {
+						return '.';
+					}
+
+					if (!availableWidgetInstances.has(widgetInstanceId)) {
+						console.warn(
+							`Widget with id "${widgetInstanceId}" not found. Replacing with "."`
+						);
+
+						return '.';
+					}
+
+					return widgetInstanceId;
+				})
+			)
+		}
+	];
 }
 
 /**
