@@ -19,6 +19,7 @@ type minimalConfig struct {
 	DataDir     string `mapstructure:"DATA_DIR"`
 }
 
+// Checks if the untyped map contains all required config parameters to successfully start the service.
 func checkMinimalConfig(mapping map[string]any) error {
 	mConf := minimalConfig{}
 
@@ -42,6 +43,7 @@ func checkMinimalConfig(mapping map[string]any) error {
 	return nil
 }
 
+// Parses an untyped map into a service configuration.
 func parseConfig(mapping *map[string]any) (*Config, error) {
 	config := Config{}
 
@@ -66,31 +68,42 @@ func parseConfig(mapping *map[string]any) (*Config, error) {
 	return &config, nil
 }
 
-func assembleConfig() (*Config, error) {
+// Loads and parses the service [Config] from different configuration sources in the following order:
+//
+// 1. `overwriteArgs`
+// 2. command line arguments
+// 3. environment variables
+// 4. default configuration, if `--dev` is passed in the steps from above
+// 5. configuration file, if `CONFIG_FILE` parameter is defined, readable and parsable
+func assembleConfig(overwriteArgs map[string]string) (*Config, error) {
 	config := &map[string]any{}
-	mergeMap(config, consoleArgs())
-	//log.Printf("After console args: %+v", config)
-	mergeMap(config, envs())
-	//log.Printf("After env: %+v", config)
 
+	// add config params from passed service options
+	addMissing(config, &overwriteArgs)
+	// add config params from command line arguments
+	addMissing(config, cliConfig())
+	// add config params from environment variables
+	addMissing(config, envConfig())
+
+	// add default config if "dev" configuration is defined
 	if dev, ok := (*config)["DEV"].(bool); ok && dev {
 		dc, err := defaultConfig()
 		if err != nil {
 			return nil, err
 		}
-		mergeMap(config, dc)
+		addMissing(config, dc)
 	}
-	//log.Printf("After default config: %+v", config)
 
+	// add config file parameters if "CONFIG_FILE" is defined and readable
 	if configPath, ok := (*config)["CONFIG_FILE"].(string); ok && len(configPath) != 0 {
 		fc, err := fileConfig(configPath)
 		if err != nil {
 			return nil, err
 		}
-		mergeMap(config, fc)
+		addMissing(config, fc)
 	}
-	//log.Printf("After file config: %+v", config)
 
+	// verify if configuration is valid
 	if err := checkMinimalConfig(*config); err != nil {
 		return nil, err
 	}
@@ -98,15 +111,17 @@ func assembleConfig() (*Config, error) {
 	return parseConfig(config)
 }
 
-func mergeMap[V any | string](config *map[string]any, updates *map[string]V) {
+// Adds entries from updates to mapping that don't exist in mapping.
+func addMissing[V any | string](mapping *map[string]any, updates *map[string]V) {
 	for k, v := range *updates {
-		if _, contained := (*config)[k]; !contained {
-			(*config)[k] = v
+		if _, contained := (*mapping)[k]; !contained {
+			(*mapping)[k] = v
 		}
 	}
 }
 
-func consoleArgs() *map[string]any {
+// Parses the console arguments and returns a map that holds the configuration parameters.
+func cliConfig() *map[string]any {
 	// setup flags
 	var (
 		devFlag bool
@@ -182,7 +197,8 @@ func isFlagPassed(name string) bool {
 	return passed
 }
 
-func envs() *map[string]string {
+// Read the environment variables and provides them as map ready to be included in the service config.
+func envConfig() *map[string]string {
 	result := make(map[string]string, len(os.Environ()))
 	for _, entry := range os.Environ() {
 		if key, value, ok := strings.Cut(entry, "="); ok {
@@ -193,6 +209,8 @@ func envs() *map[string]string {
 	return &result
 }
 
+// Tries to read the configuration file and returns the content as untyped map.
+// Fails, if the config file is not readable or if the content is not JSON parsable.
 func fileConfig(configPath string) (*map[string]any, error) {
 	// Note that the file config is supposed to be a json config
 	jsonConfig := map[string]any{}
@@ -211,6 +229,8 @@ func fileConfig(configPath string) (*map[string]any, error) {
 	return &jsonConfig, nil
 }
 
+// Returns the default configuration for development purposes.
+// Fails, if the process is not allowed to determine the current working directory.
 func defaultConfig() (*map[string]string, error) {
 	dataDir, err := filepath.Abs("data")
 	if err != nil {

@@ -14,7 +14,7 @@ const (
 
 func main() {
 	log.Println("Setup service")
-	service, err := telestion.StartService(telestion.Options{Nats: true})
+	service, err := telestion.StartService()
 	if err != nil {
 		log.Fatal(err)
 	}
