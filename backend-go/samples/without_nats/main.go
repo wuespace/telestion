@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
+    // Run without establishing a NATS connection. Especially useful during development
 	service, err := telestion.StartService(telestion.WithoutNats())
 	if err != nil {
 		log.Fatal(err)

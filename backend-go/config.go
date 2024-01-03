@@ -47,6 +47,7 @@ func checkMinimalConfig(mapping map[string]any) error {
 
 // Parses an untyped map into a service configuration.
 func parseConfig(mapping *map[string]any) (*Config, error) {
+    // gets populated by the mapstructure decoder
 	config := Config{}
 
 	decoderConfig := &mapstructure.DecoderConfig{

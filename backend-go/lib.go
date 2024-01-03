@@ -13,22 +13,22 @@ import (
 // The parsed configuration returned from the startService function for further usage.
 type Config struct {
 
-	// Dev adds minimal required configuration parameters to the configuration object.
+	// Dev if enabled, adds minimal required configuration parameters to the configuration object.
 	Dev bool `mapstructure:"DEV"`
 
 	// NatsUrl describes the url that NATS uses to connect to the NATS server.
 	NatsUrl string `mapstructure:"NATS_URL"`
 
 	// NatsUser is the username that the NATS client uses to log in on the NATS server.
-	// This property can be undefined if no configuration source provided this parameter.
+	// This property can be undefined (empty) if no configuration source provided this parameter.
 	NatsUser string `mapstructure:"NATS_USER"`
 
 	// NatsPassword is the password that the NATS client uses to log in on the NATS server.
-	// This property can be undefined if no configuration source provided this parameter.
+	// This property can be undefined (empty) if no configuration source provided this parameter.
 	NatsPassword string `mapstructure:"NATS_PASSWORD"`
 
-	// ConfigFile contains the path to the configuration file that [StartService] read during startup.
-	// This property can be undefined if no configuration source provided this parameter.
+	// ConfigFile contains the path to the configuration file that [StartService] reads during startup.
+	// This property can be undefined (empty) if no configuration source provided this parameter.
 	ConfigFile string `mapstructure:"CONFIG_FILE"`
 
 	// ConfigKey describes a key in config file's root object that configures this service.
@@ -36,7 +36,8 @@ type Config struct {
 	ConfigKey string `mapstructure:"CONFIG_KEY"`
 
 	// ServiceName contains the name of the service.
-	// This is used to create a unique queue group for the service.
+	// This is used to create a unique queue group for the service and support running multiple 
+    // parallel instances.
 	ServiceName string `mapstructure:"SERVICE_NAME"`
 
 	// DataDir is the path to the data directory.
@@ -60,17 +61,19 @@ type Options struct {
 	// Nats instructs [StartService] whether a NATS connection should be initialized.
 	Nats bool
 
-	// OverwriteArgs provide additional configuration parameters
+	// OverwriteArgs provides additional configuration parameters
 	// that have precedence over any other configuration source.
 	OverwriteArgs map[string]string
 
 	// CustomNc is a NATS connection that is externally managed and passed to [StartService] during startup.
 	// If `CustomNc != nil` [StartService] does not create another NATS connection
 	// and uses the provided connection instead.
+    // Used for testing.
 	CustomNc *nats.Conn
 
 	// CustomNcJson is an abstraction of [Options.CustomNc].
 	// It provides automatic JSON marshaling and unmarshalling of NATS message bodies.
+    // Used for testing.
 	CustomNcJson *nats.EncodedConn
 }
 
@@ -143,7 +146,7 @@ type Service struct {
 // StartService starts a new Telestion service and returns the available APIs.
 // Additional options passed are applied in the order in they appear and modify the startup procedure.
 //
-// During startup the service parses the service [Config] from different configuration sources in the following order:
+// During startup the service parses the service [Config] from different configuration sources with the following priorities:
 //
 //  1. `overwriteArgs` from [WithOverwriteArgs]
 //  2. command line arguments
@@ -206,7 +209,7 @@ func StartService(opts ...Option) (*Service, error) {
 	}, nil
 }
 
-// Drain tries to drain both NATS connection of the service.
+// Drain tries to drain any NATS connections of the service.
 func (service *Service) Drain() (errNcJson error, errNc error) {
 	if service.NcJson != nil {
 		errNcJson = service.NcJson.Drain()
@@ -218,7 +221,7 @@ func (service *Service) Drain() (errNcJson error, errNc error) {
 	return
 }
 
-// Close closes both NATS connections of the service.
+// Close closes any NATS connections of the service.
 func (service *Service) Close() {
 	if service.NcJson != nil {
 		service.NcJson.Close()

@@ -16,7 +16,7 @@ func initializeNats(config *Config, customNc *nats.Conn, customNcJson *nats.Enco
 
 	if customNc != nil {
 		if customNcJson == nil {
-			return nil, nil, errors.New("custom encoded nats connection is not defined but custom nats connection is (nc != nil && ncJson == nil)")
+			return nil, nil, errors.New("customNcJson is not defined but required if a customNc gets used (nc != nil && ncJson == nil)")
 		}
 
 		nc = customNc
