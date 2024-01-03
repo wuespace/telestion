@@ -37,7 +37,9 @@ func checkMinimalConfig(mapping map[string]any) error {
 
 	if err := decoder.Decode(mapping); err != nil {
 		// Minimal config could not be inferred from given map!
-		return err
+		return fmt.Errorf("missing parameters in configuration. "+
+			"The following parameters are required: NATS_URL, SERVICE_NAME, DATA_DIR. "+
+			"Consider using --dev during development. Original error message: %s", err.Error())
 	}
 
 	return nil
@@ -87,6 +89,7 @@ func assembleConfig(overwriteArgs map[string]string) (*Config, error) {
 
 	// add default config if "dev" configuration is defined
 	if dev, ok := (*config)["DEV"].(bool); ok && dev {
+		fmt.Println("Running in development mode. Using default values for missing environment variables.")
 		dc, err := defaultConfig()
 		if err != nil {
 			return nil, err
