@@ -4,40 +4,38 @@ import (
 	"github.com/nats-io/nats.go"
 	"github.com/wuespace/telestion/backend-go"
 	"log"
-	"os"
-	"os/signal"
 )
 
 const (
-	Subject = "publish_fast"
+	// MonitoredSubject is the message bus subject the subscriber listens for new messages.
+	MonitoredSubject = "sample_data"
 )
 
 func main() {
-	log.Println("Setup service")
+	// start a new Telestion service
 	service, err := telestion.StartService()
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println("Service started")
 
-	log.Println("Subscribing to subject...")
 	counter := 0
-	_, err = service.Nc.Subscribe(Subject, func(msg *nats.Msg) {
+	// subscribe to message bus subject
+	_, err = service.Nc.Subscribe(MonitoredSubject, func(msg *nats.Msg) {
 		counter++
-		//log.Printf("Counter: %d", counter)
-		//log.Printf("%s\n", string(msg.Data))
+		log.Printf("Counter: %d", counter)
+		log.Printf("%s\n", string(msg.Data))
 	})
 	if err != nil {
 		log.Println(err)
 	}
 
 	log.Println("Waiting for incoming messages...")
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
-	<-c
+	telestion.WaitForInterrupt()
 
-	log.Println("Draining...")
+	// drain remaining messages and close connection
 	if err1, err2 := service.Drain(); err1 != nil || err2 != nil {
 		log.Println(err1, err2)
 	}
-	log.Println("Exit process")
+	log.Println("Service stopped")
 }

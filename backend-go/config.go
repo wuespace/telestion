@@ -20,7 +20,7 @@ type minimalConfig struct {
 }
 
 // Checks if the untyped map contains all required config parameters to successfully start the service.
-func checkMinimalConfig(mapping map[string]any) error {
+func assertContainsMinimalConfig(mapping map[string]any) error {
 	mConf := minimalConfig{}
 
 	decoderConfig := &mapstructure.DecoderConfig{
@@ -47,7 +47,7 @@ func checkMinimalConfig(mapping map[string]any) error {
 
 // Parses an untyped map into a service configuration.
 func parseConfig(mapping *map[string]any) (*Config, error) {
-    // gets populated by the mapstructure decoder
+	// gets populated by the mapstructure decoder
 	config := Config{}
 
 	decoderConfig := &mapstructure.DecoderConfig{
@@ -82,20 +82,20 @@ func assembleConfig(overwriteArgs map[string]string) (*Config, error) {
 	config := &map[string]any{}
 
 	// add config params from passed service options
-	addMissing(config, &overwriteArgs)
+	updateWith(config, &overwriteArgs)
 	// add config params from command line arguments
-	addMissing(config, cliConfig())
+	updateWith(config, cliConfig())
 	// add config params from environment variables
-	addMissing(config, envConfig())
+	updateWith(config, envConfig())
 
 	// add default config if "dev" configuration is defined
 	if dev, ok := (*config)["DEV"].(bool); ok && dev {
 		fmt.Println("Running in development mode. Using default values for missing environment variables.")
-		dc, err := defaultConfig()
+		dc, err := devModeDefaultConfig()
 		if err != nil {
 			return nil, err
 		}
-		addMissing(config, dc)
+		updateWith(config, dc)
 	}
 
 	// add config file parameters if "CONFIG_FILE" is defined and readable
@@ -104,22 +104,22 @@ func assembleConfig(overwriteArgs map[string]string) (*Config, error) {
 		if err != nil {
 			return nil, err
 		}
-		addMissing(config, fc)
+		updateWith(config, fc)
 	}
 
 	// verify if configuration is valid
-	if err := checkMinimalConfig(*config); err != nil {
+	if err := assertContainsMinimalConfig(*config); err != nil {
 		return nil, err
 	}
 
 	return parseConfig(config)
 }
 
-// Adds entries from updates to mapping that don't exist in mapping.
-func addMissing[V any | string](mapping *map[string]any, updates *map[string]V) {
+// Adds entries from updates to base that don't exist in base.
+func updateWith[V any | string](base *map[string]any, updates *map[string]V) {
 	for k, v := range *updates {
-		if _, contained := (*mapping)[k]; !contained {
-			(*mapping)[k] = v
+		if _, contained := (*base)[k]; !contained {
+			(*base)[k] = v
 		}
 	}
 }
@@ -162,15 +162,9 @@ func cliConfig() *map[string]any {
 	}
 	flag.Parse()
 
-	// additional arguments that can be used by other parts of the service (although they should register flags
-	// themselves before calling the initialize method if possible! -> makes parsing a lot easier + only one behaviour
-	// can be mimicked by multiple non-flag arguments)
-	otherArgs := flag.Args()
-
 	// prepare output map
 	parsedArgs := map[string]any{
-		"NON_FLAG_ARGS": otherArgs,
-		"DEV":           devFlag,
+		"DEV": devFlag,
 	}
 
 	// only populate parsedArgs with entries that were, indeed, given (dev is an exception)
@@ -235,7 +229,7 @@ func fileConfig(configPath string) (*map[string]any, error) {
 
 // Returns the default configuration for development purposes.
 // Fails, if the process is not allowed to determine the current working directory.
-func defaultConfig() (*map[string]string, error) {
+func devModeDefaultConfig() (*map[string]string, error) {
 	dataDir, err := filepath.Abs("data")
 	if err != nil {
 		return nil, err

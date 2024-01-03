@@ -36,8 +36,8 @@ type Config struct {
 	ConfigKey string `mapstructure:"CONFIG_KEY"`
 
 	// ServiceName contains the name of the service.
-	// This is used to create a unique queue group for the service and support running multiple 
-    // parallel instances.
+	// This is used to create a unique queue group for the service and support running multiple
+	// parallel instances.
 	ServiceName string `mapstructure:"SERVICE_NAME"`
 
 	// DataDir is the path to the data directory.
@@ -46,9 +46,6 @@ type Config struct {
 	// To ensure that the service doesn't overwrite data from other services,
 	// you should create a subdirectory for your service.
 	DataDir string `mapstructure:"DATA_DIR"`
-
-	// NonFlagArgs contain additional command line arguments that are passed after all flags.
-	NonFlagArgs []string `mapstructure:"NON_FLAG_ARGS"`
 
 	// CustomConfig contains unparsed configuration from all configuration sources.
 	// To use these configuration parameter you need to type cast these to a suitable type.
@@ -68,12 +65,12 @@ type Options struct {
 	// CustomNc is a NATS connection that is externally managed and passed to [StartService] during startup.
 	// If `CustomNc != nil` [StartService] does not create another NATS connection
 	// and uses the provided connection instead.
-    // Used for testing.
+	// Used for testing.
 	CustomNc *nats.Conn
 
 	// CustomNcJson is an abstraction of [Options.CustomNc].
 	// It provides automatic JSON marshaling and unmarshalling of NATS message bodies.
-    // Used for testing.
+	// Used for testing.
 	CustomNcJson *nats.EncodedConn
 }
 
