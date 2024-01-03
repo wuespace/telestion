@@ -1,4 +1,4 @@
-module github.com/wuespace/telestion/backend
+module github.com/wuespace/telestion/backend-go
 
 go 1.21.4
 

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/wuespace/telestion/backend"
+	"github.com/wuespace/telestion/backend-go"
 	"log"
 	"time"
 )

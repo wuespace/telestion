@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/nats-io/nats.go"
-	"github.com/wuespace/telestion/backend"
+	"github.com/wuespace/telestion/backend-go"
 	"log"
 	"os"
 	"os/signal"

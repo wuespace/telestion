@@ -2,7 +2,7 @@ package telestion_test
 
 import (
 	"github.com/nats-io/nats.go"
-	"github.com/wuespace/telestion/backend"
+	"github.com/wuespace/telestion/backend-go"
 )
 
 // The WaitForInterrupt function waits for an external interrupt

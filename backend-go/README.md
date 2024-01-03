@@ -11,7 +11,7 @@ This library provides a framework for building Telestion services in Go.
 Install the library via `go get`:
 
 ```shell
-go get -u github.com/wuespace/telestion/backend@latest
+go get -u github.com/wuespace/telestion/backend-go@latest
 ```
 
 ## Basic Usage
@@ -20,7 +20,7 @@ go get -u github.com/wuespace/telestion/backend@latest
 package main
 
 import (
-	"github.com/wuespace/telestion/backend"
+	"github.com/wuespace/telestion/backend-go"
 	"log"
 )
 
