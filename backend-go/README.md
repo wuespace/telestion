@@ -2,7 +2,6 @@
 
 [![DOI: 10.5281/zenodo.10407142](https://zenodo.org/badge/DOI/10.5281/zenodo.10407142.svg)](https://doi.org/10.5281/zenodo.10407142)
 ![GitHub License: MIT](https://img.shields.io/github/license/wuespace/telestion)
-[![Go Reference](https://pkg.go.dev/badge/github.com/wuespace/telestion/backend.svg)](https://pkg.go.dev/github.com/wuespace/telestion/backend)
 
 This library provides a framework for building Telestion services in Go.
 
