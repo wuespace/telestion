@@ -15,3 +15,5 @@ services:
       - nats
     env_file:
       - .common.env
+    environment:
+      - SERVICE_NAME=logger
