@@ -22,6 +22,7 @@ jobs:
         uses: actions/setup-go@v5.0.0
         with:
           go-version: ${{ env.go }}
+          cache-dependency-path: backend-go/go.sum
       - name: Install dependencies 📚
         run: go get .
       - name: Check code style 🧽
@@ -38,6 +39,7 @@ jobs:
         uses: actions/setup-go@v5.0.0
         with:
           go-version: ${{ env.go }}
+          cache-dependency-path: backend-go/go.sum
       - name: Install dependencies 📚
         run: go get .
       - name: Build library 📦
@@ -52,6 +54,7 @@ jobs:
         uses: actions/setup-go@v5.0.0
         with:
           go-version: ${{ env.go }}
+          cache-dependency-path: backend-go/go.sum
       - name: Install dependencies 📚
         run: go get .
       - name: Run unit tests 🛃
