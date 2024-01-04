@@ -128,32 +128,29 @@ func updateWith[V any | string](base *map[string]any, updates *map[string]V) {
 func cliConfig() *map[string]any {
 	// setup flags
 	var (
-		devFlag bool
-
-		natsUrlFlag  string
-		natsUserFlag string
-		natsPwdFlag  string
-
-		configFileFlag string
-		configKeyFlag  string
-
-		serviceNameFlag string
-		dataDirFlag     string
+		dev          bool
+		natsUrl      string
+		natsUser     string
+		natsPassword string
+		configFile   string
+		configKey    string
+		serviceName  string
+		dataDir      string
 	)
 
-	flag.BoolVar(&devFlag, "dev", false, "If set, program will start in development mode")
+	flag.BoolVar(&dev, "dev", false, "If set, program will start in development mode")
 
-	flag.StringVar(&natsUrlFlag, "NATS_URL", "", "NATS url of the server the service can connect to")
-	flag.StringVar(&natsUserFlag, "NATS_USER", "", "NATS user name for the authentication with the server")
-	flag.StringVar(&natsPwdFlag, "NATS_PASSWORD", "", "NATS password for the authentication with the server "+
+	flag.StringVar(&natsUrl, "NATS_URL", "", "NATS url of the server the service can connect to")
+	flag.StringVar(&natsUser, "NATS_USER", "", "NATS user name for the authentication with the server")
+	flag.StringVar(&natsPassword, "NATS_PASSWORD", "", "NATS password for the authentication with the server "+
 		"(Note: It is recommended to set this via the environment variables or the config!)")
 
-	flag.StringVar(&configFileFlag, "CONFIG_FILE", "", "file path to the config of the service")
-	flag.StringVar(&configKeyFlag, "CONFIG_KEY", "", "object key of a config file")
+	flag.StringVar(&configFile, "CONFIG_FILE", "", "file path to the config of the service")
+	flag.StringVar(&configKey, "CONFIG_KEY", "", "object key of a config file")
 
-	flag.StringVar(&serviceNameFlag, "SERVICE_NAME", "", "name of the service also used in the nats service "+
+	flag.StringVar(&serviceName, "SERVICE_NAME", "", "name of the service also used in the nats service "+
 		"registration")
-	flag.StringVar(&dataDirFlag, "DATA_DIR", "", "path where the service can store persistent data")
+	flag.StringVar(&dataDir, "DATA_DIR", "", "path where the service can store persistent data")
 
 	// we don't really like the default message of the flag package
 	flag.Usage = func() {
@@ -162,37 +159,29 @@ func cliConfig() *map[string]any {
 	}
 	flag.Parse()
 
+	flagValues := map[string]any{
+		"NATS_URL":      natsUrl,
+		"NATS_USER":     natsUser,
+		"NATS_PASSWORD": natsPassword,
+		"CONFIG_FILE":   configFile,
+		"CONFIG_KEY":    configKey,
+		"SERVICE_NAME":  serviceName,
+		"DATA_DIR":      dataDir,
+	}
+
 	// prepare output map
 	parsedArgs := map[string]any{
-		"DEV": devFlag,
+		"DEV": dev,
 	}
 
 	// only populate parsedArgs with entries that were, indeed, given (dev is an exception)
-	for k, v := range map[string]any{
-		"NATS_URL":      natsUrlFlag,
-		"NATS_USER":     natsUserFlag,
-		"NATS_PASSWORD": natsPwdFlag,
-		"CONFIG_FILE":   configFileFlag,
-		"CONFIG_KEY":    configKeyFlag,
-		"SERVICE_NAME":  serviceNameFlag,
-		"DATA_DIR":      dataDirFlag,
-	} {
-		if isFlagPassed(k) {
-			parsedArgs[k] = v
-		}
-	}
-
-	return &parsedArgs
-}
-
-func isFlagPassed(name string) bool {
-	passed := false
-	flag.Visit(func(f *flag.Flag) {
-		if f.Name == name {
-			passed = true
+	flag.Visit(func(currentFlag *flag.Flag) {
+		if value, ok := flagValues[currentFlag.Name]; ok {
+			parsedArgs[currentFlag.Name] = value
 		}
 	})
-	return passed
+
+	return &parsedArgs
 }
 
 // Read the environment variables and provides them as map ready to be included in the service config.
