@@ -1,11 +1,7 @@
 name: Backend Go CI
 
 # Events that trigger this workflow
-on: [push, pull_request]
-
-# Defines which tool versions should be used in all workflow jobs
-env:
-  go: "1.21"
+on: [ push, pull_request ]
 
 defaults:
   run:
@@ -18,44 +14,20 @@ jobs:
     steps:
       - name: Checkout 📥
         uses: actions/checkout@v3.6.0
-      - name: Setup Go 💿
-        uses: actions/setup-go@v5.0.0
-        with:
-          go-version: ${{ env.go }}
-          cache-dependency-path: backend-go/go.sum
-      - name: Install dependencies 📚
-        run: go get .
-      - name: Check code style 🧽
-        shell: bash
-        run: |
-          test "$(gofmt -e -l . | wc -l)" -eq 0
-  build:
-    name: Build
+      - name: Check style 🧽
+        run: docker compose --file docker-compose.ci.yml --profile style up --abort-on-container-exit
+      - name: Stop containers 🛑
+        if: always()
+        run: docker compose --file docker-compose.ci.yml --profile style down
+
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 📥
         uses: actions/checkout@v3.6.0
-      - name: Setup Go 💿
-        uses: actions/setup-go@v5.0.0
-        with:
-          go-version: ${{ env.go }}
-          cache-dependency-path: backend-go/go.sum
-      - name: Install dependencies 📚
-        run: go get .
-      - name: Build library 📦
-        run: go build -v ./...
-  unit-test:
-    name: Unit Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout 📥
-        uses: actions/checkout@v3.6.0
-      - name: Setup Go 💿
-        uses: actions/setup-go@v5.0.0
-        with:
-          go-version: ${{ env.go }}
-          cache-dependency-path: backend-go/go.sum
-      - name: Install dependencies 📚
-        run: go get .
-      - name: Run unit tests 🛃
-        run: go test
+      - name: Run tests 🛃
+        run: docker compose --file docker-compose.ci.yml --profile test up --abort-on-container-exit
+      - name: Stop containers 🛑
+        if: always()
+        run: docker compose --file docker-compose.ci.yml --profile test down
