@@ -1,0 +1,17 @@
+services:
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    # volumes:
+      # - ./nats.conf:/etc/nats.conf
+  logger:
+    build:
+      context: ../
+      dockerfile: samples/Dockerfile
+    command: ["logger/mod.ts"]
+    depends_on:
+      - nats
+    env_file:
+      - .common.env
