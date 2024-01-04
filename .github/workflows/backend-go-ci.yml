@@ -1,0 +1,58 @@
+name: Backend Go CI
+
+# Events that trigger this workflow
+on: [push, pull_request]
+
+# Defines which tool versions should be used in all workflow jobs
+env:
+  go: "1.21"
+
+defaults:
+  run:
+    working-directory: ./backend-go
+
+jobs:
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+      - name: Setup Go 💿
+        uses: actions/setup-go@v5.0.0
+        with:
+          go-version: ${{ env.go }}
+      - name: Install dependencies 📚
+        run: go get .
+      - name: Check code style 🧽
+        shell: bash
+        run: |
+          test "$(gofmt -e -l . | wc -l)" -eq 0
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+      - name: Setup Go 💿
+        uses: actions/setup-go@v5.0.0
+        with:
+          go-version: ${{ env.go }}
+      - name: Install dependencies 📚
+        run: go get .
+      - name: Build library 📦
+        run: go build -v ./...
+  unit-test:
+    name: Unit Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+      - name: Setup Go 💿
+        uses: actions/setup-go@v5.0.0
+        with:
+          go-version: ${{ env.go }}
+      - name: Install dependencies 📚
+        run: go get .
+      - name: Run unit tests 🛃
+        run: go test
