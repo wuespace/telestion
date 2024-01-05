@@ -43,6 +43,20 @@ services:
     environment:
       - SERVICE_NAME=sample-publisher
       - DATA_SUBJECT=data.sample
+  forward-to-logger:
+    build:
+      context: ../
+      dockerfile: samples/Dockerfile
+    command: ["requester/mod.ts"]
+    depends_on:
+      - nats
+    env_file:
+      - .common.env
+    environment:
+      - SERVICE_NAME=forward-to-logger
+      - REQUEST_SUBJECT=latest.data.sample
+      - FREQUENCY=3000
+      - OUTPUT_SUBJECT=log.sample-data
   logger:
     build:
       context: ../
