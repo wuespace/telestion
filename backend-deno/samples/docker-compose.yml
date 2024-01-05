@@ -18,6 +18,18 @@ services:
     environment:
       - SERVICE_NAME=config
       - MY_STRING=Hello World that gets overwritten
+  sample-publisher:
+    build:
+      context: ../
+      dockerfile: samples/Dockerfile
+    command: ["publisher/mod.ts"]
+    depends_on:
+      - nats
+    env_file:
+      - .common.env
+    environment:
+      - SERVICE_NAME=sample-publisher
+      - DATA_SUBJECT=data.sample
   logger:
     build:
       context: ../
