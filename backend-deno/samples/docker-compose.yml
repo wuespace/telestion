@@ -6,6 +6,18 @@ services:
       - "8222:8222"
     # volumes:
       # - ./nats.conf:/etc/nats.conf
+  config:
+    build:
+      context: ../
+      dockerfile: samples/Dockerfile
+    command: ["config/mod.ts", "--MY_STRING", "Overwritten Hello World"]
+    depends_on:
+      - nats
+    env_file:
+      - .common.env
+    environment:
+      - SERVICE_NAME=config
+      - MY_STRING=Hello World that gets overwritten
   logger:
     build:
       context: ../
