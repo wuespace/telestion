@@ -18,6 +18,19 @@ services:
     environment:
       - SERVICE_NAME=config
       - MY_STRING=Hello World that gets overwritten
+  latest-value-cache:
+    build:
+      context: ../
+      dockerfile: samples/Dockerfile
+    command: ["latest-value-cache/mod.ts"]
+    depends_on:
+      - nats
+    env_file:
+      - .common.env
+    environment:
+      - SERVICE_NAME=latest-value-cache
+      - DATA_SUBJECT=data.>
+      - REQUEST_SUBJECT=latest.data.>
   sample-publisher:
     build:
       context: ../
