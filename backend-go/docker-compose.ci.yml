@@ -1,0 +1,24 @@
+##
+## docker-compose configuration for GitHub Actions
+##
+
+services:
+  style:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      sh -c 'gofmt -e -l . && test "$(gofmt -e -l . | wc -l)" -eq 0'
+    volumes:
+      - .:/app
+    profiles: [ 'style' ]
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: [ 'go', 'test' ]
+    volumes:
+      - .:/app
+      - ../backend-features:/backend-features
+    profiles: [ 'test' ]
