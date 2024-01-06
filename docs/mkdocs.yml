@@ -51,6 +51,7 @@ extra_javascript:
   - _js/mermaid-js/mermaid.min.js
 
 markdown_extensions:
+  - abbr
   - smarty
   - toc:
       permalink: true
