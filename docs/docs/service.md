@@ -2,7 +2,7 @@
 
 Services are small, self-contained, and (ideally) stateless applications that can be deployed and scaled independently. They're designed to be used in conjunction with other services and are often packaged together to form a larger application.
 
-**In less abstract terms,** a service is a single application that is part of the Telestion application. It is a single application that is responsible for a single task. For example, the project template contains the following services by default:
+**In less abstract terms,** a service is a single application that is part of the bigger Telestion application. It is a single application that is responsible for a single task. For example, the project template contains the following services by default:
 
 * Frontend: A web application that is responsible for displaying the user interface
 * Database Service: A service that is responsible for storing data
