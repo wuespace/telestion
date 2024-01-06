@@ -16,6 +16,7 @@ theme:
   name: material
   font: false
   custom_dir: overrides
+  favicon: _theme_img/favicon.png
   palette:
     - schema: default
       primary: custom
