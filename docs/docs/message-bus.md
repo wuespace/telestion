@@ -1,10 +1,10 @@
 # Message Bus
 
-The message bus is a simple, lightweight, and fast way to send messages between different parts (_services_) of your application. It's a simple publish/subscribe system that allows you to send messages to a specific subject and have any listeners on that subject receive the message.
+The message bus is a simple, lightweight, and fast way to send messages between different parts (_services_) of your application. It's a publish/subscribe system that allows you to send messages to a specific subject and have any listeners on that subject receive the message.
 
 ## Messages
 
-Messages are the way that data is sent between services. In the Telestion ecosystem, messages are either JSON or binary data.
+Messages are the way that data is sent between services. In the Telestion ecosystem. Messages are either [JSON](https://www.json.org/json-en.html) or binary data.
 
 ## Subjects
 
@@ -70,11 +70,9 @@ sequenceDiagram
 
 ## NATS
 
-The message bus is built on top of the [NATS](https://nats.io/) messaging system. This means that it is fast, lightweight, and reliable.
-
+We use [NATS](https://nats.io/) as our message bus.
 While all other [services](service.md) can be replaced, the message bus is a core component of Telestion. It is the backbone of the entire system.
 
 ### Authentication and Authorization
 
-NATS also handles everything related to authentication and authorization for the message bus. This means that you can easily control who can send and receive messages on which subjects.
-
+NATS also handles everything related to authentication and authorization for the message bus. You can easily control who can send and receive messages on which subjects.
