@@ -26,28 +26,19 @@ NATS can be configured using a configuration file. To run NATS with a configurat
 nats-server -c <path-to-config-file>
 ```
 
-### Adding users
+As a starting point, you can use the following configuration to enable everything you need while developing:
 
-!!! info
-    This guide will focus on getting you started. We'll look deeper into NATS permissions in the [NATS configuration guide](../nats/index.md).
+```json title="nats.conf"
+http_port: 8222
 
-In your NATS configuration file, add the following section:
-
-```json
-authorization {
-  default_permissions = {
-    publish = []
-    subscribe = ["__telestion__.>"]
-  }
-  SERVICE = {
-    publish = ["altitude", "log.>"]
-    subscribe = ["altitude", "__telestion__.health"]
-    allow_responses = true
-  }
-  users = [
-    {user: service,  password: service, permissions: $SERVICE}
-  ]
+websocket: {
+     port: 9222
+     no_tls: true
 }
 ```
 
-This will create a user called `service` with the password `service`. This user will be able to publish to the `altitude` subject and subscribe to the `__telestion__.health` subject.
+This will create a user called `nats` with the password `nats`. It will also enable the HTTP and WebSocket interfaces.
+
+Note that for production deployments, you need to configure NATS to use TLS and set up proper authentication. You can learn more about configuring NATS in the [NATS configuration guide](../nats/index.md).
+
+[Learn more about NATS configuration](../nats/index.md){ .md-button }
