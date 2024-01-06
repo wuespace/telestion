@@ -51,5 +51,3 @@ authorization {
 ```
 
 This will create a user called `service` with the password `service`. This user will be able to publish to the `altitude` subject and subscribe to the `__telestion__.health` subject.
-
-
