@@ -34,7 +34,3 @@ A web server is server software, or hardware dedicated to running said software,
 	Telestion uses NATS as a message broker. It's required for the communication between the Telestion services (both backend and frontend).
 
 NATS is a simple, secure and high-performance open source messaging system for cloud native applications, IoT messaging, and microservice architectures.
-
-
-
-
