@@ -38,7 +38,7 @@ State is the way to store data inside a component. It is mutable and can be chan
 You can initialize and use state using the `useState()` hook like this:
 
 ```typescript
-const [counter, setCounter] = useCounter(0); // initialize with 0
+const [counter, setCounter] = useState(0); // initialize with 0
 setCounter(counter + 1); // increase counter by 1
 ```
 
