@@ -7,9 +7,46 @@
 
 This document describes the various concepts you need to know when building components for the Telestion frontend.
 
+## Overview
+
+You can find the most important concepts of the Telestion frontend as well as how they relate to each other in the following diagram:
+
+  ```mermaid
+  graph BT
+    frontend[Telestion Frontend] -->|is written in|react[React]
+    react -->|uses the programming language|ts[TypeScript]
+    user[User] -->|uses|frontend
+    subgraph frontend[Telestion Frontend]
+      dashboard[Dashboard]
+      widgetInstance[Widget Instances]
+      widget[Widgets]
+    end
+    dashboard[Dashboard] -->|is a layout of|widgetInstance[Widget Instances]
+    widget -->|defines the look and behavior of|widgetInstance[Widget Instances]
+    click widgetInstance "#widget-instances" "Widget Instance"
+    click widget "#widget" "Widget"
+    click dashboard "#dashboard" "Dashboard"
+    click react "#react" "React"
+    click ts "#typescript" "TypeScript"
+  ```
+
+You can click on the elements in the diagram to learn more about them.
+
 ## Frontend
 
 The Telestion frontend is the part of Telestion that is visible to the user. It is built with React and TypeScript. It is responsible for displaying data from the backend and for sending commands to the backend.
+
+## Dashboard
+
+A dashboard is a layout of [widget instances](#widget-instances) with a specific configuration, created by the user. They are the main part of the Telestion frontend.
+
+## Widget Instances
+
+A widget instance is an instance of a widget with a specific configuration. They are the building blocks of [dashboards](#dashboard).
+
+## Widget
+
+A widget is the type of a widget instance. It contains the code that defines how the widget instance looks like and how it behaves.
 
 ## HTML/CSS/JavaScript
 

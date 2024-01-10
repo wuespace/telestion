@@ -25,8 +25,6 @@ This documentation is about developing a Ground Station software using Telestion
 * [TypeScript](https://www.typescriptlang.org/) -- The programming language used for most components by Telestion
 * [Deno](https://deno.land/) -- The runtime used by Telestion for TypeScript and JavaScript based services
 * [React](https://reactjs.org/) -- The frontend framework used by Telestion
-* [React Spectrum](https://react-spectrum.adobe.com/react-spectrum/index.html) -- The UI library used by Telestion
-
 
 ## Discord
 

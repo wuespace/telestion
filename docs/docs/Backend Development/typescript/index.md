@@ -86,3 +86,7 @@ deno run --allow-all service.ts --dev
 Now that you have a basic service running, you should have a look at how to make your service configurable.
 
 [Read more about configuration](configuration.md){ .md-button }
+
+If you prefer to learn by example, you can also have a look at the [samples](samples.md).
+
+[Browse samples on GitHub](https://github.com/wuespace/telestion/tree/main/backend-deno/samples){ .md-button }

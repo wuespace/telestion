@@ -13,11 +13,6 @@
 
 ## Configuration Sources
 
-!!! warning
-    This section is specific to TypeScript services. Only the environment variables are standardized and must be implemented for all Telestion services.
-
-    While services in other languages can use the same configuration sources, they aren't required to do so.
-
 Services can be configured using the following sources:
 
 - Environment variables
@@ -29,7 +24,6 @@ All these sources get combined into a single configuration object. If a configur
 1. Command line arguments
 2. Environment variables
 3. Configuration file
-
 
 ### Environment Variables
 
@@ -82,8 +76,8 @@ Configuration sources and their order of precedence.
 Some configuration values are required for all services. These values are:
 
 * `NATS_URL`: The URL of the NATS server to connect to.
-* `NATS_USER`: The username to use when connecting to NATS.
-* `NATS_PASSWORD`: The password to use when connecting to NATS.
+* `NATS_USER` (if the NATS server requires authentication): The username to use when connecting to NATS.
+* `NATS_PASSWORD` (if the NATS user requires authentication): The password to use when connecting to NATS.
 * `SERVICE_NAME`: The name of the service. This is used to identify the service in the logs and in the NATS server. This is required for all services.
 * `DATA_DIR`: The directory where the service can store data. This is required for all services.
 
@@ -101,7 +95,6 @@ Some configuration values are required for all services. These values are:
     This way, you don't have to set all the required configuration values when running the service locally.
     
     Without the `--dev` flag, the service fails if any of the required configuration values are missing.
-    
 
 ## Accessing the Configuration
 

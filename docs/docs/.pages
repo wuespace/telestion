@@ -2,10 +2,10 @@ collapse: true
 nav:
   - Overview:
       - index.md
-      - getting-started.md
       - Concepts:
         - service.md
         - message-bus.md
+      - project-folder-structure.md
   - Backend Development
   - Frontend Development
   - Deployment

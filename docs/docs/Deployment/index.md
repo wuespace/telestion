@@ -4,7 +4,6 @@ tags: [ Deployment ]
 
 # Deployment
 
-
 Deployment is the process of making a software system available for use. In the context of Telestion, deployment refers to the process of making the Telestion application available for use.
 
 !!! warning
@@ -25,6 +24,6 @@ Telestion can be deployed in multiple ways:
 
 ## NATS and its configuration
 
-Telestion uses [NATS](https://nats.io/) as a message broker. NATS is a lightweight, high-performance cloud native messaging system. It is used for the communication between the Telestion backend and the Telestion frontend.
+Telestion uses [NATS](https://nats.io/) as its message broker. NATS is a lightweight, high-performance cloud-native messaging system. It is used for the communication between the Telestion backend and the Telestion frontend.
 
 No matter which deployment method you choose, you need to configure NATS. The configuration of NATS is described in the [NATS Configuration](nats/index.md) document.

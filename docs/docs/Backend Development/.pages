@@ -1,6 +1,5 @@
 nav:
   - index.md
   - typescript
-  - rust
   - other-languages.md
   - Service Behavior Specification: service-behavior

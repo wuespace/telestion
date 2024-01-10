@@ -54,6 +54,4 @@ The most common way to write a backend service is to use TypeScript.
 
 However, for some use cases, it may be necessary to write a backend service in other languages.
 
-Even some of the core services provided out of the box are written in Rust. To learn how to write a service in Rust, see [Using Rust](rust/index.md).
-
 You can even write a backend service in any language you want. The only requirement is that it can communicate with the NATS message bus. To learn how to write a service in other languages, see [Using other languages](other-languages.md).

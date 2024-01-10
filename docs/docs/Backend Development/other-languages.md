@@ -31,13 +31,11 @@ Every Telestion service receives at least the following environment variables:
 **If your service doesn't receive any of these environment variables, it should exit with a non-zero exit code.**
 
 !!! warning
-	There can be multiple instances of a service with the same name running at the same time. They are guaranteed to have the same configuration, apart from the `SERVICE_ID`. If you need a truly unique identifier, you can combine the `SERVICE_NAME` and the process ID.
+	There can be multiple instances of a service with the same name running at the same time. They are guaranteed to have the same configuration. If you need a truly unique identifier, you can combine the `SERVICE_NAME` and the process ID.
 
 ### Logging
 
 Your service should log any "feedback" to `stdout` and `stderr`.
-
-For logging data to files, you should use the [Standard Operations Library](#standard-operations-library).
 
 ### Queues
 
@@ -63,20 +61,10 @@ While running, any Telestion service should respond (within 0.5 seconds) to requ
 ```json
 {
 	"errors": 0, // or number of "recent" errors
-	"service": "my-service", // the SERVICE_ID
 	"name": "My Service" // the SERVICE_NAME
 }
 ```
 
-## Standard Operations Library
+## Service Behavior Specification
 
-!!! info
-	The standard operations library is a library that provides a set of common operations that are used by many Telestion services. While it can be overwritten, every Telestion application comes with an implementation of these operations out-of-the-box that you can use.
-
-### Data Logging
-
-The standard operations library provides a simple way to log data to files.
-
-To use it, publish a message to the `__telestion__/log/[category]` subject with the body you want to log. `[category]` is the category of the log message. It can be any string.
-
-The standard operations library then logs the message to the file `logs/[category].log` in your data directory.
+A formal description of the behavior of a Telestion service is provided in the [Service Behavior Specification](service-behavior/README.md). It can be used to test libraries for writing Telestion services in other languages.
