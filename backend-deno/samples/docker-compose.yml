@@ -1,0 +1,70 @@
+services:
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    # volumes:
+      # - ./nats.conf:/etc/nats.conf
+  config:
+    build:
+      context: ../
+      dockerfile: samples/Dockerfile
+    command: ["config/mod.ts", "--MY_STRING", "Overwritten Hello World"]
+    depends_on:
+      - nats
+    env_file:
+      - .common.env
+    environment:
+      - SERVICE_NAME=config
+      - MY_STRING=Hello World that gets overwritten
+  latest-value-cache:
+    build:
+      context: ../
+      dockerfile: samples/Dockerfile
+    command: ["latest-value-cache/mod.ts"]
+    depends_on:
+      - nats
+    env_file:
+      - .common.env
+    environment:
+      - SERVICE_NAME=latest-value-cache
+      - DATA_SUBJECT=data.>
+      - REQUEST_SUBJECT=latest.data.>
+  sample-publisher:
+    build:
+      context: ../
+      dockerfile: samples/Dockerfile
+    command: ["publisher/mod.ts"]
+    depends_on:
+      - nats
+    env_file:
+      - .common.env
+    environment:
+      - SERVICE_NAME=sample-publisher
+      - DATA_SUBJECT=data.sample
+  forward-to-logger:
+    build:
+      context: ../
+      dockerfile: samples/Dockerfile
+    command: ["requester/mod.ts"]
+    depends_on:
+      - nats
+    env_file:
+      - .common.env
+    environment:
+      - SERVICE_NAME=forward-to-logger
+      - REQUEST_SUBJECT=latest.data.sample
+      - FREQUENCY=3000
+      - OUTPUT_SUBJECT=log.sample-data
+  logger:
+    build:
+      context: ../
+      dockerfile: samples/Dockerfile
+    command: ["logger/mod.ts"]
+    depends_on:
+      - nats
+    env_file:
+      - .common.env
+    environment:
+      - SERVICE_NAME=logger
