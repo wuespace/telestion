@@ -37,7 +37,7 @@ websocket: {
 }
 ```
 
-This will create a user called `nats` with the password `nats`. It will also enable the HTTP and WebSocket interfaces.
+This will enable the HTTP and WebSocket interfaces.
 
 Note that for production deployments, you need to configure NATS to use TLS and set up proper authentication. You can learn more about configuring NATS in the [NATS configuration guide](../nats/index.md).
 
