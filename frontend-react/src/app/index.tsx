@@ -1,5 +1,6 @@
 import { initTelestion, registerWidgets, UserData } from '../lib';
 import { simpleWidget } from './widgets/simple-widget';
+import { errorWidget } from './widgets/error-widget';
 
 const defaultUserData: UserData = {
 	version: '0.0.1',
@@ -8,7 +9,7 @@ const defaultUserData: UserData = {
 			title: 'Default Dashboard',
 			layout: [
 				['.', '8fj2o4', '.'],
-				['.', '.', '.']
+				['.', '9fj2o4', '9fj2o4']
 			]
 		}
 	},
@@ -18,11 +19,15 @@ const defaultUserData: UserData = {
 			configuration: {
 				text: 'Hello World!'
 			}
+		},
+		'9fj2o4': {
+			type: 'error-widget',
+			configuration: {}
 		}
 	}
 };
 
-registerWidgets(simpleWidget);
+registerWidgets(simpleWidget, errorWidget);
 
 await initTelestion({
 	version: '0.0.1',

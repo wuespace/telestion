@@ -3,6 +3,8 @@ import { getWidgetById } from '../state.ts';
 import { getUserData } from '../../user-data';
 
 import styles from './widget-renderer.module.css';
+import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorFallback } from './error-fallback.tsx';
 
 export interface WidgetRendererProps {
 	widgetInstanceId: string;
@@ -44,7 +46,9 @@ registerWidget({
 					key={`renderer-${widgetInstanceId}`}
 					value={widgetInstance.configuration}
 				>
-					{widget.element}
+					<ErrorBoundary FallbackComponent={ErrorFallback}>
+						{widget.element}
+					</ErrorBoundary>
 				</widgetConfigContext.Provider>
 			) : (
 				<div>
