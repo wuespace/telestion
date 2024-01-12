@@ -1,5 +1,5 @@
 import { ActionFunctionArgs, redirect } from 'react-router-dom';
-import { isLoggedIn, login, LoginError } from '../../../auth';
+import { attemptAutoLogin, isLoggedIn, login, LoginError } from '../../../auth';
 import { TelestionOptions } from '../../model.ts';
 import { wait } from '../../../utils.ts';
 
@@ -21,11 +21,15 @@ export function resetResumeAfterLogin() {
 }
 
 export function loginLoader({ defaultBackendUrl }: TelestionOptions) {
-	return () => {
+	return async () => {
 		if (isLoggedIn()) {
 			return redirect('/');
 		}
 
+		// try to log in with the credentials from the session storage
+		if (await attemptAutoLogin()) return redirect(resumeAfterLogin ?? '/');
+
+		// show the login form
 		return {
 			defaultBackendUrl
 		};

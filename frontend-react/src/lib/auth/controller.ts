@@ -7,6 +7,7 @@ import {
 import { LoginError, ErrorMessages } from './model.ts';
 import { connect, NatsError } from 'nats.ws';
 import { z } from 'zod';
+import { clearAutoLogin, setAutoLoginCredentials } from './auto-login.ts';
 
 const natsUrlSchema = z.string().url();
 const credentialsSchema = z.string().min(1).max(800);
@@ -81,6 +82,12 @@ export async function login(
 		setUser({ natsUrl, username });
 		setNatsConnection(nc);
 
+		setAutoLoginCredentials({
+			natsUrl,
+			username,
+			password: password
+		});
+
 		console.log('Successfully logged in');
 		return getUser();
 	} catch (err) {
@@ -100,6 +107,8 @@ export async function login(
  * @returns A promise that resolves once the user is logged out.
  */
 export async function logout() {
+	clearAutoLogin();
+
 	if (!isLoggedIn()) {
 		console.log('Already logged out');
 		return;

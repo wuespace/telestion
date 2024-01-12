@@ -20,7 +20,7 @@ export function dashboardEditorLoader({ version }: TelestionOptions) {
 		if (!isLoggedIn()) {
 			if (params.dashboardId) {
 				setResumeAfterLogin(
-					generatePath('/dashboards/:dashboardId', {
+					generatePath('/dashboards/:dashboardId/edit', {
 						dashboardId: params.dashboardId
 					})
 				);
