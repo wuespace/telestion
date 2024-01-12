@@ -38,6 +38,12 @@ module.exports = {
 		'tsdoc/syntax': 'warn'
 	},
 	settings: {
-		react: { version: 'detect' }
+		react: { version: 'detect' },
+		// Support import aliases
+		'import/resolver': {
+			typescript: {
+				projects: ['./tsconfig.json', './tsconfig.node.json']
+			}
+		}
 	}
 };

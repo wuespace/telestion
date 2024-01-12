@@ -12,16 +12,25 @@ const bannerText = {
 	description: packageJson.description,
 	author: `${packageJson.author.name} <${packageJson.author.email}>`,
 	homepage: packageJson.homepage,
-	license: 'Copyright (c) 2023 WüSpace e. V.'
+	license: 'MIT. Copyright (c) 2023 WüSpace e. V.'
 };
 
 // https://vitejs.dev/config/
 export default defineConfig({
 	build: {
 		lib: {
-			entry: resolve(__dirname, 'src/lib/index.ts'),
+			entry: [
+				resolve(__dirname, 'src/lib/index.ts'),
+				resolve(__dirname, 'src/lib/mod-application.ts'),
+				resolve(__dirname, 'src/lib/mod-auth.ts'),
+				resolve(__dirname, 'src/lib/mod-nats.ts'),
+				resolve(__dirname, 'src/lib/mod-user-data.ts'),
+				resolve(__dirname, 'src/lib/mod-utils.ts'),
+				resolve(__dirname, 'src/lib/mod-widget.ts')
+			],
 			name: 'Telestion',
-			fileName: 'telestion'
+			fileName: (format, entryName) =>
+				`${entryName}.${format === 'cjs' ? 'cjs' : 'js'}`
 		},
 		sourcemap: true,
 		rollupOptions: {
@@ -34,6 +43,11 @@ export default defineConfig({
 					react: 'React'
 				}
 			}
+		}
+	},
+	resolve: {
+		alias: {
+			'@wuespace/telestion': resolve(__dirname, 'src/lib')
 		}
 	},
 	plugins: [react(), banner(transformBanner(bannerText))],

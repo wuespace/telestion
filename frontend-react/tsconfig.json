@@ -20,7 +20,11 @@
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true
+		"noFallthroughCasesInSwitch": true,
+		"paths": {
+			"@wuespace/telestion": ["./src/lib"],
+			"@wuespace/telestion/*": ["./src/lib/*"]
+		}
 	},
 	"include": ["src", "features"],
 	"references": [{ "path": "./tsconfig.node.json" }]

@@ -1,7 +1,7 @@
 import { ActionFunctionArgs, redirect } from 'react-router-dom';
 import { attemptAutoLogin, isLoggedIn, login, LoginError } from '../../../auth';
 import { TelestionOptions } from '../../model.ts';
-import { wait } from '../../../utils.ts';
+import { wait } from '../../../utils';
 
 let resumeAfterLogin: string | undefined = undefined;
 

@@ -1,7 +1,7 @@
 import { isLoggedIn } from '../../../auth';
 import { generatePath, redirect } from 'react-router-dom';
 import { getUserData } from '../../../user-data';
-import { isUserDataUpToDate } from '../../../utils.ts';
+import { isUserDataUpToDate } from '../../../utils';
 import { TelestionOptions } from '../../model.ts';
 
 export function dashboardIndexLoader({ version }: TelestionOptions) {

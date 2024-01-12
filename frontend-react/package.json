@@ -35,11 +35,42 @@
 		"dist",
 		"types"
 	],
-	"main": "./dist/telestion.umd.cjs",
+	"main": "./dist/index.cjs",
 	"exports": {
 		".": {
-			"import": "./dist/telestion.js",
-			"require": "./dist/telestion.umd.cjs"
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs",
+			"types": "./types/src/lib/index.d.ts"
+		},
+		"./application": {
+			"import": "./dist/mod-application.js",
+			"require": "./dist/mod-application.cjs",
+			"types": "./types/src/lib/mod-application.d.ts"
+		},
+		"./auth": {
+			"import": "./dist/mod-auth.js",
+			"require": "./dist/mod-auth.cjs",
+			"types": "./types/src/lib/mod-auth.d.ts"
+		},
+		"./nats": {
+			"import": "./dist/mod-nats.js",
+			"require": "./dist/mod-nats.cjs",
+			"types": "./types/src/lib/mod-nats.d.ts"
+		},
+		"./user-data": {
+			"import": "./dist/mod-user-data.js",
+			"require": "./dist/mod-user-data.cjs",
+			"types": "./types/src/lib/mod-user-data.d.ts"
+		},
+		"./utils": {
+			"import": "./dist/mod-utils.js",
+			"require": "./dist/mod-utils.cjs",
+			"types": "./types/src/lib/mod-utils.d.ts"
+		},
+		"./widget": {
+			"import": "./dist/mod-widget.js",
+			"require": "./dist/mod-widget.cjs",
+			"types": "./types/src/lib/mod-widget.d.ts"
 		},
 		"./telestion.css": "./dist/style.css"
 	},
@@ -86,6 +117,7 @@
 		"@vitest/ui": "^1.0.4",
 		"eslint": "^8.53.0",
 		"eslint-config-prettier": "^9.1.0",
+		"eslint-import-resolver-typescript": "^3.6.1",
 		"eslint-plugin-jsx-a11y": "^6.8.0",
 		"eslint-plugin-prettier": "^5.0.1",
 		"eslint-plugin-react": "^7.33.2",

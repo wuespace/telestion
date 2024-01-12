@@ -2,7 +2,7 @@ import { redirect } from 'react-router-dom';
 
 import { isLoggedIn } from '../../auth';
 import { getUserData } from '../../user-data';
-import { isUserDataUpToDate } from '../../utils.ts';
+import { isUserDataUpToDate } from '../../utils';
 import { TelestionOptions } from '../model.ts';
 
 export function rootLoader({ version }: TelestionOptions) {

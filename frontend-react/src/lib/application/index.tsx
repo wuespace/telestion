@@ -1,3 +1,20 @@
+/**
+ * @packageDocumentation
+ *
+ * This package provides the main entry point for the Telestion frontend application.
+ *
+ * You can initialize the application by calling the {@link initTelestion} function.
+ *
+ * @example
+ * ```ts
+ * import { initTelestion } from '@wuespace/telestion/application';
+ * // or, for convenience:
+ * // import { initTelestion } from '@wuespace/telestion';
+ *
+ * initTelestion({ ... });
+ * ```
+ */
+
 // Import styles first to allow overriding bootstrap styles in CSS modules
 import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import './index.scss';
