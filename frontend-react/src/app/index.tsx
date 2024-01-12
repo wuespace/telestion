@@ -1,6 +1,7 @@
 import { initTelestion, registerWidgets, UserData } from '../lib';
 import { simpleWidget } from './widgets/simple-widget';
 import { errorWidget } from './widgets/error-widget';
+import { setAutoLoginCredentials } from '../lib/auth';
 
 const defaultUserData: UserData = {
 	version: '0.0.1',
@@ -28,6 +29,12 @@ const defaultUserData: UserData = {
 };
 
 registerWidgets(simpleWidget, errorWidget);
+
+setAutoLoginCredentials({
+	natsUrl: 'ws://localhost:9222',
+	username: 'nats',
+	password: 'nats'
+});
 
 await initTelestion({
 	version: '0.0.1',
