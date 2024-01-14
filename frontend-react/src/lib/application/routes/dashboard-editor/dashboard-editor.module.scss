@@ -1,0 +1,46 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
+.dashboardEditor {
+	display: grid;
+	grid-template-areas: 'dashboard layout widget-instance';
+	grid-auto-columns: 1fr;
+	grid-gap: var(--gutter);
+	height: calc(100vh - var(--navbar-height) - var(--gutter));
+
+	> * {
+		background: var(--bs-body-bg);
+		color: var(--bs-body-color);
+		border-radius: var(--bs-border-radius);
+
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	.dashboard {
+		grid-area: dashboard;
+	}
+
+	.layout {
+		grid-area: layout;
+	}
+
+	.widgetInstance {
+		grid-area: widget-instance;
+	}
+
+	@include media-breakpoint-down(xl) {
+		grid-template-areas: 'dashboard layout' 'widget-instance widget-instance';
+		height: auto;
+
+		> * {
+			/*height: auto;*/
+			overflow-y: visible;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		grid-template-areas: 'dashboard' 'layout' 'widget-instance';
+	}
+}

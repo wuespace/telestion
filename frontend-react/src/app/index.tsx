@@ -1,7 +1,7 @@
 import { initTelestion, registerWidgets, UserData } from '@wuespace/telestion';
 import { simpleWidget } from './widgets/simple-widget';
 import { errorWidget } from './widgets/error-widget';
-import { setAutoLoginCredentials } from '../lib/auth';
+import { setAutoLoginCredentials } from '@wuespace/telestion/auth';
 
 const defaultUserData: UserData = {
 	version: '0.0.1',

@@ -56,7 +56,7 @@ export function PageWrapper({ showSelector }: PageWrapperProps) {
 	}
 
 	return (
-		<Container fluid>
+		<Container fluid className={styles.pageBackground}>
 			<Navbar fixed="bottom" bg="body-tertiary" className={styles.nav}>
 				<Container fluid>
 					{/* only render on dashboard pages and when dashboards are defined */}

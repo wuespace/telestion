@@ -109,5 +109,4 @@ jobs:
         run: pnpm install
       - name: Run unit tests 🛃
         run: |
-          pnpm run build
           pnpm run ci:test

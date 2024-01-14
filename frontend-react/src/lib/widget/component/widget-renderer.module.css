@@ -7,4 +7,10 @@
 
 	/* Disallow grid areas to resize based on content */
 	overflow: auto;
+
+	/* Set the background color to the body background color */
+	background: var(--bs-body-bg);
+
+	/* Set the border radius to the body border radius */
+	border-radius: var(--bs-border-radius);
 }
