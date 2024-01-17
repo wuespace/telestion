@@ -1,3 +1,7 @@
+// Import styles first to allow overriding bootstrap styles in CSS modules
+import 'bootstrap-icons/font/bootstrap-icons.min.css';
+import './index.scss';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
@@ -5,9 +9,6 @@ import { RouterProvider } from 'react-router-dom';
 import { registerWidgets } from '../widget';
 import { TelestionOptions } from './model.ts';
 import { createTelestionRouter } from './telestion-router.tsx';
-
-import 'bootstrap-icons/font/bootstrap-icons.min.css';
-import './index.scss';
 
 export * from './model.ts';
 export * from './hooks';
