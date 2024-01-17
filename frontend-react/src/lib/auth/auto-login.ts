@@ -4,8 +4,17 @@ import { z } from 'zod';
 const AUTO_LOGIN_KEY = 'auto-login';
 
 const autoLoginSchema = z.object({
+	/**
+	 * The URL of the NATS server to connect to.
+	 */
 	natsUrl: z.string(),
+	/**
+	 * The username to use when connecting to the NATS server.
+	 */
 	username: z.string(),
+	/**
+	 * The password to use when connecting to the NATS server.
+	 */
 	password: z.string()
 });
 
@@ -51,10 +60,19 @@ export async function attemptAutoLogin(): Promise<boolean> {
 }
 
 /**
- * @internal
- * Store auto-login credentials in sessionStorage.
+ * Sets credentials with which to auto-login.
+ *
+ * If an auto-login attempt fails, the credentials will be cleared for the remainder of the session and a login form
+ * shown to the user. If the user logs in successfully, the credentials will be updated.
+ *
+ * ### Security Warning
+ *
+ * Use this function only if user authentication is handled by a separate system. Calling this function in
+ * your application means your NATS credentials will be hard-coded into your application, which is a security risk.
  *
  * @param credentials - The credentials to store
+ * @deprecated No, this won't be removed anytime soon. You can ignore this warning if you're aware of the security
+ * implications.
  */
 export function setAutoLoginCredentials(
 	credentials: z.input<typeof autoLoginSchema>
