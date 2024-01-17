@@ -27,6 +27,7 @@ export * as auth from './auth';
 export * as userData from './user-data';
 export * as widget from './widget';
 export * as utils from './utils.ts';
+export * as nats from './nats';
 
 // application
 export { initTelestion, useWidgetConfig } from './application';
@@ -41,3 +42,6 @@ export type { UserData } from './user-data';
 
 // auth
 export { useNats } from './auth';
+
+// nats
+export { JSONCodec } from './nats';
