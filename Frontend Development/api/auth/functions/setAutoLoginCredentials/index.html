@@ -9,25 +9,25 @@
       
       
       
-        <link rel="prev" href="../other-languages/">
+        <link rel="prev" href="../logout/">
       
       
-        <link rel="next" href="auth/">
+        <link rel="next" href="../setNatsConnection/">
       
       
-      <link rel="icon" href="../../_theme_img/favicon.png">
+      <link rel="icon" href="../../../../../_theme_img/favicon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
     
     
       
-        <title>Service Behavior Specification - Telestion Documentation</title>
+        <title>setAutoLoginCredentials - Telestion Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.50c56a3b.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -40,9 +40,9 @@
       
     
     
-      <link rel="stylesheet" href="../../_css/custom.css">
+      <link rel="stylesheet" href="../../../../../_css/custom.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -51,11 +51,11 @@
       
         <meta  property="og:type"  content="website" >
       
-        <meta  property="og:title"  content="Service Behavior Specification - Telestion Documentation" >
+        <meta  property="og:title"  content="setAutoLoginCredentials - Telestion Documentation" >
       
         <meta  property="og:description"  content="None" >
       
-        <meta  property="og:image"  content="./assets/images/social/Backend Development/service-behavior/README.png" >
+        <meta  property="og:image"  content="./assets/images/social/Frontend Development/api/auth/functions/setAutoLoginCredentials.png" >
       
         <meta  property="og:image:type"  content="image/png" >
       
@@ -67,11 +67,11 @@
       
         <meta  name="twitter:card"  content="summary_large_image" >
       
-        <meta  name="twitter:title"  content="Service Behavior Specification - Telestion Documentation" >
+        <meta  name="twitter:title"  content="setAutoLoginCredentials - Telestion Documentation" >
       
         <meta  name="twitter:description"  content="None" >
       
-        <meta  name="twitter:image"  content="./assets/images/social/Backend Development/service-behavior/README.png" >
+        <meta  name="twitter:image"  content="./assets/images/social/Frontend Development/api/auth/functions/setAutoLoginCredentials.png" >
       
     
     
@@ -96,7 +96,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#service-behavior-specification" class="md-skip">
+        <a href="#security-warning" class="md-skip">
           Skip to content
         </a>
       
@@ -112,9 +112,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Telestion Documentation" class="md-header__button md-logo" aria-label="Telestion Documentation" data-md-component="logo">
+    <a href="../../../../.." title="Telestion Documentation" class="md-header__button md-logo" aria-label="Telestion Documentation" data-md-component="logo">
       
-  <img src="../../_theme_img/logo.svg" alt="logo">
+  <img src="../../../../../_theme_img/logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -131,7 +131,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Service Behavior Specification
+              setAutoLoginCredentials
             
           </span>
         </div>
@@ -234,12 +234,32 @@
     
     
       <li class="md-tabs__item">
-        <a href="../.." class="md-tabs__link">
+        <a href="../../../../.." class="md-tabs__link">
           
   
     
   
   Overview
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Backend%20Development/" class="md-tabs__link">
+          
+  
+    
+  
+  Backend Development
 
         </a>
       </li>
@@ -256,27 +276,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
-          
-  
-    
-  
-  Backend Development
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../Frontend%20Development/" class="md-tabs__link">
+        <a href="../../../../" class="md-tabs__link">
           
   
     
@@ -296,7 +296,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../Deployment/" class="md-tabs__link">
+        <a href="../../../../../Deployment/" class="md-tabs__link">
           
   
     
@@ -354,9 +354,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Telestion Documentation" class="md-nav__button md-logo" aria-label="Telestion Documentation" data-md-component="logo">
+    <a href="../../../../.." title="Telestion Documentation" class="md-nav__button md-logo" aria-label="Telestion Documentation" data-md-component="logo">
       
-  <img src="../../_theme_img/logo.svg" alt="logo">
+  <img src="../../../../../_theme_img/logo.svg" alt="logo">
 
     </a>
     Telestion Documentation
@@ -412,7 +412,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../.." class="md-nav__link ">
+            <a href="../../../../.." class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -490,7 +490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../service/" class="md-nav__link">
+      <a href="../../../../../service/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -511,7 +511,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../message-bus/" class="md-nav__link">
+      <a href="../../../../../message-bus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -540,7 +540,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../project-folder-structure/" class="md-nav__link">
+      <a href="../../../../../project-folder-structure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -565,8 +565,6 @@
       
   
   
-    
-  
   
   
     
@@ -589,17 +587,19 @@
       
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../../../../Backend%20Development/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -616,7 +616,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Backend Development
@@ -664,7 +664,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../typescript/" class="md-nav__link ">
+            <a href="../../../../../Backend%20Development/typescript/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -697,7 +697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../typescript/configuration/" class="md-nav__link">
+      <a href="../../../../../Backend%20Development/typescript/configuration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -718,7 +718,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../typescript/message-bus/" class="md-nav__link">
+      <a href="../../../../../Backend%20Development/typescript/message-bus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -739,7 +739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../typescript/e2e-log-service/" class="md-nav__link">
+      <a href="../../../../../Backend%20Development/typescript/e2e-log-service/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -760,7 +760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../typescript/samples/" class="md-nav__link">
+      <a href="../../../../../Backend%20Development/typescript/samples/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -810,7 +810,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../other-languages/" class="md-nav__link">
+      <a href="../../../../../Backend%20Development/other-languages/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -828,8 +828,6 @@
                 
   
   
-    
-  
   
   
     
@@ -853,17 +851,19 @@
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../../../../../Backend%20Development/service-behavior/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -874,13 +874,13 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             Service Behavior Specification
@@ -896,7 +896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="auth/" class="md-nav__link">
+      <a href="../../../../../Backend%20Development/service-behavior/auth/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -917,7 +917,7 @@
   
   
     <li class="md-nav__item">
-      <a href="config/" class="md-nav__link">
+      <a href="../../../../../Backend%20Development/service-behavior/config/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -938,7 +938,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dev-mode/" class="md-nav__link">
+      <a href="../../../../../Backend%20Development/service-behavior/dev-mode/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -959,7 +959,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nats/" class="md-nav__link">
+      <a href="../../../../../Backend%20Development/service-behavior/nats/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -980,7 +980,7 @@
   
   
     <li class="md-nav__item">
-      <a href="service/" class="md-nav__link">
+      <a href="../../../../../Backend%20Development/service-behavior/service/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1013,6 +1013,8 @@
       
   
   
+    
+  
   
   
     
@@ -1033,19 +1035,17 @@
       
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Frontend%20Development/" class="md-nav__link ">
+            <a href="../../../../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1062,7 +1062,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Frontend Development
@@ -1078,7 +1078,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/concepts/" class="md-nav__link">
+      <a href="../../../../concepts/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1096,6 +1096,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1123,19 +1125,17 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Frontend%20Development/api/" class="md-nav__link ">
+            <a href="../../../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1152,7 +1152,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_3">
             <span class="md-nav__icon md-icon"></span>
             API Reference
@@ -1192,7 +1192,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Frontend%20Development/api/application/" class="md-nav__link ">
+            <a href="../../../application/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1268,7 +1268,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/application/functions/initTelestion/" class="md-nav__link">
+      <a href="../../../application/functions/initTelestion/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1302,6 +1302,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1321,19 +1323,17 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_3" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Frontend%20Development/api/auth/" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1350,7 +1350,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_3_3">
             <span class="md-nav__icon md-icon"></span>
             Auth
@@ -1409,7 +1409,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/classes/LoginError/" class="md-nav__link">
+      <a href="../../classes/LoginError/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1435,8 +1435,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -1464,14 +1466,12 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3_3_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_3_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3_3_3_3" id="__nav_3_3_3_3_label" tabindex="0">
@@ -1485,7 +1485,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_3_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_3_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_3_3_3">
             <span class="md-nav__icon md-icon"></span>
             Functions
@@ -1499,7 +1499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/functions/attemptAutoLogin/" class="md-nav__link">
+      <a href="../attemptAutoLogin/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1520,7 +1520,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/functions/getNatsConnection/" class="md-nav__link">
+      <a href="../getNatsConnection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1541,7 +1541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/functions/getUser/" class="md-nav__link">
+      <a href="../getUser/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1562,7 +1562,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/functions/isLoggedIn/" class="md-nav__link">
+      <a href="../isLoggedIn/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1583,7 +1583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/functions/login/" class="md-nav__link">
+      <a href="../login/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1604,7 +1604,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/functions/logout/" class="md-nav__link">
+      <a href="../logout/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1622,10 +1622,28 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/functions/setAutoLoginCredentials/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    setAutoLoginCredentials
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1634,6 +1652,60 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#security-warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Warning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deprecated" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deprecated
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1646,7 +1718,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/functions/setNatsConnection/" class="md-nav__link">
+      <a href="../setNatsConnection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1667,7 +1739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/functions/setUser/" class="md-nav__link">
+      <a href="../setUser/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1688,7 +1760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/functions/useNatsSubscription/" class="md-nav__link">
+      <a href="../useNatsSubscription/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1762,7 +1834,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/interfaces/ErrorMessages/" class="md-nav__link">
+      <a href="../../interfaces/ErrorMessages/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1783,7 +1855,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/auth/interfaces/User/" class="md-nav__link">
+      <a href="../../interfaces/User/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1848,7 +1920,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Frontend%20Development/api/index/" class="md-nav__link ">
+            <a href="../../../index/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1930,7 +2002,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/index/functions/JSONCodec/" class="md-nav__link">
+      <a href="../../../index/functions/JSONCodec/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1951,7 +2023,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/index/functions/registerWidgets/" class="md-nav__link">
+      <a href="../../../index/functions/registerWidgets/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1972,7 +2044,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/index/functions/useNats/" class="md-nav__link">
+      <a href="../../../index/functions/useNats/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1993,7 +2065,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/index/functions/useWidgetConfig/" class="md-nav__link">
+      <a href="../../../index/functions/useWidgetConfig/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2067,7 +2139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/index/interfaces/TelestionOptions/" class="md-nav__link">
+      <a href="../../../index/interfaces/TelestionOptions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2088,7 +2160,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/index/interfaces/Widget/" class="md-nav__link">
+      <a href="../../../index/interfaces/Widget/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2160,7 +2232,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/index/type-aliases/UserData/" class="md-nav__link">
+      <a href="../../../index/type-aliases/UserData/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2227,7 +2299,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Frontend%20Development/api/nats/" class="md-nav__link ">
+            <a href="../../../nats/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -2303,7 +2375,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/classes/NatsError/" class="md-nav__link">
+      <a href="../../../nats/classes/NatsError/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2377,7 +2449,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/functions/StringCodec/" class="md-nav__link">
+      <a href="../../../nats/functions/StringCodec/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2398,7 +2470,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/functions/headers/" class="md-nav__link">
+      <a href="../../../nats/functions/headers/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2484,7 +2556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/interfaces/Codec/" class="md-nav__link">
+      <a href="../../../nats/interfaces/Codec/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2505,7 +2577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/interfaces/Msg/" class="md-nav__link">
+      <a href="../../../nats/interfaces/Msg/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2526,7 +2598,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/interfaces/MsgHdrs/" class="md-nav__link">
+      <a href="../../../nats/interfaces/MsgHdrs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2547,7 +2619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/interfaces/NatsConnection/" class="md-nav__link">
+      <a href="../../../nats/interfaces/NatsConnection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2568,7 +2640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/interfaces/PublishOptions/" class="md-nav__link">
+      <a href="../../../nats/interfaces/PublishOptions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2589,7 +2661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/interfaces/RequestOptions/" class="md-nav__link">
+      <a href="../../../nats/interfaces/RequestOptions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2610,7 +2682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/interfaces/Sub/" class="md-nav__link">
+      <a href="../../../nats/interfaces/Sub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2631,7 +2703,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/interfaces/SubOpts/" class="md-nav__link">
+      <a href="../../../nats/interfaces/SubOpts/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2707,7 +2779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/type-aliases/MsgRequest/" class="md-nav__link">
+      <a href="../../../nats/type-aliases/MsgRequest/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2728,7 +2800,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/type-aliases/Subscription/" class="md-nav__link">
+      <a href="../../../nats/type-aliases/Subscription/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2749,7 +2821,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/nats/type-aliases/SubscriptionOptions/" class="md-nav__link">
+      <a href="../../../nats/type-aliases/SubscriptionOptions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2814,7 +2886,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Frontend%20Development/api/user-data/" class="md-nav__link ">
+            <a href="../../../user-data/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -2898,7 +2970,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/functions/getBlankUserData/" class="md-nav__link">
+      <a href="../../../user-data/functions/getBlankUserData/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2919,7 +2991,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/functions/getEmptyDashboard/" class="md-nav__link">
+      <a href="../../../user-data/functions/getEmptyDashboard/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2940,7 +3012,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/functions/getUserData/" class="md-nav__link">
+      <a href="../../../user-data/functions/getUserData/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2961,7 +3033,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/functions/removeUserData/" class="md-nav__link">
+      <a href="../../../user-data/functions/removeUserData/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2982,7 +3054,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/functions/setUserData/" class="md-nav__link">
+      <a href="../../../user-data/functions/setUserData/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3056,7 +3128,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/type-aliases/Dashboard/" class="md-nav__link">
+      <a href="../../../user-data/type-aliases/Dashboard/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3077,7 +3149,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/type-aliases/WidgetInstance/" class="md-nav__link">
+      <a href="../../../user-data/type-aliases/WidgetInstance/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3159,7 +3231,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/variables/dashboardSchema/" class="md-nav__link">
+      <a href="../../../user-data/variables/dashboardSchema/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3180,7 +3252,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/variables/idSchema/" class="md-nav__link">
+      <a href="../../../user-data/variables/idSchema/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3201,7 +3273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/variables/layoutSchema/" class="md-nav__link">
+      <a href="../../../user-data/variables/layoutSchema/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3222,7 +3294,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/variables/semverRegExp/" class="md-nav__link">
+      <a href="../../../user-data/variables/semverRegExp/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3243,7 +3315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/variables/userDataSchema/" class="md-nav__link">
+      <a href="../../../user-data/variables/userDataSchema/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3264,7 +3336,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/user-data/variables/widgetInstanceSchema/" class="md-nav__link">
+      <a href="../../../user-data/variables/widgetInstanceSchema/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3325,7 +3397,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Frontend%20Development/api/utils/" class="md-nav__link ">
+            <a href="../../../utils/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -3407,7 +3479,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/utils/functions/generateDashboardId/" class="md-nav__link">
+      <a href="../../../utils/functions/generateDashboardId/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3428,7 +3500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/utils/functions/isUserDataUpToDate/" class="md-nav__link">
+      <a href="../../../utils/functions/isUserDataUpToDate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3449,7 +3521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/utils/functions/loadFileContents/" class="md-nav__link">
+      <a href="../../../utils/functions/loadFileContents/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3470,7 +3542,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/utils/functions/wait/" class="md-nav__link">
+      <a href="../../../utils/functions/wait/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3535,7 +3607,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Frontend%20Development/api/widget/" class="md-nav__link ">
+            <a href="../../../widget/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -3615,7 +3687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/widget/functions/WidgetRenderer/" class="md-nav__link">
+      <a href="../../../widget/functions/WidgetRenderer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3636,7 +3708,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/widget/functions/getWidgetById/" class="md-nav__link">
+      <a href="../../../widget/functions/getWidgetById/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3657,7 +3729,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/widget/functions/getWidgets/" class="md-nav__link">
+      <a href="../../../widget/functions/getWidgets/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3729,7 +3801,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/widget/interfaces/WidgetRendererProps/" class="md-nav__link">
+      <a href="../../../widget/interfaces/WidgetRendererProps/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3801,7 +3873,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Frontend%20Development/api/widget/variables/widgetConfigContext/" class="md-nav__link">
+      <a href="../../../widget/variables/widgetConfigContext/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3888,7 +3960,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Deployment/" class="md-nav__link ">
+            <a href="../../../../../Deployment/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -3921,7 +3993,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Deployment/concepts/" class="md-nav__link">
+      <a href="../../../../../Deployment/concepts/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3968,7 +4040,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Deployment/local/" class="md-nav__link ">
+            <a href="../../../../../Deployment/local/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -4001,7 +4073,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Deployment/local/local-nats/" class="md-nav__link">
+      <a href="../../../../../Deployment/local/local-nats/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4022,7 +4094,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Deployment/local/local-typescript-service/" class="md-nav__link">
+      <a href="../../../../../Deployment/local/local-typescript-service/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4073,7 +4145,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Deployment/docker/" class="md-nav__link ">
+            <a href="../../../../../Deployment/docker/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -4131,7 +4203,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Deployment/kubernetes/" class="md-nav__link ">
+            <a href="../../../../../Deployment/kubernetes/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -4189,7 +4261,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Deployment/nats/" class="md-nav__link ">
+            <a href="../../../../../Deployment/nats/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -4262,8 +4334,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -4272,18 +4342,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#gherkin" class="md-nav__link">
+  <a href="#security-warning" class="md-nav__link">
     <span class="md-ellipsis">
-      Gherkin
+      Security Warning
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
+  <a href="#parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      Documentation
+      Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deprecated" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deprecated
     </span>
   </a>
   
@@ -4304,7 +4392,7 @@
                   
 
   
-    <a href="https://github.com/wuespace/telestion/edit/main/docs/docs/Backend Development/service-behavior/README.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/wuespace/telestion/edit/main/docs/docs/Frontend Development/api/auth/functions/setAutoLoginCredentials.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
     </a>
@@ -4313,26 +4401,39 @@
     
       
     
-    <a href="https://github.com/wuespace/telestion/raw/main/docs/docs/Backend Development/service-behavior/README.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/wuespace/telestion/raw/main/docs/docs/Frontend Development/api/auth/functions/setAutoLoginCredentials.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
     </a>
   
 
 
-<h1 id="service-behavior-specification">Service Behavior Specification<a class="headerlink" href="#service-behavior-specification" title="Permanent link">&para;</a></h1>
-<p>Telestion services can be written in any language that supports the NATS protocol.</p>
-<p>While there can be differences in the implementation, there are some things that all Telestion services should have in
-common. This includes, among other things, the configuration of services, allowing seamless deployment of services
-written in different languages.</p>
-<h2 id="gherkin">Gherkin<a class="headerlink" href="#gherkin" title="Permanent link">&para;</a></h2>
-<p>To specify these common behaviors, we use <a href="https://cucumber.io/docs/gherkin/">Gherkin</a>. Gherkin is a language that is
-used to specify the behavior of software in a human-readable way while still being executable, meaning that tests can be
-automated.</p>
-<p>They are based on examples and should be written in a way that is independent of the implementation language.</p>
-<p>The Gherkin files are located in the <code>backend-features</code> directory of the Telestion project.</p>
-<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
-<p>The Gherkin files get converted to Markdown files that are then included in the documentation.</p>
+  <h1>setAutoLoginCredentials</h1>
+
+<p><a href="../../../">@wuespace/telestion</a> / <a href="../../">auth</a> / setAutoLoginCredentials</p>
+<blockquote>
+<p><strong>setAutoLoginCredentials</strong>(<code>credentials</code>): <code>void</code></p>
+</blockquote>
+<p>Sets credentials with which to auto-login.</p>
+<p>If an auto-login attempt fails, the credentials will be cleared for the remainder of the session and a login form
+shown to the user. If the user logs in successfully, the credentials will be updated.</p>
+<h3 id="security-warning">Security Warning<a class="headerlink" href="#security-warning" title="Permanent link">&para;</a></h3>
+<p>Use this function only if user authentication is handled by a separate system. Calling this function in
+your application means your NATS credentials will be hard-coded into your application, which is a security risk.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<p>• <strong>credentials</strong>: <code>Object</code></p>
+<p>The credentials to store</p>
+<p>• <strong>credentials.natsUrl</strong>: <code>string</code>= <code>undefined</code></p>
+<p>The URL of the NATS server to connect to.</p>
+<p>• <strong>credentials.password</strong>: <code>string</code>= <code>undefined</code></p>
+<p>The password to use when connecting to the NATS server.</p>
+<p>• <strong>credentials.username</strong>: <code>string</code>= <code>undefined</code></p>
+<p>The username to use when connecting to the NATS server.</p>
+<h2 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h2>
+<p><code>void</code></p>
+<h2 id="deprecated">Deprecated<a class="headerlink" href="#deprecated" title="Permanent link">&para;</a></h2>
+<p>No, this won&rsquo;t be removed anytime soon. You can ignore this warning if you&rsquo;re aware of the security
+implications.</p>
 
 
 
@@ -4394,7 +4495,7 @@ automated.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../other-languages/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Using other languages">
+          <a href="../logout/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Logout">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -4404,20 +4505,20 @@ automated.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Using other languages
+                Logout
               </div>
             </div>
           </a>
         
         
           
-          <a href="auth/" class="md-footer__link md-footer__link--next" aria-label="Next: NATS authentication">
+          <a href="../setNatsConnection/" class="md-footer__link md-footer__link--next" aria-label="Next: setNatsConnection">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                NATS authentication
+                setNatsConnection
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -4473,16 +4574,16 @@ automated.</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.path", "navigation.footer", "navigation.indexes", "content.code.copy", "content.code.annotate", "content.action.edit", "content.action.view", "search.highlight"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.path", "navigation.footer", "navigation.indexes", "content.code.copy", "content.code.annotate", "content.action.edit", "content.action.view", "search.highlight"], "search": "../../../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.d7c377c4.min.js"></script>
       
-        <script src="../../_js/main.js"></script>
+        <script src="../../../../../_js/main.js"></script>
       
-        <script src="../../_js/mermaid-js/mermaid.min.js"></script>
+        <script src="../../../../../_js/mermaid-js/mermaid.min.js"></script>
       
-        <script src="../../assets/external/unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>
+        <script src="../../../../../assets/external/unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>
       
     
   </body>
