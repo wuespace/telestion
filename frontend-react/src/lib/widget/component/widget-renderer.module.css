@@ -1,4 +1,10 @@
 .widgetRenderer {
+	/* Initial state, gets overwritten through inline styles */
 	--id: loading;
+
+	/* Place the widget in the correct grid area */
 	grid-area: var(--id);
+
+	/* Disallow grid areas to resize based on content */
+	overflow: auto;
 }
