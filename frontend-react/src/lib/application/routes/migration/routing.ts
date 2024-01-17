@@ -1,7 +1,7 @@
 import { ActionFunctionArgs, redirect } from 'react-router-dom';
 
 import { isLoggedIn } from '../../../auth';
-import { isUserDataUpToDate, loadFileContents } from '../../../utils.ts';
+import { isUserDataUpToDate, loadFileContents } from '../../../utils';
 import {
 	getBlankUserData,
 	getUserData,

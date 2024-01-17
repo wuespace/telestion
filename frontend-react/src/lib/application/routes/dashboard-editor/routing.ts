@@ -11,7 +11,7 @@ import {
 	setUserData,
 	UserData
 } from '../../../user-data';
-import { isUserDataUpToDate } from '../../../utils.ts';
+import { isUserDataUpToDate } from '../../../utils';
 import { TelestionOptions } from '../../model.ts';
 import { setResumeAfterLogin } from '../login';
 

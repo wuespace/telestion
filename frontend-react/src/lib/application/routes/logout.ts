@@ -1,6 +1,6 @@
 import { redirect } from 'react-router-dom';
 import { isLoggedIn, logout } from '../../auth';
-import { wait } from '../../utils.ts';
+import { wait } from '../../utils';
 import { resetResumeAfterLogin } from './login';
 
 export function logoutLoader() {

@@ -1,4 +1,4 @@
-import { initTelestion, registerWidgets, UserData } from '../lib';
+import { initTelestion, registerWidgets, UserData } from '@wuespace/telestion';
 import { simpleWidget } from './widgets/simple-widget';
 import { errorWidget } from './widgets/error-widget';
 

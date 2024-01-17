@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { generateDashboardId } from '../utils.ts';
+import { generateDashboardId } from '../utils';
 
 /**
  * A regular expression that matches semantic version numbers.

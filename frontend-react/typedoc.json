@@ -6,7 +6,15 @@
 		"typedoc-plugin-zod"
 	],
 	"titleLink": "/",
-	"entryPoints": ["./src/lib/index.ts"],
+	"entryPoints": [
+		"./src/lib",
+		"./src/lib/application",
+		"./src/lib/auth",
+		"./src/lib/nats",
+		"./src/lib/user-data",
+		"./src/lib/utils",
+		"./src/lib/widget"
+	],
 	"out": "docs",
 	"githubPages": false,
 	"validation": {

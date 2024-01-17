@@ -8,7 +8,7 @@ import {
 import { TelestionOptions } from '../../model.ts';
 import { isLoggedIn } from '../../../auth';
 import { getUserData, setUserData, UserData } from '../../../user-data';
-import { isUserDataUpToDate } from '../../../utils.ts';
+import { isUserDataUpToDate } from '../../../utils';
 
 import { dashboardCreateAction } from '../dashboard.ts';
 import { setResumeAfterLogin } from '../login';
