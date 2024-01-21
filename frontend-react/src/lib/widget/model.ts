@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+import { BaseWidgetConfiguration } from '@wuespace/telestion/widget/configuration/model.tsx';
+
 /**
  * A widget that can be used in widget instances on dashboards.
  *
@@ -7,7 +9,7 @@ import { ReactNode } from 'react';
  * @see {@link userData.WidgetInstance}
  */
 export interface Widget<
-	T extends Record<string, unknown> = Record<string, unknown>
+	T extends BaseWidgetConfiguration = BaseWidgetConfiguration
 > {
 	/**
 	 * Represents an identifier of the widget type.
@@ -28,7 +30,7 @@ export interface Widget<
 	 * of the configuration options to enable more complex migration logic in this function.
 	 * @param input - previous configuration or empty
 	 */
-	createConfig(input: Partial<T> & Record<string, unknown>): T;
+	createConfig(input: Partial<T> & BaseWidgetConfiguration): T;
 
 	/**
 	 * A function that takes the configuration of the widget and returns a React element that represents the widget.

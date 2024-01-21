@@ -10,3 +10,4 @@
  */
 export * from './model.ts';
 export * from './state.ts';
+export { jsonSchema } from './json-schema.ts';
