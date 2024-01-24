@@ -1,0 +1,17 @@
+# unless otherwise specified
+* @fussel178
+
+# specific implementations
+/.github @fussel178
+/backend-deno @pklaschka
+/backend-features @pklaschka @fussel178
+/backend-go @cb0s @fussel178
+/backend-python @cb0s
+/branding @pklaschka
+/docs @pklaschka
+/frontend-react @fussel178 @pklaschka
+
+# Root files, citation providers, and docs
+*.md @pklaschka
+.zenodo.json @pklaschka
+CITATION.cff @pklaschka
