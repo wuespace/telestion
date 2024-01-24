@@ -108,7 +108,7 @@ export function getEmptyDashboard(): readonly [
 	return [
 		id,
 		{
-			title: 'Empty Dashboard',
+			title: `Untitled (${new Date().toLocaleString()})`,
 			layout: [
 				['.', '.'],
 				['.', '.']
