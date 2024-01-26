@@ -60,6 +60,8 @@ export function ResizeButton(props: {
 								max={24}
 								placeholder="Columns"
 								defaultValue={props.defaultWidth}
+								// eslint-disable-next-line jsx-a11y/no-autofocus
+								autoFocus={true}
 							/>
 						</Form.Group>
 						<Form.Group>

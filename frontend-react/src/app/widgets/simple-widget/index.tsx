@@ -1,9 +1,15 @@
 import { z } from 'zod';
 import { SimpleWidget } from './simple-widget.tsx';
 import { Widget } from '../../../lib';
+import {
+	WidgetConfigCheckboxField,
+	WidgetConfigTextField,
+	WidgetConfigWrapper
+} from '@wuespace/telestion/widget';
 
 export type WidgetConfig = {
 	text: string;
+	bool: boolean;
 };
 
 export const simpleWidget: Widget<WidgetConfig> = {
@@ -13,9 +19,20 @@ export const simpleWidget: Widget<WidgetConfig> = {
 	createConfig(
 		input: Partial<WidgetConfig> & Record<string, unknown>
 	): WidgetConfig {
-		return { text: z.string().catch('Initial Text').parse(input.text) };
+		return z
+			.object({
+				text: z.string().catch('Initial Text'),
+				bool: z.boolean().catch(false)
+			})
+			.default({})
+			.parse(input);
 	},
 
 	element: <SimpleWidget />,
-	configElement: <div>Config</div>
+	configElement: (
+		<WidgetConfigWrapper>
+			<WidgetConfigCheckboxField label={'Bool value'} name={'bool'} />
+			<WidgetConfigTextField label={'Test Text'} name={'text'} />
+		</WidgetConfigWrapper>
+	)
 };

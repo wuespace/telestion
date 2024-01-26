@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, redirect } from 'react-router-dom';
+import { ActionFunctionArgs, generatePath, redirect } from 'react-router-dom';
 
 import { isLoggedIn } from '../../../auth';
 import { isUserDataUpToDate, loadFileContents } from '../../../utils';
@@ -80,9 +80,16 @@ export function migrationAction({
 					return { errors };
 				}
 
-			case 'blank':
-				setUserData(getBlankUserData(version));
-				return redirect('/');
+			case 'blank': {
+				const blankUserData = getBlankUserData(version);
+				const dashboardId = Object.keys(blankUserData.dashboards)[0];
+				setUserData(blankUserData);
+				return redirect(
+					generatePath('/dashboards/:dashboardId/edit', {
+						dashboardId
+					})
+				);
+			}
 			case 'existing': {
 				const oldUserData = getUserData();
 				if (!oldUserData) {

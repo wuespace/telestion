@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { generateDashboardId } from '../utils';
+import { jsonSchema } from './json-schema.ts';
 
 /**
  * A regular expression that matches semantic version numbers.
@@ -35,6 +36,7 @@ export const dashboardSchema = z.object({
 	 */
 	layout: layoutSchema
 });
+
 /**
  * Represents the schema for a widget instance.
  *
@@ -44,7 +46,7 @@ export const widgetInstanceSchema = z.object({
 	/**
 	 * The configuration of the widget.
 	 */
-	configuration: z.record(z.string(), z.unknown()),
+	configuration: z.record(z.string(), jsonSchema),
 	/**
 	 * The type ID of the widget.
 	 *
