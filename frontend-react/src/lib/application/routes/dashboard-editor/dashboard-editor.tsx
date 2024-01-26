@@ -1,9 +1,15 @@
 import { z } from 'zod';
-import { Form, useActionData, useLoaderData } from 'react-router-dom';
+import {
+	Form,
+	useActionData,
+	useLoaderData,
+	useSubmit
+} from 'react-router-dom';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 import {
 	Alert,
+	Button,
 	FormControl,
 	FormGroup,
 	FormLabel,
@@ -41,6 +47,7 @@ const actionSchema = z
 	.optional();
 
 export function DashboardEditor() {
+	const submit = useSubmit();
 	const errors = actionSchema.parse(useActionData());
 
 	const {
@@ -48,6 +55,8 @@ export function DashboardEditor() {
 		setLocalDashboard,
 		localWidgetInstances,
 		setLocalWidgetInstances,
+		dashboardTitle,
+		setDashboardTitle,
 		selectedWidgetInstance,
 		selectedWidgetId,
 		selectedWidgetType,
@@ -74,7 +83,7 @@ export function DashboardEditor() {
 		return newId;
 	}, [setLocalWidgetInstances]);
 
-	const onFormSelectChange = useCallback(
+	const onWidgetInstanceTypeChange = useCallback(
 		(event: ChangeEvent<HTMLSelectElement>) => {
 			const value = event.target.value;
 			const widgetType = getWidgetById(value);
@@ -103,6 +112,15 @@ export function DashboardEditor() {
 			setLocalWidgetInstances
 		]
 	);
+	const onDeleteDashboard = useCallback(() => {
+		if (
+			!window.confirm(
+				`Are you sure you want to delete the dashboard "${dashboardTitle}" (ID: ${dashboardId})?`
+			)
+		)
+			return;
+		submit(null, { method: 'DELETE' });
+	}, [dashboardId, dashboardTitle, submit]);
 
 	const onConfigurationChange = (
 		newConfig: z.infer<typeof widgetInstanceSchema.shape.configuration>
@@ -132,10 +150,22 @@ export function DashboardEditor() {
 						{errors.errors.layout && <p>{errors.errors.layout}</p>}
 					</Alert>
 				)}
-				<FormGroup>
+				<FormGroup className={clsx('mb-3')}>
 					<FormLabel>Dashboard ID</FormLabel>
 					<FormControl readOnly name="dashboardId" value={dashboardId} />
 				</FormGroup>
+				<FormGroup className={clsx('mb-3')}>
+					<FormLabel>Dashboard Title</FormLabel>
+					<FormControl
+						name="title"
+						value={dashboardTitle}
+						onChange={event => setDashboardTitle(event.target.value)}
+					/>
+				</FormGroup>
+				<h3>Danger Zone</h3>
+				<Button variant="danger" onClick={onDeleteDashboard}>
+					Delete Dashboard
+				</Button>
 			</section>
 			<section className={clsx(styles.layout)}>
 				<h2 className={'p-3'}>Dashboard Layout</h2>
@@ -171,7 +201,7 @@ export function DashboardEditor() {
 						<FormSelect
 							disabled={!selectedWidgetId}
 							value={selectedWidgetInstance?.type ?? ''}
-							onChange={onFormSelectChange}
+							onChange={onWidgetInstanceTypeChange}
 						>
 							{!selectedWidgetId && (
 								<option value="" disabled>
@@ -225,6 +255,7 @@ function useDashboardEditorData() {
 		z.infer<typeof loaderSchema.shape.widgetInstances>
 	>({});
 	const [dashboardId, setDashboardId] = useState('');
+	const [dashboardTitle, setDashboardTitle] = useState('');
 
 	// create the local working copy of the data whenever the loader data changes
 	useEffect(() => {
@@ -240,6 +271,7 @@ function useDashboardEditorData() {
 		});
 		setLocalWidgetInstances(widgetInstances);
 		setDashboardId(dashboardId);
+		setDashboardTitle(dashboard.title);
 	}, [loaderData]);
 
 	const selectedWidgetId = getSelectedWidgetId(localDashboard);
@@ -256,6 +288,8 @@ function useDashboardEditorData() {
 		setLocalDashboard,
 		localWidgetInstances,
 		setLocalWidgetInstances,
+		dashboardTitle,
+		setDashboardTitle,
 		selectedWidgetInstance,
 		selectedWidgetId,
 		configuration,

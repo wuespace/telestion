@@ -14,7 +14,7 @@ import {
 } from '../../../user-data';
 import { isUserDataUpToDate } from '../../../utils';
 import { TelestionOptions } from '../../model.ts';
-import { setResumeAfterLogin } from '../login';
+import { resetResumeAfterLogin, setResumeAfterLogin } from '../login';
 import { z } from 'zod';
 
 export function dashboardEditorLoader({ version }: TelestionOptions) {
@@ -80,52 +80,90 @@ export function dashboardEditorAction({ version }: TelestionOptions) {
 			});
 		}
 
-		const formData = await request.formData();
-		const rawNewLayout = formData.get('layout');
-		if (typeof rawNewLayout !== 'string') {
-			throw new Error('No layout given');
-		}
-
-		const rawNewWidgetInstances = formData.get('widgetInstances');
-		if (typeof rawNewWidgetInstances !== 'string') {
-			throw new Error('No widgetInstances given');
-		}
-
-		try {
-			const newLayout = layoutSchema.parse(JSON.parse(rawNewLayout));
-			const newWidgetInstances = z
-				.record(z.string(), widgetInstanceSchema)
-				.parse(JSON.parse(rawNewWidgetInstances));
-			const dashboard = userData.dashboards[dashboardId];
-
-			const newUserData: UserData = {
-				...userData,
-				dashboards: {
-					...userData.dashboards,
-					[dashboardId]: {
-						...dashboard,
-						layout: newLayout
-					}
-				},
-				widgetInstances: {
-					...userData.widgetInstances,
-					...newWidgetInstances
-				}
-			};
-			setUserData(newUserData);
-			return redirect(
-				generatePath('/dashboards/:dashboardId', { dashboardId })
-			);
-		} catch (err) {
-			const errors: Record<string, string> = {};
-
-			if (err instanceof Error) {
-				errors.layout = err.message;
-			} else {
-				errors.layout = JSON.stringify(err);
-			}
-
-			return { errors };
+		switch (request.method) {
+			case 'POST':
+			case 'PUT':
+				return editDashboard(request, userData, dashboardId);
+			case 'DELETE':
+				return deleteDashboard(userData, dashboardId);
+			default:
+				throw new Response(`Method "${request.method}" not allowed`, {
+					status: 405
+				}) as never;
 		}
 	};
+}
+
+async function editDashboard(
+	request: Request,
+	userData: UserData,
+	dashboardId: string
+) {
+	const formData = await request.formData();
+	const rawNewLayout = formData.get('layout');
+	if (typeof rawNewLayout !== 'string') {
+		throw new Error('No layout given');
+	}
+
+	const rawNewWidgetInstances = formData.get('widgetInstances');
+	if (typeof rawNewWidgetInstances !== 'string') {
+		throw new Error('No widgetInstances given');
+	}
+
+	const rawNewTitle = formData.get('title');
+	if (typeof rawNewTitle !== 'string') {
+		throw new Error('No title given');
+	}
+
+	try {
+		const newLayout = layoutSchema.parse(JSON.parse(rawNewLayout));
+		const newWidgetInstances = z
+			.record(z.string(), widgetInstanceSchema)
+			.parse(JSON.parse(rawNewWidgetInstances));
+		const newTitle = z.string().parse(rawNewTitle);
+		const dashboard = userData.dashboards[dashboardId];
+
+		const newUserData: UserData = {
+			...userData,
+			dashboards: {
+				...userData.dashboards,
+				[dashboardId]: {
+					...dashboard,
+					layout: newLayout,
+					title: newTitle
+				}
+			},
+			widgetInstances: {
+				...userData.widgetInstances,
+				...newWidgetInstances
+			}
+		};
+		setUserData(newUserData);
+		return redirect(generatePath('/dashboards/:dashboardId', { dashboardId }));
+	} catch (err) {
+		const errors: Record<string, string> = {};
+
+		if (err instanceof Error) {
+			errors.layout = err.message;
+		} else {
+			errors.layout = JSON.stringify(err);
+		}
+
+		return { errors };
+	}
+}
+
+function deleteDashboard(userData: UserData, dashboardId: string) {
+	const newUserData: UserData = {
+		...userData,
+		dashboards: {
+			...Object.fromEntries(
+				Object.entries(userData.dashboards).filter(([id]) => id !== dashboardId)
+			)
+		}
+	};
+	console.debug(`Deleted dashboard "${dashboardId}"`, newUserData);
+	setUserData(newUserData);
+	resetResumeAfterLogin();
+	return redirect('/');
 }
