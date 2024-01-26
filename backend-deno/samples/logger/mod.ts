@@ -1,9 +1,13 @@
 import { startService } from "https://deno.land/x/telestion/mod.ts";
 import { encode } from "https://deno.land/std@0.186.0/encoding/hex.ts";
+import { resolve } from "https://deno.land/std@0.186.0/path/mod.ts";
 
 const encoder = new TextEncoder();
 
-const { messageBus } = await startService();
+const { messageBus, dataDir } = await startService();
+
+const logFilePath = resolve(dataDir, "log.txt");
+await Deno.mkdir(dataDir, { recursive: true });
 
 const logMessages = messageBus.subscribe("log.>");
 
@@ -17,7 +21,7 @@ for await (const msg of logMessages) {
 
     console.log(`${currentTime} [${subject}] ${logMessage}`);
     await Deno.writeFile(
-      "log.txt",
+      logFilePath,
       encoder.encode(`${currentTime} [${subject}] ${logMessage}\n`),
       { append: true },
     );
