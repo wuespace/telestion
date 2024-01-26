@@ -1,0 +1,222 @@
+/*Component Variables*/
+.layoutEditor {
+	/*Variables*/
+	--keyboard-hints-bg: var(--bs-tertiary-bg);
+	--empty-cell-bg: var(--bs-secondary-bg);
+	--empty-cell-color: var(--bs-secondary);
+	--cursor-color: var(--bs-body-color);
+	--widget-instance-bg: var(--bs-teal);
+	--widget-instance-color: var(--bs-body-color);
+}
+
+[data-bs-theme='dark'] .layoutEditor {
+	--keyboard-hints-bg: var(--bs-tertiary-bg);
+	--empty-cell-bg: var(--bs-secondary-bg);
+	--empty-cell-color: var(--bs-secondary-color);
+	--cursor-color: var(--bs-body-color);
+	--widget-instance-bg: var(--bs-blue);
+	--widget-instance-color: var(--bs-body-color);
+}
+
+/*Styles*/
+.layoutEditor {
+	position: relative;
+}
+
+.grid {
+	/*Input Props*/
+	--width: 4; /* Number of columns */
+	--height: 4; /* Number of rows */
+	--gap: 4; /* Gap between cells in pixels */
+
+	/*Styles*/
+	display: grid;
+	grid-template-columns: repeat(var(--width), 1fr);
+	grid-template-rows: repeat(var(--height), 1fr);
+	aspect-ratio: 16 / 9;
+	gap: calc(var(--gap) * 1px);
+	margin: 1em;
+
+	/*Interactivity*/
+
+	&:focus {
+		outline: 2px solid var(--bs-focus-ring-color);
+	}
+}
+
+.emptyCell {
+	/*Input props*/
+	--x: 1; /* Column Index (0-based) */
+	--y: 1; /* Row Index (0-based) */
+
+	/*Styles*/
+	grid-area: calc(var(--y) + 1) / calc(var(--x) + 1) / span 1 / span 1;
+	background: var(--empty-cell-bg);
+	color: var(--empty-cell-color);
+
+	/*Interactivity*/
+	position: relative;
+	cursor: pointer;
+	user-select: none;
+}
+
+.emptyCellContent {
+	/*Positioning*/
+	position: absolute;
+	inset: 1em;
+	overflow: hidden;
+
+	/*Text size*/
+	font-size: 1.3em;
+
+	/*Center everything*/
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	/*Interactivity*/
+	opacity: 0;
+	@media (prefers-reduced-motion: no-preference) {
+		will-change: opacity;
+		transition: opacity 0.1s ease-in-out;
+	}
+}
+
+.emptyCell:hover .emptyCellContent {
+	opacity: 1;
+}
+
+.cursor {
+	/*Input props*/
+	--x: 1; /* Column Index (0-based) */
+	--y: 1; /* Row Index (0-based) */
+
+	/*Styles*/
+	grid-area: calc(var(--y) + 1) / calc(var(--x) + 1) / span 1 / span 1;
+	width: 100%;
+	height: 100%;
+
+	color: var(--cursor-color);
+	background: url('./cursor.svg') no-repeat center center / contain;
+
+	pointer-events: none;
+	z-index: 2;
+
+	/*Hide unless focused*/
+	opacity: 0;
+	@media (prefers-reduced-motion: no-preference) {
+		will-change: opacity;
+		transition: opacity 0.1s ease-in-out;
+	}
+}
+
+:focus .cursor {
+	opacity: 0.3;
+}
+
+.widgetInstance {
+	/*Input props*/
+	--x: 1; /* Column Index (0-based) */
+	--y: 1; /* Row Index (0-based) */
+	--width: 1; /* Number of columns */
+	--height: 1; /* Number of rows */
+
+	/*Styles*/
+
+	/*positioning*/
+	grid-area: calc(var(--y) + 1) / calc(var(--x) + 1) / span var(--height) / span
+		var(--width);
+
+	/*styling the widget instance itself*/
+	background: var(--widget-instance-bg);
+	color: var(--widget-instance-color);
+
+	/*center the content*/
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	/*show the resize handle*/
+	position: relative;
+	overflow: visible;
+
+	/*make sure the text can't "blow out" the grid*/
+	min-width: 0;
+	min-height: 0;
+	/*max-width: 100%;*/
+
+	cursor: pointer;
+
+	&.isSelected,
+	&.isDragged {
+		border: 2px solid;
+		border-color: var(--widget-instance-color);
+		cursor: move;
+		z-index: 1;
+	}
+
+	&.isDragged {
+		z-index: 2;
+	}
+}
+
+.widgetInstanceLabel {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: center;
+}
+
+.resizeHandle {
+	position: absolute;
+	bottom: -0.5em;
+	right: -0.5em;
+	width: 1em;
+	height: 1em;
+	background: var(--widget-instance-color);
+	cursor: nwse-resize;
+}
+
+.actionButtons {
+	--padding: 1em;
+	padding: var(--padding) var(--padding) 0;
+	display: flex;
+	justify-content: end;
+	gap: 1em;
+	flex-wrap: wrap;
+}
+
+.layoutEditorKeyboardHints {
+	min-height: 3lh;
+	opacity: 0;
+	padding: 0.5em 1em;
+	margin: 0;
+
+	position: absolute;
+	bottom: 0;
+	left: 1em;
+	right: 1em;
+	transform: translateY(100%);
+
+	background: var(--keyboard-hints-bg);
+	outline: 2px solid var(--bs-focus-ring-color);
+
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+
+	pointer-events: none;
+
+	@media (prefers-reduced-motion: no-preference) {
+		will-change: opacity;
+		transition: opacity 0.1s ease-in-out;
+	}
+}
+
+.layoutEditorKeyboardHints kbd {
+	white-space: nowrap;
+}
+
+.grid:focus + .layoutEditorKeyboardHints {
+	opacity: 1;
+}

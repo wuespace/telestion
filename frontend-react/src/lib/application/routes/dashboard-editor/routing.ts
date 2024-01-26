@@ -9,11 +9,13 @@ import {
 	getUserData,
 	layoutSchema,
 	setUserData,
-	UserData
+	UserData,
+	widgetInstanceSchema
 } from '../../../user-data';
 import { isUserDataUpToDate } from '../../../utils';
 import { TelestionOptions } from '../../model.ts';
 import { setResumeAfterLogin } from '../login';
+import { z } from 'zod';
 
 export function dashboardEditorLoader({ version }: TelestionOptions) {
 	return ({ params }: LoaderFunctionArgs) => {
@@ -48,7 +50,8 @@ export function dashboardEditorLoader({ version }: TelestionOptions) {
 
 		return {
 			dashboardId,
-			dashboard: userData.dashboards[dashboardId]
+			dashboard: userData.dashboards[dashboardId],
+			widgetInstances: userData.widgetInstances
 		};
 	};
 }
@@ -83,8 +86,16 @@ export function dashboardEditorAction({ version }: TelestionOptions) {
 			throw new Error('No layout given');
 		}
 
+		const rawNewWidgetInstances = formData.get('widgetInstances');
+		if (typeof rawNewWidgetInstances !== 'string') {
+			throw new Error('No widgetInstances given');
+		}
+
 		try {
 			const newLayout = layoutSchema.parse(JSON.parse(rawNewLayout));
+			const newWidgetInstances = z
+				.record(z.string(), widgetInstanceSchema)
+				.parse(JSON.parse(rawNewWidgetInstances));
 			const dashboard = userData.dashboards[dashboardId];
 
 			const newUserData: UserData = {
@@ -95,6 +106,10 @@ export function dashboardEditorAction({ version }: TelestionOptions) {
 						...dashboard,
 						layout: newLayout
 					}
+				},
+				widgetInstances: {
+					...userData.widgetInstances,
+					...newWidgetInstances
 				}
 			};
 			setUserData(newUserData);

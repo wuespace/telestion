@@ -1,3 +1,18 @@
+/*
+Set the main background color to a non-default-body-background color.
+
+This way, widgets and other elements can use the default body background color, allowing to use the design system as
+if it got applied immediately on the body while being in a visible wrapper / widget / card / ...
+*/
+.pageBackground {
+	background-color: #eee;
+}
+
+[data-bs-theme='dark'] .pageBackground {
+	background-color: black;
+}
+
+/*Layout, etc.*/
 .nav {
 	height: var(--navbar-height);
 }
