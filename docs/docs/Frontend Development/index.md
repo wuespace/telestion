@@ -25,7 +25,7 @@ Now, add the following files to your directory:
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "@wuespace/telestion": "^1.0.0-alpha.2",// (1)!
+    "@wuespace/telestion": "^1.0.0-alpha.4",// (1)!
     "react": "^18.2.0",
     "zod": "^3.22.4"// (2)!
   },
