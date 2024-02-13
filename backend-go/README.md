@@ -65,6 +65,14 @@ the [Behavior Specification](https://docs.telestion.wuespace.de/Backend%20Develo
 This specification is also used to test the library.
 The source code of the tests can be found in the repository under `/backend-features`.
 
+## Releasing a new version
+
+To release a new version of the Go library, a special tag has to be created next to the main release tag. For example, if the released version tag is `v1.0.0-alpha.0`, a second tag (prefixed with the subdirectory) has to be created: `backend-go/v1.0.0-alpha.0`. Otherwise, the Go package registry doesn't detect the new version.
+
+> If a module is defined in a subdirectory within the repository, that is, the module subdirectory portion of the module path is not empty, then each tag name must be prefixed with the module subdirectory, followed by a slash. For example, the module golang.org/x/tools/gopls is defined in the gopls subdirectory of the repository with root path golang.org/x/tools. The version v0.4.0 of that module must have the tag named gopls/v0.4.0 in that repository.
+
+-- https://go.dev/ref/mod#vcs-version
+
 ## License
 
 This project is licensed under the terms of the [MIT license](LICENSE).
