@@ -12,10 +12,15 @@ from telestion.backend.config import TelestionConfig, build_config
 
 @dataclass
 class Service:
+    """Helper Class for starting NATS clients also exposing the parsed config."""
     nc: NatsClient | None   # None if Options.nats = False
+    """Configured and started NATS client for this service."""
     data_dir: Path
+    """Directory where all data (temporary and persistent) should be stored."""
     service_name: str
+    """Name of this service. Note that it is not necessarily unique!"""
     config: TelestionConfig
+    """TelestionConfig instance for this service """
 
     # wrapper methods for NatsClient instance for convenience
     async def publish(self, **kwargs) -> None:
@@ -45,18 +50,25 @@ class Service:
 
 @dataclass
 class Options:
+    """Storing a custom configuration which overwrites the parsed config during startup of the Telestion service."""
     nats: bool = True
+    """Whether a service should use nats. If set to False no nats client is set up during startup"""
     # (officially) we don't support int keys, btw...
     overwrite_args: dict[str, Any] | None = None
+    """Arguments overwriting the parsed config of a service."""
     custom_nc: NatsClient | None = None
+    """Custom nats client. During startup no configuration takes place if present."""
 
     def without_nats(self) -> 'Options':
-        return replace(self, nats=False)
+        """Returns a copy of this Options instance with nats switched off."""
+        return replace(self, nats=False, custom_nc=None)
 
     def with_overwrite_args(self, **kwargs) -> 'Options':
+        """Returns a copy of this Options instance with different custom arguments."""
         return replace(self, overwrite_args=kwargs)
 
     def with_custom_nc(self, nats_client: NatsClient) -> 'Options':
+        """Returns a copy of this Options instance with a custom client."""
         return replace(self, custom_nc=nats_client)
 
 
@@ -79,12 +91,13 @@ async def setup_healthcheck(nc: NatsClient, service_name: str) -> NatsClient:
 
 
 async def start_service(opts: Options = None) -> Service:
+    """Creates a Service for the given Options and the parsed config and spins up a new NATS client if configured so."""
     if opts is None:
         opts = Options()
 
     config = build_config()
     if opts.overwrite_args is not None:
-        config.update(opts.overwrite_args)
+        config = config.model_copy(update=opts.overwrite_args)
 
     service = Service(opts.custom_nc, config.data_dir, config.service_name, config)
 
