@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from typing import Any, TypeVar
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class TelestionConfig(BaseModel):
@@ -19,12 +19,20 @@ class TelestionConfig(BaseModel):
 
     unparsed_cli: list[str] = Field(alias="_telestion_validator_unparsed_cli")
 
+    # To include all envs and config parts -> it is recommended to add a custom subtype
+    model_config = ConfigDict(
+        extra='allow'
+    )
+
 
 # With this we allow users to extend TelestionConfig for finer control over custom config fields
-_TelestionConfigT = TypeVar("_TelestionConfigT", bound=TelestionConfig, default=TelestionConfig)
+_TelestionConfigT = TypeVar("_TelestionConfigT", bound=TelestionConfig)
 
 
-def build_config() -> _TelestionConfigT:
+def build_config(clazz: type[_TelestionConfigT] = None) -> _TelestionConfigT:
+    if clazz is None:
+        clazz = TelestionConfig
+
     cli_args, additional_args = _parse_cli()
 
     def _from_env_or_cli(key: str):
@@ -34,7 +42,7 @@ def build_config() -> _TelestionConfigT:
     config_key = _from_env_or_cli('CONFIG_KEY')
 
     config_assembly: dict[str, Any] = dict()
-    if 'dev' in cli_args:
+    if 'dev' in cli_args and cli_args['dev']:
         # 1. Add default config
         config_assembly.update(defaults())
 
@@ -52,7 +60,7 @@ def build_config() -> _TelestionConfigT:
     # 5. Add args that cannot be parsed by the pipeline, i.e. service specific config
     config_assembly['_telestion_validator_unparsed_cli'] = additional_args
 
-    return TelestionConfig(**config_assembly)
+    return clazz(**config_assembly)
 
 
 def defaults() -> dict[str, Any]:
@@ -71,6 +79,7 @@ def _parse_cli() -> tuple[dict[str, Any], list[str]]:
         description=description,
         epilog=epilog,
         prog="Telestion-CLI (Python)",
+        argument_default=argparse.SUPPRESS
     )
 
     parser.add_argument("--dev", action='store_true', help="If set, program will start in development mode")

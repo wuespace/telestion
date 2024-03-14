@@ -4,7 +4,8 @@ from pathlib import Path
 from typing import Any
 
 import nats
-from nats.aio.client import Client as NatsClient  # mostly for type hinting
+from nats.aio.client import Client as NatsClient, Msg as NatsMsg, DEFAULT_FLUSH_TIMEOUT  # mostly for type hinting
+from nats.aio.subscription import Subscription
 
 from telestion.backend.config import TelestionConfig, build_config
 
@@ -15,6 +16,31 @@ class Service:
     data_dir: Path
     service_name: str
     config: TelestionConfig
+
+    # wrapper methods for NatsClient instance for convenience
+    async def publish(self, **kwargs) -> None:
+        """Wrapper for https://nats-io.github.io/nats.py/modules.html#nats.aio.client.Client.publish"""
+        await self.nc.publish(**kwargs)
+
+    async def subscribe(self, **kwargs) -> Subscription:
+        """Wrapper for https://nats-io.github.io/nats.py/modules.html#nats.aio.client.Client.subscribe"""
+        return await self.nc.subscribe(**kwargs)
+
+    async def request(self, **kwargs) -> NatsMsg:
+        """Wrapper for Client.request(subject, payload, timeout, old_style, headers)"""
+        return await self.nc.request(**kwargs)
+
+    async def flush(self, timeout: int = DEFAULT_FLUSH_TIMEOUT) -> None:
+        """Wrapper for https://nats-io.github.io/nats.py/modules.html#nats.aio.client.Client.flush"""
+        await self.nc.flush(timeout)
+
+    async def drain(self) -> None:
+        """Wrapper for https://nats-io.github.io/nats.py/modules.html#nats.aio.client.Client.drain"""
+        await self.nc.drain()
+
+    async def close(self) -> None:
+        """Wrapper for https://nats-io.github.io/nats.py/modules.html#nats.aio.client.Client.close"""
+        await self.nc.close()
 
 
 @dataclass
@@ -47,16 +73,22 @@ async def start_service(opts: Options = None) -> Service:
     if not opts.nats or opts.custom_nc is not None:
         return service
 
-    nc = await nats.connect(servers=_prepare_nats_url(config))
+    async def error_cb(err):
+        print(err)
+
+    nc = await nats.connect(servers=_prepare_nats_url(config), error_cb=error_cb)
     # Setup healthcheck
-    await nc.subscribe(
-        '__telestion__.health',
-        cb=lambda msg: msg.respond(
+    async def respond(msg):
+        msg.respond(
             json_encode({
                 "errors": 0,
                 "name": config.service_name
             })
         )
+
+    await nc.subscribe(
+        '__telestion__.health',
+        cb=respond
     )
 
     return replace(service, nc=nc)
