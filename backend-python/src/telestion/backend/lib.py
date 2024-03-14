@@ -60,6 +60,24 @@ class Options:
         return replace(self, custom_nc=nats_client)
 
 
+async def setup_healthcheck(nc: NatsClient, service_name: str) -> NatsClient:
+    """Sets up __telestion__.health for a NatsClient. Returns NatsClient for fluent API."""
+    async def _respond_hc(msg):
+        msg.respond(
+            json_encode({
+                "errors": 0,
+                "name": service_name
+            })
+        )
+
+    await nc.subscribe(
+        '__telestion__.health',
+        cb=_respond_hc
+    )
+
+    return nc
+
+
 async def start_service(opts: Options = None) -> Service:
     if opts is None:
         opts = Options()
@@ -73,25 +91,9 @@ async def start_service(opts: Options = None) -> Service:
     if not opts.nats or opts.custom_nc is not None:
         return service
 
-    async def error_cb(err):
-        print(err)
+    nc = await nats.connect(servers=_prepare_nats_url(config))
 
-    nc = await nats.connect(servers=_prepare_nats_url(config), error_cb=error_cb)
-    # Setup healthcheck
-    async def respond(msg):
-        msg.respond(
-            json_encode({
-                "errors": 0,
-                "name": config.service_name
-            })
-        )
-
-    await nc.subscribe(
-        '__telestion__.health',
-        cb=respond
-    )
-
-    return replace(service, nc=nc)
+    return replace(service, nc=await setup_healthcheck(nc, config.service_name))
 
 
 # Macros
