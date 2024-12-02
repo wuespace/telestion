@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 site_name: Telestion Documentation
+site_url: https://docs.telestion.wuespace.de
 
 repo_url: https://github.com/wuespace/telestion
 repo_name: wuespace/telestion
