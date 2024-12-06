@@ -1,95 +1,114 @@
-import * as nats from "https://deno.land/x/nats@v1.13.0/src/mod.ts";
-import {parse} from "https://deno.land/std@0.183.0/flags/mod.ts";
-import {parse as parseJSON} from "https://deno.land/std@0.183.0/jsonc/mod.ts";
-import {z} from "https://deno.land/x/zod@v3.21.4/mod.ts";
-import {resolve} from "https://deno.land/std@0.183.0/path/mod.ts";
+import type { NatsConnection } from "@nats-io/nats-core";
+import * as natsTransport from "@nats-io/transport-deno";
+import { parseArgs } from "@std/cli";
+import { parse as parseJSON } from "@std/jsonc";
+import { resolve } from "@std/path";
+import { z, type ZodSchema, type ZodTypeDef } from "zod";
 
 let args = Deno.args;
-let natsModule = nats;
+let natsModule = natsTransport;
 
 /**
- * The NATS `JSONCodec`, re-exported for convenience.
- * 
- * See https://docs.nats.io/using-nats/developer/receiving/structure for details.
- * 
- * @example Encoding data into a `Uint8Array` to publish it to NATS
- * ```ts
- * import {JSONCodec} from "https://deno.land/x/telestion/mod.ts";
- * 
- * const codec = JSONCodec();
- * 
- * const encoded = codec.encode({foo: "bar"});
- * console.log(encoded); // Uint8Array(13)
- * ```
- * 
- * @example Decoding a `Uint8Array` received from NATS
- * ```ts
- * import {JSONCodec} from "https://deno.land/x/telestion/mod.ts";
- * 
- * const codec = JSONCodec();
- * 
- * const decoded = codec.decode(msg.data);
- * console.log(decoded); // {foo: "bar"}
- * ```
+ * Options passed to the {@link startService} function.
+ *
+ * ### Properties
+ * - {@link StartServiceConfig.nats}
+ * - {@link StartServiceConfig.overwriteArgs}
+ * - {@link StartServiceConfig.natsMock}
+ *
+ * @see {@link startService}
  */
-export const JSONCodec = nats.JSONCodec;
+interface StartServiceConfig {
+  /**
+   * Whether to enable NATS or not. Disabling NATS can be useful during development.
+   * @default true
+   */
+  nats: boolean;
+  /**
+   * An array of arguments that should overwrite the CLI arguments. Useful for testing.
+   */
+  overwriteArgs?: string[];
+  /**
+   * A mock for the NATS module. Useful for testing.
+   */
+  natsMock?: unknown;
+}
 
-const StartServiceConfigSchema = z.object({
+const StartServiceConfigSchema: ZodSchema<
+  StartServiceConfig,
+  ZodTypeDef,
+  Partial<StartServiceConfig>
+> = z.object({
   nats: z.boolean().default(true),
   overwriteArgs: z.array(z.string()).optional(),
   natsMock: z.unknown().optional(),
 });
 
 /**
+ * The minimal configuration for a Telestion service. Returned as `config` property by {@link startService}.
+ *
+ * ### Properties
+ * - {@link MinimalConfig.NATS_URL}
+ * - {@link MinimalConfig.NATS_USER}
+ * - {@link MinimalConfig.NATS_PASSWORD}
+ * - {@link MinimalConfig.SERVICE_NAME}
+ * - {@link MinimalConfig.DATA_DIR}
+ *
+ * Can also contain additional properties under `MinimalConfig[key: string]: unknown`.
+ */
+export interface MinimalConfig {
+  /**
+   * The URL of the NATS server.
+   */
+  NATS_URL: string;
+  /**
+   * The username for the NATS server.
+   */
+  NATS_USER?: string;
+  /**
+   * The password for the NATS server.
+   */
+  NATS_PASSWORD?: string;
+  /**
+   * The name of the service.
+   */
+  SERVICE_NAME: string;
+  /**
+   * The path to the data directory.
+   */
+  DATA_DIR: string;
+  /**
+   * Additional properties.
+   */
+  [key: string]: unknown;
+}
+
+/**
  * The minimal configuration for a Telestion service. Gets used internally by {@link startService}.
- * 
+ *
  * See {@link MinimalConfig} for details about the resulting configuration object.
- * 
+ *
  * @example Manually parsing the configuration
  * ```ts
  * import {MinimalConfigSchema} from "https://deno.land/x/telestion/mod.ts";
- * 
+ *
  * const rawConfig: unknown = Deno.env.toObject();
- * 
+ *
  * const config = MinimalConfigSchema.parse(rawConfig);
  * console.log(config.SERVICE_NAME); // "my-service"
  * ```
  */
-export const MinimalConfigSchema = z.object({
+export const MinimalConfigSchema: ZodSchema<
+  MinimalConfig,
+  ZodTypeDef,
+  MinimalConfig
+> = z.object({
   NATS_URL: z.string(),
   NATS_USER: z.string().optional(),
   NATS_PASSWORD: z.string().optional(),
   SERVICE_NAME: z.string(),
   DATA_DIR: z.string(),
 }).passthrough();
-
-/**
- * The minimal configuration for a Telestion service. Returned as `config` property by {@link startService}.
- * 
- * ### Properties
- * - `NATS_URL: string` The URL of the NATS server.
- * - `NATS_USER?: string` The username for the NATS server.
- * - `NATS_PASSWORD?: string` The password for the NATS server.
- * - `SERVICE_NAME: string` The name of the service.
- * - `DATA_DIR: string` The path to the data directory.
- * 
- * Can also contain additional properties under `MinimalConfig[key: string]: unknown`.
- */
-export type MinimalConfig = z.infer<typeof MinimalConfigSchema>;
-
-// Development mode => use default values
-
-/**
- * Options passed to the {@link startService} function.
- * 
- * ### Properties
- * - `nats: boolean = true` Whether to enable NATS or not. Disabling NATS can be useful during development.
- * - `overwriteArgs?: string[]` An array of arguments that should overwrite the CLI arguments. Useful for testing.
- * - `natsMock?: unknown` A mock for the NATS module. Useful for testing.
- * 
- * @see {@link startService}
- */
-export type StartServiceConfig = z.infer<typeof StartServiceConfigSchema>;
 
 /**
  * Starts the service and returns the APIs available to the Telestion service.
@@ -119,11 +138,18 @@ export type StartServiceConfig = z.infer<typeof StartServiceConfigSchema>;
  * ```
  */
 export async function startService(
-  rawOptions: z.input<typeof StartServiceConfigSchema> = StartServiceConfigSchema.parse({}),
-) {
+  rawOptions: z.input<typeof StartServiceConfigSchema> =
+    StartServiceConfigSchema.parse({}),
+): Promise<{
+  nc: NatsConnection;
+  messageBus: NatsConnection;
+  dataDir: string;
+  serviceName: string;
+  config: MinimalConfig;
+}> {
   const options = StartServiceConfigSchema.parse(rawOptions);
   args = options.overwriteArgs ?? Deno.args;
-  natsModule = options.natsMock as typeof nats ?? nats;
+  natsModule = options.natsMock as typeof natsTransport ?? natsTransport;
 
   const config = assembleConfig();
 
@@ -148,7 +174,7 @@ export async function startService(
  * Assembles the configuration for the service.
  */
 function assembleConfig() {
-  const flags = parse(args);
+  const flags = parseArgs(args);
 
   /**
    * Configuration parameters that are passed via environment variables or command line arguments.
@@ -199,21 +225,21 @@ function ensureMinimalConfig(rawConfig: unknown) {
   try {
     return MinimalConfigSchema.parse(rawConfig);
   } catch (e) {
-    const flags = parse(args);
+    const flags = parseArgs(args);
     console.error("Missing required configuration parameters.");
-    console.info(`Details: ${e.message}`);
+    console.info(`Details: ${e}`);
 
     if (!flags["dev"]) {
       console.info(
         'Run with "--dev" to use default values for missing environment variables during development.',
       );
     }
-    Deno.exit(1);
+    throw e;
   }
 }
 
 function getDefaultConfig() {
-  const flags = parse(args);
+  const flags = parseArgs(args);
   if (!flags["dev"]) {
     return {};
   }
@@ -243,7 +269,7 @@ async function initializeNats(config: MinimalConfig) {
           return;
         }
         msg.respond(
-          JSONCodec().encode({
+          JSON.stringify({
             name: config.SERVICE_NAME,
           }),
         );
@@ -252,7 +278,7 @@ async function initializeNats(config: MinimalConfig) {
     return { nc, messageBus: nc };
   } catch (e) {
     console.error(
-      `Error! Couldn't connect to the message bus. Details: ${e.message}`,
+      `Error! Couldn't connect to the message bus. Details: ${e}`,
     );
     throw e;
   }

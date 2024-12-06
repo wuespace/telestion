@@ -1,5 +1,5 @@
-import { JSONCodec, startService } from "https://deno.land/x/telestion/mod.ts";
-import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
+import { JSONCodec, startService } from "jsr:@wuespace/telestion";
+import { z } from "npm:zod";
 
 const { messageBus, config } = await startService();
 
