@@ -24,7 +24,7 @@ export function getUserData() {
 
 	try {
 		return userDataSchema.parse(JSON.parse(storedData));
-	} catch (err) {
+	} catch {
 		// don't throw to trigger no data user flow
 		console.warn('Cannot parse or validate locally stored user data.');
 		return undefined;

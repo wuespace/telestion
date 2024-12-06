@@ -43,9 +43,7 @@ export function dashboardEditorLoader({ version }: TelestionOptions) {
 		}
 
 		if (!(dashboardId in userData.dashboards)) {
-			throw new Response(`Dashboard "${dashboardId}" does not exist`, {
-				status: 404
-			});
+			throw new Error(`Dashboard "${dashboardId}" does not exist`);
 		}
 
 		return {
@@ -75,9 +73,7 @@ export function dashboardEditorAction({ version }: TelestionOptions) {
 		}
 
 		if (!(dashboardId in userData.dashboards)) {
-			throw new Response(`Dashboard "${dashboardId}" does not exist`, {
-				status: 404
-			});
+			throw new Error(`Dashboard "${dashboardId}" does not exist`);
 		}
 
 		switch (request.method) {
@@ -87,9 +83,8 @@ export function dashboardEditorAction({ version }: TelestionOptions) {
 			case 'DELETE':
 				return deleteDashboard(userData, dashboardId);
 			default:
-				throw new Response(`Method "${request.method}" not allowed`, {
-					status: 405
-				}) as never;
+				// eslint-disable-next-line @typescript-eslint/only-throw-error
+				throw new Error(`Method "${request.method}" not allowed`) as never;
 		}
 	};
 }

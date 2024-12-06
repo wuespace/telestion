@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-deprecated */
 import {
 	getNatsConnection,
 	getUser,
@@ -39,19 +40,19 @@ export async function login(
 
 	try {
 		natsUrl = natsUrlSchema.parse(natsUrl);
-	} catch (err) {
+	} catch {
 		errorMessages.natsUrlMessage = 'Invalid backend URL';
 	}
 
 	try {
 		username = credentialsSchema.parse(username);
-	} catch (err) {
+	} catch {
 		errorMessages.usernameMessage = 'User does not exist';
 	}
 
 	try {
 		password = credentialsSchema.parse(password);
-	} catch (err) {
+	} catch {
 		errorMessages.passwordMessage = 'Invalid password';
 	}
 
@@ -82,6 +83,7 @@ export async function login(
 		setUser({ natsUrl, username });
 		setNatsConnection(nc);
 
+		// eslint-disable-next-line @typescript-eslint/no-deprecated
 		setAutoLoginCredentials({
 			natsUrl,
 			username,

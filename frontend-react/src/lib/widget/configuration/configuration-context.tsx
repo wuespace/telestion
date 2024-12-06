@@ -1,4 +1,4 @@
-import { createContext, SetStateAction, useContext } from 'react';
+import { createContext, ReactNode, SetStateAction, useContext } from 'react';
 import {
 	BaseWidgetConfiguration,
 	WidgetConfigurationContextValue
@@ -68,7 +68,7 @@ export function WidgetConfigurationContextProvider(props: {
 	 *
 	 * This should be the widget configuration controls.
 	 */
-	children: React.ReactNode;
+	children: ReactNode;
 }) {
 	const onSetConfiguration = (
 		newConfig: SetStateAction<BaseWidgetConfiguration>

@@ -30,6 +30,7 @@ const defaultUserData: UserData = {
 
 registerWidgets(simpleWidget, errorWidget);
 
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 setAutoLoginCredentials({
 	natsUrl: 'ws://localhost:9222',
 	username: 'nats',

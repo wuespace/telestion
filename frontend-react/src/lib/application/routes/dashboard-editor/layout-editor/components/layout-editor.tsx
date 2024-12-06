@@ -166,9 +166,9 @@ export function LayoutEditor(props: LayoutEditorProps) {
 				<div
 					className={clsx(styles.grid)}
 					style={{
-						'--width': `${width}`,
-						'--height': `${height}`,
-						'--gap': `${gap}`
+						'--width': width.toString(),
+						'--height': height.toString(),
+						'--gap': gap.toString()
 					}}
 					tabIndex={0}
 					onKeyDown={onKeyDown}
@@ -178,7 +178,7 @@ export function LayoutEditor(props: LayoutEditorProps) {
 					{props.value.layout.map((row, y) =>
 						row.map((_, x) => (
 							<EmptyCell
-								key={`${x},${y}`}
+								key={`${x.toString()},${y.toString()}`}
 								y={y}
 								x={x}
 								ref={x + y === 0 ? singleCellRef : undefined}
