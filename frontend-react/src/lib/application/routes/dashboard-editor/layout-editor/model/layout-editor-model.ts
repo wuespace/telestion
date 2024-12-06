@@ -89,7 +89,7 @@ export function fillWith(
 						isAscending(x, columnIndex, x + width - 1) // in fill area
 							? widgetId
 							: cell
-				  )
+					)
 				: row
 		)
 	};
