@@ -8,6 +8,8 @@ import { widgetConfigContext } from '../../widget';
  * @returns The widget configuration retrieved from the widgetConfigContext.
  * @throws Error Throws an error if useWidgetConfig is not used within a WidgetConfigProvider.
  */
+// The type is safe due to the surrounding application structure.
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export function useWidgetConfig<T>(): T {
 	const widgetConfig = useContext(widgetConfigContext);
 	if (!widgetConfig) {

@@ -83,7 +83,6 @@ export async function login(
 		setUser({ natsUrl, username });
 		setNatsConnection(nc);
 
-		// eslint-disable-next-line @typescript-eslint/no-deprecated
 		setAutoLoginCredentials({
 			natsUrl,
 			username,
