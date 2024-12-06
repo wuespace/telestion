@@ -21,7 +21,7 @@ All you need to do compared to the previous examples is to omit the `{ nats: fal
 ```typescript title="service.ts"
 import {
     startService
-} from "https://deno.land/x/telestion/mod.ts";
+} from "jsr:@wuespace/telestion";
 
 const {nc/* (1)! */} = await startService(/* (2)! */);
 ```
@@ -56,24 +56,18 @@ To send a JSON message, you need to create a JSON object and pass it to the `pub
 
 ```typescript title="service.ts"
 import {
-    JSONCodec,
     startService
-} from "https://deno.land/x/telestion/mod.ts";
-// or: import { JSONCodec } from "https://deno.land/x/nats/src/mod.ts";
+} from "jsr:@wuespace/telestion";
 
 const {nc} = await startService();
 
-const jsonCodec = JSONCodec();//(2)!
-
-await nc.publish("subject", jsonCodec.encode/*(3)!*/({
+await nc.publish("subject", JSON.stringify/*(1)!*/({
     foo: "some arbitrary JSON-compatible data",
     bar: 42
 }));
 ```
 
-1. Import the `JSONCodec` (for convenience, this gets re-exported by the `lib.ts`, but you can also import it directly from the NATS library).
-2. Create a new `JSONCodec` instance.
-3. Encode the JSON object using the `JSONCodec` instance.
+1. Encode the object into a JSON `string`.
 
 ### Binary Messages
 
@@ -82,7 +76,7 @@ To send a binary message, you need to create a `Uint8Array` containing the bytes
 ```typescript title="service.ts"
 import {
     startService
-} from "https://deno.land/x/telestion/mod.ts";
+} from "jsr:@wuespace/telestion";
 
 const {nc} = await startService();
 
@@ -99,7 +93,7 @@ There are multiple ways to subscribe to messages on a subject. The most common w
 ```typescript title="service.ts"
 import {
     startService
-} from "https://deno.land/x/telestion/mod.ts";
+} from "jsr:@wuespace/telestion";
 
 const {nc} = await startService();
 
@@ -119,22 +113,19 @@ Unfortunately, this won't decode our JSON messages automatically. We need to do 
 
 ```typescript title="service.ts"
 import {
-    JSONCodec,
     startService
-} from "https://deno.land/x/telestion/mod.ts";
+} from "jsr:@wuespace/telestion";
 
 const {nc} = await startService();
 
-const jsonCodec = JSONCodec();
-
 const subjectSubscription = await nc.subscribe("subject");
 for await (const message of subjectSubscription) {
-    const jsonMessage = jsonCodec.decode(message.data);//(1)!
+    const jsonMessage = message.json();//(1)!
     console.log(jsonMessage.foo);//(2)!
 }
 ```
 
-1. Decode the message data using the `JSONCodec` instance.
+1. Decode the message payload using the built-in `json()` method. This will decode the message data if it's a JSON message and throw an error if it's not.
 2. Print the `foo` property of the decoded JSON message to the console.
 
 !!! danger
@@ -150,14 +141,14 @@ A Telestion service must validate all messages it receives. This is to ensure th
 
 #### Validating the message type
 
-The first "layer" of validation is the message type. A message can either be a JSON message or a binary message. The `jsonCodec.decode` function will throw an error if the message data is not a valid JSON message. Therefore, we can use a `try`/`catch` block to catch the error and handle it accordingly:
+The first "layer" of validation is the message type. A message can either be a JSON message or a binary message. The `Msg.json()` function will throw an error if the message data is not a valid JSON message. Therefore, we can use a `try`/`catch` block to catch the error and handle it accordingly:
 
 ```typescript title="service.ts"
 // ...
 
 for await (const message of subjectSubscription) {
     try/*(3)!*/{
-        const jsonMessage = jsonCodec.decode(message.data);
+        const jsonMessage = message.json();
         console.log(jsonMessage.foo);
     } catch (_e) {
         console.error/*(2)!*/("Received invalid message:", message);
@@ -165,12 +156,12 @@ for await (const message of subjectSubscription) {
 }
 ```
 
-1. Catch the error thrown by `jsonCodec.decode`.
+1. Catch the error thrown by `Msg.json()`.
 2. Print the error message to the console (or do whatever else you want to do when you receive an invalid message).
 3. Wrap the code that decodes the message in a `try`/`catch` block.
 
 !!! note "Binary Messages"
-	Since any messages get sent as binary messages (in fact, the `JSONCodec` does nothing else than convert the JSON message to a `Uint8Array` and back), there's no way to validate that a message is supposed to be a binary message. This makes the next section even more important.
+	Since any messages get sent as binary messages (in fact, the `json()` function does nothing else than convert the JSON message from a `Uint8Array`), there's no way to validate that a message is supposed to be a binary message. This makes the next section even more important.
 
 #### Validating the message structure
 
@@ -223,7 +214,7 @@ import {
 for await (const message of subjectSubscription) {
     try {
         const jsonMessage = fooMessageSchema.parse/*(1)!*/(
-            jsonCodec.decode(message.data)
+            message.json()
         );
 
         console.log(jsonMessage/*(2)!*/.foo);
@@ -392,16 +383,16 @@ const kvMessages = nc.subscribe/*(1)!*/("kv.>");
             if (action === "get") {
                 // retrieve the value from the store
                 message.respond(
-                    jsonCodec.encode(store[key])
+                    JSON.stringify(store[key])
                 );
             } else if (action === "set") {
                 // set the value in the store
-                store[key] = jsonCodec.decode(message.data);
-                message.respond(jsonCodec.encode({ok: true});
+                store[key] = message.json();
+                message.respond(JSON.stringify({ok: true});
             }
         } catch (error) {
             message.respond(
-                jsonCodec.encode({error: error.message})
+                JSON.stringify({error: error.message})
             );
         }
     }
@@ -433,7 +424,7 @@ Let's start by looking at how we can send a request. We can use the `request` me
 
 const response = await nc.request/*(1)!*/(
     "fooRequest"/*(2)!*/,
-    jsonCodec.encode({foo: "bar"})/*(3)!*/
+    JSON.stringify({foo: "bar"})/*(3)!*/
 );
 console.log(response.data);
 ```
@@ -448,7 +439,7 @@ console.log(response.data);
 	```typescript
 	const response = await nc.request(
     	"fooRequest", 
-		jsonCodec.encode({foo: "bar"}),
+		JSON.stringify({foo: "bar"}),
 		{timeout: 1000}
 	);
 	```
@@ -466,7 +457,7 @@ const requestMessages = nc.subscribe/*(1)!*/("fooRequest");
 
 (async () => {
 	for await (const message of requestMessages) {//(2)!
-		message.respond/*(3)!*/(jsonCodec.encode({bar: "baz"}));
+		message.respond/*(3)!*/(JSON.stringify({bar: "baz"}));
 	}
 })();
 ```
