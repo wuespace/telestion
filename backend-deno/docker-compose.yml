@@ -1,7 +1,8 @@
 services:
   backend-deno:
-    image: denoland/deno:1.39.0
-    command: [ "test", "--allow-all", "/app/cucumber/test.ts", "--",
+    image: denoland/deno:2.1.2
+    working_dir: /app
+    command: [ "test", "--allow-all", "./cucumber/test.ts", "--",
                "--features", "/features",
                "--steps", "/app/cucumber/steps", ]
     volumes:

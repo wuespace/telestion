@@ -8,7 +8,7 @@ This library provides a framework for building Telestion services in Deno.
 ## Usage
 
 ```typescript
-import {startService} from 'https://deno.land/x/telestion/mod.ts';
+import {startService} from 'jsr:@wuespace/telestion';
 
 const {nc} = await startService();
 ```

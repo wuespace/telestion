@@ -48,7 +48,7 @@ touch service.ts
 Open `service.ts` in your favorite editor and add the following code:
 
 ```typescript title="service.ts"
-import { startService } from 'https://deno.land/x/telestion/mod.ts';// (1)!
+import { startService } from 'jsr:@wuespace/telestion';// (1)!
 
 await startService/*(2)!*/({
 	nats: false,// (3)!

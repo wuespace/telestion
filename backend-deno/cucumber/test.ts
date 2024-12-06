@@ -13,8 +13,10 @@
   * MIT License (MIT)
   */
 
-import { AssertionError, parseArgs, resolve } from "./deps.ts";
+import { parseArgs } from "@std/cli";
 import { getStep, importStepDefinitions } from "./step-registry.ts";
+import { resolve } from "@std/path";
+import { AssertionError } from "@std/assert";
 
 /// Determine steps and features folder from command line arguments
 

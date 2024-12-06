@@ -1,6 +1,6 @@
-import { startService } from "../../mod.ts";
+import { startService } from "jsr:@wuespace/telestion";
 import { Then, When } from "../step-registry.ts";
-import { assert, assertRejects } from "./deps.ts";
+import { assert, assertRejects } from "@std/assert";
 
 When("I start the service", async (ctx) => {
   if (!ctx.nats) {

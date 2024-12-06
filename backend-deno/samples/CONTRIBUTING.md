@@ -17,7 +17,7 @@ Most samples should also have a `mod.ts` file that contains the sample code.
 To import the Telestion library, use the following import statement:
 
 ```typescript
-import { startService } from "https://deno.land/x/telestion/mod.ts";
+import { startService } from "jsr:@wuespace/telestion";
 ```
 
 This ensures that the import gets aliases to the repository's library files.

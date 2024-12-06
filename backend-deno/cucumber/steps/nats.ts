@@ -1,5 +1,6 @@
+import type { ConnectionOptions, NatsConnection } from "@nats-io/nats-core";
 import { Given, Then } from "../step-registry.ts";
-import { ConnectionOptions, NatsConnection, assert, assertEquals } from "./deps.ts";
+import { assert, assertEquals } from "@std/assert";
 
 /**
  * A mock NATS client that can be used to test services that use NATS.

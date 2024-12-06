@@ -1,6 +1,6 @@
-import { startService } from "https://deno.land/x/telestion/mod.ts";
-import { encode } from "https://deno.land/std@0.186.0/encoding/hex.ts";
-import { resolve } from "https://deno.land/std@0.186.0/path/mod.ts";
+import { startService } from "jsr:@wuespace/telestion";
+import { encodeHex } from "jsr:@std/encoding/hex";
+import { resolve } from "jsr:@std/path";
 
 const encoder = new TextEncoder();
 
@@ -16,7 +16,7 @@ console.log("Logger started");
 for await (const msg of logMessages) {
   try {
     const currentTime = new Date().toISOString();
-    const logMessage = encode(msg.data).toString();
+    const logMessage = encodeHex(msg.data).toString();
     const subject = msg.subject.split(".")[1];
 
     console.log(`${currentTime} [${subject}] ${logMessage}`);
