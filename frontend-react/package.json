@@ -39,38 +39,38 @@
 	"exports": {
 		".": {
 			"import": "./dist/index.js",
-			"require": "./dist/index.cjs",
-			"types": "./types/src/lib/index.d.ts"
+			"types": "./types/src/lib/index.d.ts",
+			"require": "./dist/index.cjs"
 		},
 		"./application": {
 			"import": "./dist/mod-application.js",
-			"require": "./dist/mod-application.cjs",
-			"types": "./types/src/lib/mod-application.d.ts"
+			"types": "./types/src/lib/mod-application.d.ts",
+			"require": "./dist/mod-application.cjs"
 		},
 		"./auth": {
 			"import": "./dist/mod-auth.js",
-			"require": "./dist/mod-auth.cjs",
-			"types": "./types/src/lib/mod-auth.d.ts"
+			"types": "./types/src/lib/mod-auth.d.ts",
+			"require": "./dist/mod-auth.cjs"
 		},
 		"./nats": {
 			"import": "./dist/mod-nats.js",
-			"require": "./dist/mod-nats.cjs",
-			"types": "./types/src/lib/mod-nats.d.ts"
+			"types": "./types/src/lib/mod-nats.d.ts",
+			"require": "./dist/mod-nats.cjs"
 		},
 		"./user-data": {
 			"import": "./dist/mod-user-data.js",
-			"require": "./dist/mod-user-data.cjs",
-			"types": "./types/src/lib/mod-user-data.d.ts"
+			"types": "./types/src/lib/mod-user-data.d.ts",
+			"require": "./dist/mod-user-data.cjs"
 		},
 		"./utils": {
 			"import": "./dist/mod-utils.js",
-			"require": "./dist/mod-utils.cjs",
-			"types": "./types/src/lib/mod-utils.d.ts"
+			"types": "./types/src/lib/mod-utils.d.ts",
+			"require": "./dist/mod-utils.cjs"
 		},
 		"./widget": {
 			"import": "./dist/mod-widget.js",
-			"require": "./dist/mod-widget.cjs",
-			"types": "./types/src/lib/mod-widget.d.ts"
+			"types": "./types/src/lib/mod-widget.d.ts",
+			"require": "./dist/mod-widget.cjs"
 		},
 		"./telestion.css": "./dist/style.css"
 	},
