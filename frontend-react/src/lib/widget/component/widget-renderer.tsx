@@ -10,7 +10,7 @@ export interface WidgetRendererProps {
 	widgetInstanceId: string;
 }
 
-export const widgetConfigContext = createContext<unknown>(undefined);
+export const WidgetConfigContext = createContext<unknown>(undefined);
 
 /**
  * Renders a widget based on the provided widgetInstanceId.
@@ -42,14 +42,14 @@ registerWidget({
 			style={{ '--id': CSS.escape(widgetInstanceId) }}
 		>
 			{widget ? (
-				<widgetConfigContext.Provider
+				<WidgetConfigContext
 					key={`renderer-${widgetInstanceId}`}
 					value={widgetInstance.configuration}
 				>
 					<ErrorBoundary FallbackComponent={ErrorFallback}>
 						{widget.element}
 					</ErrorBoundary>
-				</widgetConfigContext.Provider>
+				</WidgetConfigContext>
 			) : (
 				<div>
 					<p>Widget isn't registered.</p>

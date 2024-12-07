@@ -89,7 +89,7 @@ export function fillWith(
 						isAscending(x, columnIndex, x + width - 1) // in fill area
 							? widgetId
 							: cell
-				  )
+					)
 				: row
 		)
 	};
@@ -358,7 +358,7 @@ export function resizeGrid(
 
 	if (columns < 1 || rows < 1) {
 		throw new InvalidBoundsError(
-			`Invalid grid size while resizing the grid. Must be at least 1x1, got ${columns}x${rows}`
+			`Invalid grid size while resizing the grid. Must be at least 1x1, got ${columns.toString()}x${rows.toString()}`
 		);
 	}
 

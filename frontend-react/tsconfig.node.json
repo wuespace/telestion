@@ -8,5 +8,5 @@
 		"strictNullChecks": true,
 		"resolveJsonModule": true
 	},
-	"include": ["vite.config.ts", "package.json"]
+	"include": ["vite.config.ts", "eslint.config.js", "package.json"]
 }
