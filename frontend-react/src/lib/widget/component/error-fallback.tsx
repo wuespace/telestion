@@ -1,5 +1,6 @@
 import { Alert, AlertHeading, Button } from 'react-bootstrap';
 import styles from './error-fallback.module.css';
+import { clsx } from 'clsx';
 
 export function ErrorFallback({
 	error,
@@ -9,7 +10,7 @@ export function ErrorFallback({
 	resetErrorBoundary: () => void;
 }) {
 	return (
-		<Alert variant="danger" className={styles.alert}>
+		<Alert variant="danger" className={clsx(styles.alert)}>
 			<AlertHeading>Widget Error</AlertHeading>
 			<p>
 				Unfortunately, the widget encountered an error and cannot be displayed.

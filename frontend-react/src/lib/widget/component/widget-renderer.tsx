@@ -5,9 +5,11 @@ import { getUserData } from '../../user-data';
 import styles from './widget-renderer.module.css';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallback } from './error-fallback.tsx';
+import { clsx } from 'clsx';
 
 export interface WidgetRendererProps {
 	widgetInstanceId: string;
+	borderless: boolean;
 }
 
 export const WidgetConfigContext = createContext<unknown>(undefined);
@@ -36,9 +38,11 @@ registerWidget({
 });
 	`;
 
+	const isBorderless = widget?.borderless;
+
 	return (
 		<div
-			className={styles.widgetRenderer}
+			className={clsx(styles.widgetRenderer, !isBorderless && 'p-3')}
 			style={{ '--id': CSS.escape(widgetInstanceId) }}
 		>
 			{widget ? (

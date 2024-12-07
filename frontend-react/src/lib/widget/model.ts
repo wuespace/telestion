@@ -40,4 +40,8 @@ export interface Widget<
 	 * A configuration element that is used to configure the widget.
 	 */
 	configElement: ReactNode;
+	/**
+	 * If `true`, the widget gets rendered without a default padding.
+	 */
+	borderless?: boolean;
 }
