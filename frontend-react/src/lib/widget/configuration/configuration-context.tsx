@@ -1,4 +1,4 @@
-import { createContext, ReactNode, SetStateAction, useContext } from 'react';
+import { createContext, ReactNode, SetStateAction, use } from 'react';
 import {
 	BaseWidgetConfiguration,
 	WidgetConfigurationContextValue
@@ -37,9 +37,7 @@ const WidgetConfigurationContext =
  * @returns the current widget configuration and a function to update it
  */
 export function useConfigureWidget() {
-	const { configuration, setConfiguration } = useContext(
-		WidgetConfigurationContext
-	);
+	const { configuration, setConfiguration } = use(WidgetConfigurationContext);
 
 	return [configuration, setConfiguration] as const;
 }
@@ -80,13 +78,13 @@ export function WidgetConfigurationContextProvider(props: {
 	};
 
 	return (
-		<WidgetConfigurationContext.Provider
+		<WidgetConfigurationContext
 			value={{
 				configuration: props.createConfig(props.value),
 				setConfiguration: onSetConfiguration
 			}}
 		>
 			{props.children}
-		</WidgetConfigurationContext.Provider>
+		</WidgetConfigurationContext>
 	);
 }
