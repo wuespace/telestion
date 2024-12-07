@@ -65,12 +65,17 @@ export function PageWrapper({ showSelector }: PageWrapperProps) {
 							<DashboardDropdown dashboards={dashboards} />
 							{dashboardId &&
 								(match ? (
-									<Button size="sm" form="dashboard-editor" type="submit">
+									<Button
+										size="sm"
+										form="dashboard-editor"
+										type="submit"
+										className="ms-2"
+									>
 										Save
 									</Button>
 								) : (
 									<Link
-										className="btn btn-sm btn-secondary"
+										className="btn btn-sm btn-secondary ms-2"
 										to={generatePath('/dashboards/:dashboardId/edit', {
 											dashboardId
 										})}
