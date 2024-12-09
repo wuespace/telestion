@@ -1,8 +1,8 @@
-import {startService} from "jsr:@wuespace/telestion";
-import {z} from "npm:zod";
+import { startService } from "jsr:@wuespace/telestion";
+import { z } from "npm:zod";
 
 // Start the service
-const {config, serviceName, dataDir} = await startService({
+const { config, serviceName, dataDir } = await startService({
     nats: false // we don't need NATS to work with the config
 });
 
