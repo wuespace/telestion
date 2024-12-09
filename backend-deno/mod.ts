@@ -18,7 +18,7 @@ let natsModule = natsTransport;
  *
  * @see {@link startService}
  */
-interface StartServiceConfig {
+export interface StartServiceConfig {
   /**
    * Whether to enable NATS or not. Disabling NATS can be useful during development.
    * @default true
