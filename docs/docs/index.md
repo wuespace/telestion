@@ -23,7 +23,7 @@ This documentation is about developing a Ground Station software using Telestion
 
 * [NATS](https://nats.io/) -- The message bus used by Telestion
 * [TypeScript](https://www.typescriptlang.org/) -- The programming language used for most components by Telestion
-* [Deno](https://deno.land/) -- The runtime used by Telestion for TypeScript and JavaScript based services
+* [Deno](https://deno.com/) -- The runtime used by Telestion for TypeScript and JavaScript based services
 * [React](https://reactjs.org/) -- The frontend framework used by Telestion
 
 ## Discord
