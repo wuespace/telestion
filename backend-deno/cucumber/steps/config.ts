@@ -1,6 +1,6 @@
-import { startService } from "../../mod.ts";
+import { startService } from "jsr:@wuespace/telestion";
 import { Given, Then } from "../step-registry.ts";
-import { assertEquals } from "./deps.ts";
+import { assertEquals } from "@std/assert";
 
 Given('I have an environment variable named {string} with value {string}', (_ctx, key, value) => {
   Deno.env.set(key, value);
