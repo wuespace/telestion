@@ -19,7 +19,7 @@ export function ExistingUserPrompt({
 	migrationState
 }: ExistingUserPrompt) {
 	const actionText = `You can try to migrate your existing configuration, ${
-		isDefaultAvailable && 'replace it with the default configuration, '
+		isDefaultAvailable ? 'replace it with the default configuration, ' : ''
 	}or import a configuration from a file.`;
 
 	return (

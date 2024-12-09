@@ -119,7 +119,7 @@ export function DashboardEditor() {
 			)
 		)
 			return;
-		submit(null, { method: 'DELETE' });
+		void submit(null, { method: 'DELETE' });
 	}, [dashboardId, dashboardTitle, submit]);
 
 	const onConfigurationChange = (
@@ -243,7 +243,7 @@ export function DashboardEditor() {
  * @returns the local working copy of the dashboard data
  */
 function useDashboardEditorData() {
-	const loaderData = useLoaderData();
+	const loaderData: unknown = useLoaderData();
 	const [localDashboard, setLocalDashboard] = useState<LayoutEditorState>({
 		layout: [['.']],
 		selection: {
