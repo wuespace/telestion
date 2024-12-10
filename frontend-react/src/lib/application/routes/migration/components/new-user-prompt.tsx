@@ -11,7 +11,7 @@ export function NewUserPrompt({
 	onClick
 }: NewUserBannerProps) {
 	const actionText = `You can either ${
-		isDefaultAvailable && 'load the default dashboards, '
+		isDefaultAvailable ? 'load the default dashboards, ' : ''
 	}start from scratch creating a custom dashboard, or import your own existing dashboard configuration from a file.`;
 
 	return (
