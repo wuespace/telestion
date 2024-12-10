@@ -106,7 +106,7 @@
 		"zod": "^3.23.8"
 	},
 	"peerDependencies": {
-		"react": "18"
+		"react": "19"
 	},
 	"devDependencies": {
 		"@cucumber/cucumber": "^11.1.0",
