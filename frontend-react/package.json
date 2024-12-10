@@ -72,7 +72,7 @@
 			"types": "./types/src/lib/mod-widget.d.ts",
 			"require": "./dist/mod-widget.cjs"
 		},
-		"./telestion.css": "./dist/style.css"
+		"./telestion.css": "./dist/telestion.css"
 	},
 	"types": "types/src/lib/index.d.ts",
 	"scripts": {
