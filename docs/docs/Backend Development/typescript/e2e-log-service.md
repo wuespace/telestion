@@ -11,12 +11,12 @@ This tutorial will explain step-by-step how to write a log service that will lis
 
 ## Steps
 
-1. First, we need to import the `startService` function from our library (`lib.ts`) and the `encode` function from the standard Deno library.
+1. First, we need to import the `startService` function from our library (`lib.ts`) and the `encodeHex` function from the standard Deno library.
 
 	```ts
-	import { startService } from "https://deno.land/x/telestion/mod.ts";
-	import { encode } from "https://deno.land/std@0.186.0/encoding/hex.ts";
-	import { resolve } from "https://deno.land/std@0.186.0/path/mod.ts";
+	import { startService } from "jsr:@wuespace/telestion";
+	import { encodeHex } from "jsr:@std/encoding";
+	import { resolve } from "jsr:@std/path";
 	```
 
 2. Next, we create a new TextEncoder instance. This will be used to turn messages into a format that can be written to a file.
@@ -44,13 +44,13 @@ This tutorial will explain step-by-step how to write a log service that will lis
 	const logMessages = messageBus.subscribe("log.>");
 	```
 
-6. We use a for-await-of loop to receive messages from the message bus. For each message, we extract the subject (split the string on `.`, then take the second element) and the message data, which we encode using the `encode` function from the standard library.
+6. We use a for-await-of loop to receive messages from the message bus. For each message, we extract the subject (split the string on `.`, then take the second element) and the message data, which we encode using the `encodeHex` function from the standard library.
 
 	```ts
 	for await (const msg of logMessages) {
 	  try {
 		const currentTime = new Date().toISOString();
-		const logMessage = encode(msg.data).toString();
+		const logMessage = encodeHex(msg.data).toString();
 		const subject = msg.subject.split(".")[1];
 	```
 
@@ -74,9 +74,9 @@ And that's it! Our service is now complete and ready to be used.
 ## Final Code
 
 ```ts
-import { startService } from "https://deno.land/x/telestion/mod.ts";
-import { encode } from "https://deno.land/std@0.186.0/encoding/hex.ts";
-import { resolve } from "https://deno.land/std/0.186.0/path/mod.ts";
+import { startService } from "jsr:@wuespace/telestion";
+import { encodeHex } from "jsr:@std/encoding";
+import { resolve } from "jsr:@std/path";
 
 const encoder = new TextEncoder();
 
@@ -90,7 +90,7 @@ const logMessages = messageBus.subscribe("log.>");
 for await (const msg of logMessages) {
   try {
     const currentTime = new Date().toISOString();
-    const logMessage = encode(msg.data).toString();
+    const logMessage = encodeHex(msg.data).toString();
     const subject = msg.subject.split(".")[1];
 
     console.log(`${currentTime} [${subject}] ${logMessage}`);
