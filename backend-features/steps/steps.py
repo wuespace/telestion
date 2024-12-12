@@ -1,4 +1,3 @@
-import docker as dockerlib
 from behave import *
 from behave.api.pending_step import StepNotImplementedError
 

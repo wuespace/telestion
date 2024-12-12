@@ -1,5 +1,3 @@
-from os.path import exists
-
 import docker
 
 
