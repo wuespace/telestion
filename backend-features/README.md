@@ -19,3 +19,25 @@ The Gherkin files are located in the `backend-features` directory of the Telesti
 ## Documentation
 
 The Gherkin files get converted to Markdown files that are then included in the documentation.
+
+## Testing
+
+### Natively
+
+Create the Python virtual environment with the helper script:
+
+```shell
+./tools/setup-venv.sh
+```
+
+Source the virtual environment:
+
+```shell
+. .venv/bin/activate
+```
+
+Run the tests with:
+
+```shell
+behave
+```
