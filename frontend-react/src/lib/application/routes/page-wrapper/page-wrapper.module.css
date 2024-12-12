@@ -9,7 +9,7 @@ if it got applied immediately on the body while being in a visible wrapper / wid
 }
 
 [data-bs-theme='dark'] .pageBackground {
-	background-color: black;
+	background-color: #111;
 }
 
 /*Layout, etc.*/
