@@ -39,9 +39,7 @@ export function dashboardPageLoader({ version }: TelestionOptions) {
 		}
 
 		if (!(dashboardId in userData.dashboards)) {
-			throw new Response(`Dashboard "${dashboardId}" does not exist`, {
-				status: 404
-			});
+			throw new Error(`Dashboard "${dashboardId}" does not exist`);
 		}
 
 		return {
@@ -72,9 +70,7 @@ export function dashboardPageAction(options: TelestionOptions) {
 		}
 
 		if (!(dashboardId in oldUserData.dashboards)) {
-			throw new Response(`Dashboard "${dashboardId}" does not exist`, {
-				status: 404
-			});
+			throw new Error(`Dashboard "${dashboardId}" does not exist`);
 		}
 
 		const oldDashboard = oldUserData.dashboards[dashboardId];

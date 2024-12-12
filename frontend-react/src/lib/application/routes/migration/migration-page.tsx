@@ -37,10 +37,10 @@ export function MigrationPage() {
 	const handle = (action: PromptAction) => {
 		switch (action) {
 			case 'blank':
-				submit({ action: 'blank' }, { method: 'post' });
+				void submit({ action: 'blank' }, { method: 'post' });
 				return;
 			case 'default':
-				submit({ action: 'default' }, { method: 'post' });
+				void submit({ action: 'default' }, { method: 'post' });
 				return;
 			case 'import':
 				setImportDialogState(true);

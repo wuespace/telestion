@@ -5,8 +5,8 @@ on: [push, pull_request]
 
 # Defines which tool versions should be used in all workflow jobs
 env:
-  node: '20'
-  pnpm: '8'
+  node: '22'
+  pnpm: '9'
 
 defaults:
   run:
@@ -20,7 +20,7 @@ jobs:
       - name: Checkout 📥
         uses: actions/checkout@v3.6.0
       - name: Setup PNPM 💿
-        uses: pnpm/action-setup@v2.4.0
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.pnpm }}
       - name: Setup Node 💿
@@ -42,7 +42,7 @@ jobs:
       - name: Checkout 📥
         uses: actions/checkout@v3.6.0
       - name: Setup PNPM 💿
-        uses: pnpm/action-setup@v2.4.0
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.pnpm }}
       - name: Setup Node 💿
@@ -64,7 +64,7 @@ jobs:
       - name: Checkout 📥
         uses: actions/checkout@v3.6.0
       - name: Setup PNPM 💿
-        uses: pnpm/action-setup@v2.4.0
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.pnpm }}
       - name: Setup Node 💿
@@ -95,7 +95,7 @@ jobs:
       - name: Checkout 📥
         uses: actions/checkout@v3.6.0
       - name: Setup PNPM 💿
-        uses: pnpm/action-setup@v2.4.0
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.pnpm }}
       - name: Setup Node 💿
