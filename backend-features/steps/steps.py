@@ -1,7 +1,7 @@
 from behave import *
 from behave.api.pending_step import StepNotImplementedError
 
-from docker_lib import nats_online, nats_offline, restart_nats
+from docker_lib import nats_online, nats_offline, restart_nats, run_testbed
 from nats_config import update_nats_config
 
 
@@ -65,22 +65,22 @@ def environment_variable(context, key, value):
 
 @when(u'I start the service')
 def start_service(context):
-    raise StepNotImplementedError()
+    run_testbed(context, env=context.environment)
 
 
 @when(u'I start the service without NATS')
 def start_service_without_nats(context):
-    raise StepNotImplementedError()
+    run_testbed(context, env=context.environment.update({'X_DISABLE_NATS': '1'}))
 
 
 @when(u'I start the service with "{arg}"')
 def start_service_with_arg(context, arg):
-    raise StepNotImplementedError()
+    run_testbed(context, env=context.environment, cmd=arg)
 
 
 @when(u'I start the service with "{arg}" without NATS')
 def start_service_with_arg_without_nats(context, arg):
-    raise StepNotImplementedError()
+    run_testbed(context, env=context.environment.update({'X_DISABLE_NATS': '1'}), cmd=arg)
 
 
 @then(u'the service should start')

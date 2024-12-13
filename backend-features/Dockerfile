@@ -6,3 +6,5 @@ RUN npm install -g gherkin-lint@3.3.1
 
 # Set the working directory
 WORKDIR /features
+
+CMD ["echo", "{}"]
