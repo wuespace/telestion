@@ -1,7 +1,6 @@
 from behave import when, then
-from behave.api.pending_step import StepNotImplementedError
 
-from docker_lib import run_testbed
+from lib.testbed import run_testbed
 
 
 def service_env(context, disable_nats=False):
@@ -58,7 +57,8 @@ def assert_service_failed(context):
 @then(u'the service should be configured with "{key}" set to "{expected_value}"')
 def assert_service_configured_with(context, key, expected_value):
     assert 'result' in context, 'Service must be started before checking connection'
-    assert 'config' in context.result, 'Service must be started before checking connection'
+    assert 'config' in context.result, ('Service must successfully start before checking connection. '
+                                        'Field "config" not set in result.')
     if expected_value == "undefined":
         assert key not in context.result['config'], 'Service must be started before checking connection'
     else:

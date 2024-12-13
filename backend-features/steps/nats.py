@@ -1,7 +1,7 @@
 from behave import given
 
-from docker_lib import restart_nats, nats_online, nats_offline
-from nats_config import update_nats_config
+from lib.nats_container import restart_nats, nats_online, nats_offline
+from lib.nats_config import update_nats_config
 
 
 @given(u'I have a NATS server running on "{host}"')

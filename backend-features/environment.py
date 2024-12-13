@@ -1,7 +1,8 @@
 import uuid
 import docker
-from docker_lib import *
-from nats_config import reset_nats_config, setup_nats_config, teardown_nats_config
+from lib.nats_config import reset_nats_config, setup_nats_config, teardown_nats_config
+from lib.nats_container import setup_nats, teardown_nats
+from lib.testbed import setup_testbed
 
 
 def before_all(context):

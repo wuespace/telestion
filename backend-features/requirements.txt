@@ -1,4 +1,6 @@
 # we need this to interact with docker on the system
 docker==7.1.0
+# JSON schema for testbed service response validation
+jsonschema==4.23.0
 # we need this to execute Cucumber tests
 behave @ git+https://github.com/behave/behave@v1.2.7.dev6

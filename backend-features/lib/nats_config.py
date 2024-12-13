@@ -1,4 +1,5 @@
 import json
+import os
 import tempfile
 from os import unlink
 
@@ -12,8 +13,9 @@ def setup_nats_config(context):
 def teardown_nats_config(context):
     assert hasattr(context, 'nats_config_file')
 
-    print(f"Removing NATS config file: {context.nats_config_file}")
-    print(f"Contents of NATS config file: {open(context.nats_config_file).read()}")
+    if 'VERBOSE' in os.environ and os.environ['VERBOSE']:
+        print(f"Removing NATS config file: {context.nats_config_file}")
+        print(f"Contents of NATS config file: {open(context.nats_config_file).read()}")
 
     unlink(context.nats_config_file)
 

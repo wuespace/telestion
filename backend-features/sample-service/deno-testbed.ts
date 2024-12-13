@@ -18,7 +18,7 @@ const result: {
   /**
    * The configuration of the service.
    */
-  config: Record<string, unknown>;
+  config?: Record<string, unknown>;
   /**
    * Details about an error that occurred during startup.
    */
@@ -31,7 +31,6 @@ const result: {
   started: false,
   nats_api_available: false,
   nats_connected: false,
-  config: {},
   env: Deno.env.toObject(),
 };
 
