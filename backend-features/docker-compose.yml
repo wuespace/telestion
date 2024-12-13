@@ -1,8 +1,0 @@
-services:
-  lint:
-    build:
-        context: .
-        dockerfile: Dockerfile
-    volumes:
-        - .:/features
-    entrypoint: "gherkin-lint"
