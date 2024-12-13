@@ -3,15 +3,6 @@ from behave import when, then
 from lib.testbed import run_testbed
 
 
-def service_env(context, disable_nats=False):
-    assert hasattr(context, 'nats_config'), 'NATS configuration is required for this step'
-    assert isinstance(context.nats_config, dict), 'NATS configuration must be a dictionary'
-
-    env = context.nats_config.copy()
-    env['X_DISABLE_NATS'] = '1' if disable_nats else '0'
-    return env
-
-
 @when(u'I start the service')
 def start_service(context):
     run_testbed(context)
@@ -44,7 +35,6 @@ def assert_service_connected(context):
     assert 'result' in context, 'Service must be started before checking connection'
     assert 'nats_connected' in context.result, 'Service must be started before checking connection'
     assert context.result['nats_connected'], 'Service must be connected to NATS'
-    # raise StepNotImplementedError()
 
 
 @then(u'the service should fail to start')
