@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3.6.0
       - name: Setup Virtual Environment 🛠️
         run: |-
-          ../backend-features/tools/setup.sh
+          ../backend-features/tools/setup-venv.sh
           . ../backend-features/.venv/bin/activate
       - name: Run Tests 🧪
         run: ../backend-features/run-tests.py
