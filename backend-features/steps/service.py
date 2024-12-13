@@ -76,4 +76,6 @@ def assert_nats_api_available(context):
 
 @then(u'the service should not connect to NATS')
 def assert_service_not_connected(context):
-    raise StepNotImplementedError()
+    assert 'result' in context, 'Service must be started before checking connection'
+    assert 'nats_connected' in context.result, 'Service must be started before checking connection'
+    assert not context.result['nats_connected'], 'Service must not be connected to NATS'
