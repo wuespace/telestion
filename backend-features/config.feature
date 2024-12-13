@@ -27,6 +27,7 @@ Feature: Service Configuration
 
   During development, it is possible to use the development mode so you don't have to provide these values. However, this is not recommended for production.
     Given I have no service configuration
+    When I start the service
     Then the service should fail to start
 
   Scenario: CLI arguments overwrite environment variables

@@ -41,11 +41,3 @@ def update_nats_config(context, config):
 
     context.nats_config.update(config)
     write_nats_config(context)
-
-
-def listens_on(context, listens):
-    assert hasattr(context, 'nats_config')
-    assert isinstance(context.nats_config, dict)
-
-    context.nats_config['listens'] = listens
-    write_nats_config(context)

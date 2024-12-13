@@ -20,8 +20,10 @@ def after_all(context):
     teardown_nats(context)
     teardown_nats_config(context)
 
+
 def before_scenario(context, scenario):
     reset_nats_config(context)
+
 
 def generate_prefix():
     """

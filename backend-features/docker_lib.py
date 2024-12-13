@@ -1,9 +1,7 @@
 import json
-import os
-from sys import flags
 
-from docker.models.images import Image
 from docker.client import DockerClient
+from docker.models.images import Image
 
 
 def setup_nats(context):
@@ -64,7 +62,8 @@ def teardown_nats(context):
     assert isinstance(context.docker, DockerClient)
 
     context.docker.containers.get(nats_container_name(context)).stop()
-    print(context.docker.containers.get(nats_container_name(context)).logs().decode())
+    # Output NATS logs – useful for debugging:
+    # print(context.docker.containers.get(nats_container_name(context)).logs().decode())
     context.docker.containers.get(nats_container_name(context)).remove()
     nats_network(context).remove()
 
@@ -82,7 +81,8 @@ def nats_online(context):
         in network.containers
     ]: return  # already connected
 
-    network.connect(nats_container_name(context))
+    network.connect(nats_container_name(context), aliases=['nats'])
+    restart_nats(context)
 
 
 def nats_offline(context):
@@ -112,36 +112,48 @@ def setup_testbed(context):
     """
     assert isinstance(context.docker, DockerClient)
 
-    [image, _output] = context.docker.images.build(path='.')
+    [image, _output] = context.docker.images.build(path='./sample-service')
     context.testbed = image
 
 
-def run_testbed(context, cmd="", env=None) -> dict:
+def run_testbed(context, cmd="", disable_nats=False) -> dict:
     """
     Run a command in the testbed container
     :param context: the context, including the Docker client
     :param cmd: the command to run.
     Default is an empty string
-    :param env: the environment variables to set.
+    :param disable_nats: Starts the service in the no-NATS mode
     :return: The JSON output of the command
     """
-    if env is None:
-        env = {}
-    assert isinstance(context.docker, DockerClient)
-    assert isinstance(context.testbed, Image)
-    assert isinstance(cmd, str)
-    assert isinstance(env, dict)
+    assert hasattr(context, 'docker'), 'Docker client is required for this step'
+    assert isinstance(context.docker, DockerClient), 'Docker client must be an instance of DockerClient'
+    assert hasattr(context, 'testbed'), 'Testbed image is required for this step'
+    assert isinstance(context.testbed, Image), 'Testbed image must be an instance of Image'
+    assert hasattr(context, 'environment'), 'Environment variables are required for this step'
+    assert isinstance(context.environment, dict), 'Environment variables must be a dictionary'
+    assert isinstance(cmd, str), 'Command must be a string'
 
-    result = context.docker.containers.run(
-        context.testbed,
-        cmd,
-        environment=env,
-        auto_remove=True,
-        network=nats_network_name(context),
-    )
+    env = context.environment.copy()
+    env['X_DISABLE_NATS'] = '1' if disable_nats else '0'
 
-    json_result = json.loads(result)
+    try:
+        result = context.docker.containers.run(
+            context.testbed,
+            cmd,
+            environment=env,
+            auto_remove=True,
+            network=nats_network_name(context),
+        ).splitlines()[-1].decode()
 
-    assert isinstance(json_result, dict)
+        print(f"Result: {result}")
 
-    return json_result
+        json_result = json.loads(result)
+
+        assert isinstance(json_result, dict)
+
+        context.result = json_result
+
+        return json_result
+    except Exception as e:
+        print(f"Error: {e}")
+        return {}
