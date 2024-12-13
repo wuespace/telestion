@@ -1,7 +1,8 @@
 from behave import *
 from behave.api.pending_step import StepNotImplementedError
 
-from docker_lib import nats_online, nats_offline
+from docker_lib import nats_online, nats_offline, restart_nats
+from nats_config import update_nats_config
 
 
 #
@@ -11,17 +12,24 @@ from docker_lib import nats_online, nats_offline
 
 @given(u'I have a NATS server running on "{host}"')
 def nats_server(context, host):
+    update_nats_config(context, {'listen': host})
+    restart_nats(context)
     nats_online(context)
 
 
 @given(u'the NATS server requires authentication')
 def nats_server_auth(context):
-    pass
+    update_nats_config(context, {'authorization': {
+        'user': 'nats',
+        'password': 'SOME_UNKNOWN_SECRET_PASSWORD_UNTIL_PROPER_USER_IS_SET_UP'
+    }})
+    restart_nats(context)
 
 
 @given(u'"{username}" is a NATS user with password "{password}"')
 def nats_server_user_credentials(context, username, password):
-    pass
+    update_nats_config(context, {'authorization': {'user': username, 'password': password}})
+    restart_nats(context)
 
 
 @given(u'the NATS server is offline')
@@ -50,7 +58,7 @@ def no_service_configuration(context):
 
 @given(u'I have an environment variable named "{key}" with value "{value}"')
 def environment_variable(context, key, value):
-    if context.environment is None:
+    if not hasattr(context, 'environment'):
         context.environment = {}
     context.environment[key] = value
 
