@@ -16,6 +16,7 @@ jobs:
       - name: Setup Virtual Environment 🛠️
         run: |-
           ../backend-features/tools/setup-venv.sh
-          . ../backend-features/.venv/bin/activate
       - name: Run Tests 🧪
-        run: ../backend-features/run-tests.py
+        run: |-
+          . ../backend-features/.venv/bin/activate
+          ../backend-features/run-tests.py
