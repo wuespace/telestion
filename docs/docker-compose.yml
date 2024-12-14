@@ -47,7 +47,11 @@ services:
       && mv /tmp/docs-output/* /docs
       "
     volumes:
-      - ../frontend-react:/app
+      - ../frontend-react/package.json:/app/package.json
+      - ../frontend-react/src:/app/src
+      - ../frontend-react/typedoc.json:/app/typedoc.json
+      - ../frontend-react/tsconfig.json:/app/tsconfig.json
+      - ../frontend-react/tsconfig.node.json:/app/tsconfig.node.json
       - frontend-react-docs:/docs
     profiles:
       - deps

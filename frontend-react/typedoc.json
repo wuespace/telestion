@@ -15,6 +15,7 @@
 		"./src/lib/utils",
 		"./src/lib/widget"
 	],
+	"entryModule": "index",
 	"out": "docs",
 	"githubPages": false,
 	"validation": {
@@ -24,10 +25,14 @@
 	},
 	"hideGenerator": true,
 	"disableSources": true,
-	"hideInPageTOC": true,
-	"outputFileStrategy": "members",
+	"outputFileStrategy": "modules",
+	"hideBreadcrumbs": true,
 	"hidePageTitle": true,
 	"hidePageHeader": true,
-	"indexPageTitle": "API Reference",
-	"readme": "none"
+	"pageTitleTemplates": {
+		"index": "API Reference"
+	},
+	"useCodeBlocks": true,
+	"readme": "none",
+	"useHTMLAnchors": true
 }

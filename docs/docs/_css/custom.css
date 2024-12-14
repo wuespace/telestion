@@ -1,115 +1,130 @@
 [data-md-color-scheme="slate"] {
-    --md-hue: 255;
+  --md-hue: 255;
 }
 
 [data-md-color-scheme="slate"] img.invertible {
-    filter: invert(1) hue-rotate(180deg) brightness(2);
-    mix-blend-mode: screen;
+  filter: invert(1) hue-rotate(180deg) brightness(2);
+  mix-blend-mode: screen;
 }
 
 :root {
-    --md-primary-fg-color: #452897;
-    --md-primary-fg-color--light: #704ed2;
-    --md-primary-fg-color--dark: #1f0e4f;
-    --md-accent-fg-color: #452897;
-    --md-accent-fg-color--light: #704ed2;
-    --md-accent-fg-color--dark: #1f0e4f;
+  --md-primary-fg-color: #452897;
+  --md-primary-fg-color--light: #704ed2;
+  --md-primary-fg-color--dark: #1f0e4f;
+  --md-accent-fg-color: #452897;
+  --md-accent-fg-color--light: #704ed2;
+  --md-accent-fg-color--dark: #1f0e4f;
 
-    --md-text-font: "Roboto", Arial, sans-serif;
-    --md-code-font: "Roboto Mono", monospace;
+  --md-text-font: "Roboto", Arial, sans-serif;
+  --md-code-font: "Roboto Mono", monospace;
 }
 
 .md-banner a {
-    color: white;
-    text-decoration: underline;
+  color: white;
+  text-decoration: underline;
 }
 
 .md-banner a:hover {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
 /*Fonts*/
 
 @font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 300;
-    font-display: fallback;
-    src: url(./Roboto/Roboto-Light.ttf);
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-display: fallback;
+  src: url(./Roboto/Roboto-Light.ttf);
 }
 
 @font-face {
-    font-family: 'Roboto';
-    font-style: italic;
-    font-weight: 300;
-    font-display: fallback;
-    src: url(./Roboto/Roboto-LightItalic.ttf);
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 300;
+  font-display: fallback;
+  src: url(./Roboto/Roboto-LightItalic.ttf);
 }
 
 @font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-display: fallback;
-    src: url(./Roboto/Roboto-Regular.ttf);
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-display: fallback;
+  src: url(./Roboto/Roboto-Regular.ttf);
 }
 
 @font-face {
-    font-family: 'Roboto';
-    font-style: italic;
-    font-weight: 400;
-    font-display: fallback;
-    src: url(./Roboto/Roboto-Italic.ttf);
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  font-display: fallback;
+  src: url(./Roboto/Roboto-Italic.ttf);
 }
 
 @font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-display: fallback;
-    src: url(./Roboto/Roboto-Bold.ttf);
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url(./Roboto/Roboto-Bold.ttf);
 }
 
 @font-face {
-    font-family: 'Roboto';
-    font-style: italic;
-    font-weight: 700;
-    font-display: fallback;
-    src: url(./Roboto/Roboto-BoldItalic.ttf);
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 700;
+  font-display: fallback;
+  src: url(./Roboto/Roboto-BoldItalic.ttf);
 }
-
 
 /*Roboto Mono*/
 
 @font-face {
-    font-family: 'Roboto Mono';
-    font-style: normal;
-    font-weight: 400;
-    font-display: fallback;
-    src: url(./Roboto_Mono/RobotoMono-Regular.ttf);
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: fallback;
+  src: url(./Roboto_Mono/RobotoMono-Regular.ttf);
 }
 
 @font-face {
-    font-family: 'Roboto Mono';
-    font-style: italic;
-    font-weight: 400;
-    font-display: fallback;
-    src: url(./Roboto_Mono/RobotoMono-Italic.ttf);
+  font-family: "Roboto Mono";
+  font-style: italic;
+  font-weight: 400;
+  font-display: fallback;
+  src: url(./Roboto_Mono/RobotoMono-Italic.ttf);
 }
 
 @font-face {
-    font-family: 'Roboto Mono';
-    font-style: normal;
-    font-weight: 700;
-    font-display: fallback;
-    src: url(./Roboto_Mono/RobotoMono-Bold.ttf);
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url(./Roboto_Mono/RobotoMono-Bold.ttf);
 }
 
 @font-face {
-    font-family: 'Roboto Mono';
-    font-style: italic;
-    font-weight: 700;
-    font-display: fallback;
-    src: url(./Roboto_Mono/RobotoMono-BoldItalic.ttf);
+  font-family: "Roboto Mono";
+  font-style: italic;
+  font-weight: 700;
+  font-display: fallback;
+  src: url(./Roboto_Mono/RobotoMono-BoldItalic.ttf);
+}
+
+/* Prevent smallcaps in headers */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  color: var(--md-typeset-color);
+  text-transform: none;
+}
+
+.md-typeset h5,
+.md-typeset h6 {
+  font-size: 1em;
 }
