@@ -19,4 +19,4 @@ jobs:
       - name: Run Tests 🧪
         run: |-
           . ../backend-features/.venv/bin/activate
-          ../backend-features/run-tests.py
+          ../backend-features/run-tests.py -v .
