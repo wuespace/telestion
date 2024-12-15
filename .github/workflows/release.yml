@@ -26,6 +26,13 @@ env:
   node: '22'
   pnpm: '9'
 
+# Add the necessary permissions:
+# - contents: write
+# - id-token: write for the publish-backend-deno job (JSR publishing)
+permissions:
+  contents: write
+  id-token: write
+
 jobs:
   ####################
   ### backend-deno ###
