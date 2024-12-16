@@ -1,8 +1,7 @@
-echo "Running Tests"
+#!/bin/sh
 
-FILE_DIR=$(realpath $(dirname $0))
+script_dir="$(dirname "$(realpath "$0")")"
+backend_features_dir="$script_dir/../backend-features"
 
-source ~/WebstormProjects/telestion/backend-features/.venv/bin/activate
-set -x
-echo "File Dir: $FILE_DIR"
-python ~/WebstormProjects/telestion/backend-features/run-tests.py "$FILE_DIR"
+source "$backend_features_dir/.venv/bin/activate"
+python3 "$backend_features_dir/run-tests.py" "$script_dir"
