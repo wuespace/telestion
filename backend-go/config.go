@@ -54,6 +54,7 @@ func CliArgsMap() map[string]any {
 
 		if !strings.HasPrefix(key, "--") {
 			// ignore positional arguments
+			println("Ignoring positional CLI argument (positional arguments are unsupported):", key)
 			continue
 		}
 
