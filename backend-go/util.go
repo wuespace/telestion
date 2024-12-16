@@ -13,7 +13,7 @@ func WaitForInterrupt() os.Signal {
 	return <-c
 }
 
-// Returns the value associated with the key in the map if it exists and is a string,
+// GetStringOrDefault returns the value associated with the key in the map if it exists and is a string,
 // otherwise returns the default value.
 func GetStringOrDefault(m map[string]any, key string, defaultValue string) string {
 	if value, ok := m[key]; ok {

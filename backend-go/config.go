@@ -20,18 +20,18 @@ func withServiceConfig(service *Service) error {
 	}
 
 	// Ensure Minimal Config
-	if service.Config["DATA_DIR"] == nil {
+	if _, ok := service.Config["DATA_DIR"]; !ok {
 		return fmt.Errorf("no DATA_DIR provided")
 	}
 	service.DataDir = service.Config["DATA_DIR"].(string)
-	if service.Config["SERVICE_NAME"] == nil {
+	if _, ok := service.Config["SERVICE_NAME"]; !ok {
 		return fmt.Errorf("no SERVICE_NAME provided")
 	}
 	service.ServiceName = service.Config["SERVICE_NAME"].(string)
 	return nil
 }
 
-// Merges multiple maps into one.
+// MergeMaps merges multiple maps into one.
 // If a key is present in multiple maps, the value of the last map is used.
 func MergeMaps(maps ...map[string]any) map[string]any {
 	res := make(map[string]any)
@@ -43,7 +43,7 @@ func MergeMaps(maps ...map[string]any) map[string]any {
 	return res
 }
 
-// Returns a map of all CLI arguments in the form of --KEY=VALUE or --KEY VALUE
+// CliArgsMap returns a map of all CLI arguments in the form of --KEY=VALUE or --KEY VALUE
 // where KEY is the uppercase key and VALUE is the value.
 // If the argument is a flag (i.e., does not have a value), the value is true.
 // Positional arguments are ignored.
@@ -87,7 +87,7 @@ func CliArgsMap() map[string]any {
 	return res
 }
 
-// Returns a map of all environment variables, where the key is the uppercase key
+// EnvArgsMap returns a map of all environment variables, where the key is the uppercase key
 // and the value is the value of the environment variable.
 //
 // While this does always return a string, for compatibility with MergeMaps, it is
