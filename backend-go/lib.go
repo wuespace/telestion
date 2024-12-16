@@ -5,7 +5,7 @@ import (
 	"github.com/nats-io/nats.go"
 )
 
-// Starts the Telestion service with the given options.
+// StartService starts the Telestion service with the given options.
 // The service can be configured using functions implementing the ServiceOption interface.
 // Examples for such functions are:
 //   - WithoutNats.
@@ -55,7 +55,7 @@ func StartService(opts ...ServiceOption) (*Service, error) {
 	return service, nil
 }
 
-// A ServiceOption that modifies a service to run without connecting to NATS.
+// WithoutNats returns a ServiceOption that modifies a service to run without connecting to NATS.
 // This is useful for deploying local services with the Telestion infrastructure without having
 // interactions with other services.
 func WithoutNats() ServiceOption {
