@@ -1,33 +1,22 @@
 name: Backend Go CI
 
-# Events that trigger this workflow
-on: [ push, pull_request ]
+on: [push, pull_request]
 
 defaults:
   run:
     working-directory: ./backend-go
 
 jobs:
-  style:
-    name: Style
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout 📥
-        uses: actions/checkout@v3.6.0
-      - name: Check style 🧽
-        run: docker compose --file docker-compose.ci.yml --profile style up --abort-on-container-exit
-      - name: Stop containers 🛑
-        if: always()
-        run: docker compose --file docker-compose.ci.yml --profile style down
-
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 📥
         uses: actions/checkout@v3.6.0
-      - name: Run tests 🛃
-        run: docker compose --file docker-compose.ci.yml --profile test up --abort-on-container-exit
-      - name: Stop containers 🛑
-        if: always()
-        run: docker compose --file docker-compose.ci.yml --profile test down
+      - name: Setup Virtual Environment 🛠️
+        run: |-
+          ../backend-features/tools/setup-venv.sh
+      - name: Run Tests 🧪
+        run: |-
+          . ../backend-features/.venv/bin/activate
+          ../backend-features/run-tests.py -v .

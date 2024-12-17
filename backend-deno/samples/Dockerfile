@@ -1,5 +1,5 @@
 FROM denoland/deno:alpine-2.1.2
-LABEL version="1.0.0-alpha.4" maintainer="WüSpace e. V. <telestion@wuespace.de>"
+LABEL maintainer="WüSpace e. V. <telestion@wuespace.de>"
 
 # Add files
 COPY ./mod.ts /app/mod.ts
