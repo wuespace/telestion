@@ -154,6 +154,7 @@ jobs:
           node-version: ${{ env.node }}
           cache: 'pnpm'
           cache-dependency-path: '**/pnpm-lock.yaml'
+          registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies 📚
         run: pnpm install
       - name: Build 🏗️
