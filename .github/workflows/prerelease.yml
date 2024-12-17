@@ -100,9 +100,13 @@ jobs:
     steps:
       - name: Checkout 📥
         uses: actions/checkout@v3.6.0
+        # set GitHub Actions Bot as git user
+        # see: https://github.com/actions/checkout/pull/1707
       - name: Create Go Version Tag
         run: |
           tag=${GITHUB_REF#refs/tags/}
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git tag -a "backend-go/$tag" -m "Go Release $tag"
           git push origin "backend-go/$tag"
   ######################
@@ -150,6 +154,7 @@ jobs:
           node-version: ${{ env.node }}
           cache: 'pnpm'
           cache-dependency-path: '**/pnpm-lock.yaml'
+          registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies 📚
         run: pnpm install
       - name: Build 🏗️
