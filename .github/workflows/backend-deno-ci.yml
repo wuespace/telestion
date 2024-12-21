@@ -1,6 +1,6 @@
 name: Backend Deno CI
 
-on: [ push, pull_request ]
+on: [push, pull_request]
 
 defaults:
   run:
@@ -13,8 +13,10 @@ jobs:
     steps:
       - name: Checkout 📥
         uses: actions/checkout@v3.6.0
-      - name: Run tests 🛃
-        run: docker compose up --abort-on-container-exit
-      - name: Stop containers 🛑
-        if: always()
-        run: docker compose down
+      - name: Setup Virtual Environment 🛠️
+        run: |-
+          ../backend-features/tools/setup-venv.sh
+      - name: Run Tests 🧪
+        run: |-
+          . ../backend-features/.venv/bin/activate
+          ../backend-features/run-tests.py -v .

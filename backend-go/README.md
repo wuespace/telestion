@@ -19,14 +19,9 @@ go get -u github.com/wuespace/telestion/backend-go@latest
 package main
 
 import (
-	"github.com/wuespace/telestion/backend-go"
 	"log"
+	"github.com/wuespace/telestion/backend-go"
 )
-
-type Person struct {
-	Name string `json:"name"`
-	Address string `json:"address"`
-}
 
 func main() {
 	// start a new Telestion service
@@ -35,27 +30,17 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Println("Service started")
-	
+
 	// publish a message on the message bus
-	service.Nc.Publish("my-topic", []byte("Hello from Go!"))
-	
-	// subscribe to receive messages from the message bus
-	// automatically unmarshal JSON message to go struct 
-	_, err = service.NcJson.Subscribe("registered-person-topic", func(person *Person) {
-		log.Println("Received new personal information:", person)
-    })
-	if err != nil {
-		log.Println(err)
-    }
-	
+	service.Nc.Publish(service.Config["OUT"], []byte("Hello from Go!"))
+
 	// wait for interrupts to prevent immediate shutdown of service
 	telestion.WaitForInterrupt()
-	
+
 	// drain remaining messages and close connection
-	if err1, err2 := service.Drain(); err1 != nil || err2 != nil {
-		log.Fatal(err1, err2)
-    }
+	service.Drain()
 }
+
 ```
 
 ## Behavior Specification

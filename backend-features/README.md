@@ -19,3 +19,63 @@ The Gherkin files are located in the `backend-features` directory of the Telesti
 ## Documentation
 
 The Gherkin files get converted to Markdown files that are then included in the documentation.
+
+## Testing
+
+### Architecture
+
+```mermaid
+graph TD
+    R[Test Runner]
+    subgraph Docker
+        T[Testbed Container]
+        N[NATS Container]
+        T --- W[Network] -- Host: nats --- N
+    end
+    NC[Temporary NATS Config File]
+    NC -- mounted into --- N
+    R -- writes --> NC
+    R -- runs --> T
+    T -- result --> R
+    R -- controls containers of --> W
+    R -- starts/restarts --> N
+```
+
+```mermaid
+graph LR
+    I[Testbed Image]
+    R[Test Runner]
+    subgraph Docker 
+        C[Testbed Container]
+    end
+    R -- builds --> I
+    R -- runs --> C
+    C -- result --> R
+    C -- is based on --> I
+```
+
+### Natively
+
+Create the Python virtual environment with the helper script:
+
+```shell
+./tools/setup-venv.sh
+```
+
+Source the virtual environment:
+
+```shell
+. .venv/bin/activate
+```
+
+Run the tests with:
+
+```shell
+./run-tests.py ./sample-service
+```
+
+> [!NOTE]
+> You can also run the tests from any other directory.
+
+> [!NOTE]
+> Run `./run-tests.py --help` for more options, such as verbose output.

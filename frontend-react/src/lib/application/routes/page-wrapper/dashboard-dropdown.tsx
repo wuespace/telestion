@@ -34,7 +34,7 @@ export function DashboardDropdown({ dashboards }: DashboardDropdownProps) {
 				</NavDropdown.Item>
 			))}
 			<NavDropdown.Divider />
-			<NavDropdown.Item onClick={() => submit(null, { method: 'post' })}>
+			<NavDropdown.Item onClick={() => void submit(null, { method: 'post' })}>
 				New Dashboard...
 			</NavDropdown.Item>
 		</NavDropdown>

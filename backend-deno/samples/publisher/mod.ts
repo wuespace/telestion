@@ -1,5 +1,5 @@
-import { JSONCodec, startService } from "https://deno.land/x/telestion/mod.ts";
-import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
+import { startService } from "jsr:@wuespace/telestion";
+import { z } from "npm:zod";
 
 const { messageBus, config } = await startService();
 
@@ -20,7 +20,7 @@ setInterval(() => {
   console.log("Publishing", value, "to", DATA_SUBJECT);
   messageBus.publish(
     DATA_SUBJECT,
-    JSONCodec().encode(value),
+    JSON.stringify(value),
   );
   console.log("Published", value, "to", DATA_SUBJECT);
 }, FREQUENCY);

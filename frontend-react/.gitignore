@@ -12,6 +12,7 @@ dist
 dist-ssr
 types
 doc
+/docs
 *.local
 
 # Editor directories and files

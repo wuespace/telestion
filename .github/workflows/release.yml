@@ -1,0 +1,172 @@
+name: Release
+
+########################
+### Release Pipeline ###
+########################
+# This pipeline is triggered when a new tag is pushed to the repository.
+# This should usually be triggered by creating a GitHub Release in the repository.
+# We use a commitless release workflow, meaning no version numbers are written into 
+# the repository. You can, therefore, tag any commit you want to make it a release.
+#
+# The pipeline generally consists of two stages:
+# 1. Test things to ensure we don't publish any broken code.
+# 2. Publish the code to the respective package registry or the like.
+#
+# These stages are applied to all libraries in this monorepo.
+
+
+# Only on release tags – prereleases get handled separately.
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+# Defines which tool versions should be used in all workflow jobs
+env:
+  node: '22'
+  pnpm: '9'
+
+# Add the necessary permissions:
+# - contents: write
+# - id-token: write for the publish-backend-deno job (JSR publishing)
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  ####################
+  ### backend-deno ###
+  ####################
+  test-backend-deno:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend-deno
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+      - name: Setup Virtual Environment 🛠️
+        run: |-
+          ../backend-features/tools/setup-venv.sh
+      - name: Run Tests 🧪
+        run: |-
+          . ../backend-features/.venv/bin/activate
+          ../backend-features/run-tests.py -v .
+  publish-backend-deno:
+    runs-on: ubuntu-latest
+    needs: test-backend-deno
+    defaults:
+      run:
+        working-directory: ./backend-deno
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+      - name: Setup Deno
+        uses: denolib/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Update version in `deno.json`
+        run: |
+          tag=${GITHUB_REF#refs/tags/}
+          version=${tag#v}
+          jq --arg version "$version" '.version = $version' deno.json > tmp.$$.json
+          mv tmp.$$.json deno.json
+      - name: Publish to JSR
+        run: deno publish --allow-dirty
+  ##################
+  ### backend-go ###
+  ##################
+  test-backend-go:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend-go
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+      - name: Setup Virtual Environment 🛠️
+        run: |-
+          ../backend-features/tools/setup-venv.sh
+      - name: Run Tests 🧪
+        run: |-
+          . ../backend-features/.venv/bin/activate
+          ../backend-features/run-tests.py -v .
+  publish-backend-go:
+    runs-on: ubuntu-latest
+    needs: test-backend-go
+    defaults:
+      run:
+        working-directory: ./backend-go
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+        # set GitHub Actions Bot as git user
+        # see: https://github.com/actions/checkout/pull/1707
+      - name: Create Go Version Tag
+        run: |
+          tag=${GITHUB_REF#refs/tags/}
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "backend-go/$tag" -m "Go Release $tag"
+          git push origin "backend-go/$tag"
+  ######################
+  ### frontend-react ###
+  ######################
+  test-frontend-react:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend-react
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+      - name: Setup PNPM 💿
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.pnpm }}
+      - name: Setup Node 💿
+        uses: actions/setup-node@v3.8.2
+        with:
+          node-version: ${{ env.node }}
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - name: Install dependencies 📚
+        run: pnpm install
+      - name: Run unit tests 🛃
+        run: |
+          pnpm run ci:test
+  publish-frontend-react:
+    runs-on: ubuntu-latest
+    needs: test-frontend-react
+    defaults:
+      run:
+        working-directory: ./frontend-react
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v3.6.0
+      - name: Setup PNPM 💿
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.pnpm }}
+      - name: Setup Node 💿
+        uses: actions/setup-node@v3.8.2
+        with:
+          node-version: ${{ env.node }}
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies 📚
+        run: pnpm install
+      - name: Build 🏗️
+        run: pnpm run build
+      - name: Update version in `package.json`
+        run: |
+          tag=${GITHUB_REF#refs/tags/}
+          version=${tag#v}
+          jq --arg version "$version" '.version = $version' package.json > tmp.$$.json
+          mv tmp.$$.json package.json
+      - name: Publish to NPM 📦
+        run: pnpm publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true

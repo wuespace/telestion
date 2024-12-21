@@ -34,7 +34,7 @@ export function migrationLoader({
 						previousVersion: userData.version,
 						currentVersion: version,
 						oldUserData: userData
-				  }
+					}
 				: undefined,
 			isDefaultAvailable: !!defaultUserData
 		};
