@@ -7,7 +7,7 @@ import nats
 from nats.aio.client import Client as NatsClient, Msg as NatsMsg, DEFAULT_FLUSH_TIMEOUT  # mostly for type hinting
 from nats.aio.subscription import Subscription
 
-from telestion.backend.config import TelestionConfig, build_config
+from telestion.backend.config import TelestionConfig, build_config, _TelestionConfigT
 
 
 @dataclass
@@ -23,17 +23,17 @@ class Service:
     """TelestionConfig instance for this service """
 
     # wrapper methods for NatsClient instance for convenience
-    async def publish(self, **kwargs) -> None:
+    async def publish(self, *args, **kwargs) -> None:
         """Wrapper for https://nats-io.github.io/nats.py/modules.html#nats.aio.client.Client.publish"""
-        await self.nc.publish(**kwargs)
+        await self.nc.publish(*args, **kwargs)
 
-    async def subscribe(self, **kwargs) -> Subscription:
+    async def subscribe(self, *args, **kwargs) -> Subscription:
         """Wrapper for https://nats-io.github.io/nats.py/modules.html#nats.aio.client.Client.subscribe"""
-        return await self.nc.subscribe(**kwargs)
+        return await self.nc.subscribe(*args, **kwargs)
 
-    async def request(self, **kwargs) -> NatsMsg:
+    async def request(self, *args, **kwargs) -> NatsMsg:
         """Wrapper for Client.request(subject, payload, timeout, old_style, headers)"""
-        return await self.nc.request(**kwargs)
+        return await self.nc.request(*args, **kwargs)
 
     async def flush(self, timeout: int = DEFAULT_FLUSH_TIMEOUT) -> None:
         """Wrapper for https://nats-io.github.io/nats.py/modules.html#nats.aio.client.Client.flush"""
@@ -48,69 +48,17 @@ class Service:
         await self.nc.close()
 
 
-@dataclass
-class Options:
-    """Storing a custom configuration which overwrites the parsed config during startup of the Telestion service."""
-    nats: bool = True
-    """Whether a service should use nats. If set to False no nats client is set up during startup"""
-    # (officially) we don't support int keys, btw...
-    overwrite_args: dict[str, Any] | None = None
-    """Arguments overwriting the parsed config of a service."""
-    custom_nc: NatsClient | None = None
-    """Custom nats client. During startup no configuration takes place if present."""
+async def start_service(nats_disabled: bool = False, config: _TelestionConfigT = None) -> Service:
+    """Creates a Service with the parsed config and spins up a new NATS client if configured to do so."""
+    if config is None:
+        config = build_config()
 
-    def without_nats(self) -> 'Options':
-        """Returns a copy of this Options instance with nats switched off."""
-        return replace(self, nats=False, custom_nc=None)
-
-    def with_overwrite_args(self, **kwargs) -> 'Options':
-        """Returns a copy of this Options instance with different custom arguments."""
-        return replace(self, overwrite_args=kwargs)
-
-    def with_custom_nc(self, nats_client: NatsClient) -> 'Options':
-        """Returns a copy of this Options instance with a custom client."""
-        return replace(self, custom_nc=nats_client)
-
-
-async def setup_healthcheck(nc: NatsClient, service_name: str) -> NatsClient:
-    """Sets up __telestion__.health for a NatsClient. Returns NatsClient for fluent API."""
-    async def _respond_hc(msg):
-        msg.respond(
-            json_encode({
-                "errors": 0,
-                "name": service_name
-            })
-        )
-
-    await nc.subscribe(
-        '__telestion__.health',
-        cb=_respond_hc
-    )
-
-    return nc
-
-
-async def start_service(opts: Options = None) -> Service:
-    """Creates a Service for the given Options and the parsed config and spins up a new NATS client if configured so."""
-    if opts is None:
-        opts = Options()
-
-    config = build_config()
-    if opts.overwrite_args is not None:
-        config = config.model_copy(update=opts.overwrite_args)
-
-    service = Service(opts.custom_nc, config.data_dir, config.service_name, config)
-
-    if not opts.nats or opts.custom_nc is not None:
-        return service
-
-    nc = await nats.connect(servers=_prepare_nats_url(config))
-
-    return replace(service, nc=await setup_healthcheck(nc, config.service_name))
+    nc = None if nats_disabled else await nats.connect(servers=_prepare_nats_url(config))
+    return Service(nc, config.data_dir, config.service_name, config)
 
 
 # Macros
-def json_encode(msg: Any, encoding='utf-8', **dumps_kwargs) -> bytes:
+def json_encode(msg: Any, encoding='utf-8', errors='strict', **dumps_kwargs) -> bytes:
     """
     Helper function to encode messages to json.
     This convenience macro helps to reduce encoding/decoding boilerplate.
@@ -118,13 +66,14 @@ def json_encode(msg: Any, encoding='utf-8', **dumps_kwargs) -> bytes:
 
     :param msg:             message to encode
     :param encoding:        encoding to use (default: utf-8)
+    :param errors:          way to handle encoding errors, see #bytes.encode()
     :param dumps_kwargs:    additional arguments to pass to json.dumps
     :return: encoded json message as utf-8 bytes
     """
-    return json.dumps(msg, **dumps_kwargs).encode(encoding=encoding)
+    return json.dumps(msg, **dumps_kwargs).encode(encoding=encoding, errors=errors)
 
 
-def json_decode(msg: str | bytes | bytearray, encoding='utf-8', **loads_kwargs) -> Any:
+def json_decode(msg: str | bytes | bytearray, encoding='utf-8', errors='strict', **loads_kwargs) -> Any:
     """
     Helper function to decode messages from json into an object.
     This convenience macro helps to reduce encoding/decoding boilerplate.
@@ -132,12 +81,13 @@ def json_decode(msg: str | bytes | bytearray, encoding='utf-8', **loads_kwargs) 
 
     :param msg:             message to decode
     :param encoding:        encoding used to encode the bytes
-    :param loads_kwargs:
-    :return:
+    :param errors:          way to handle encoding errors, see #bytes.decode()
+    :param loads_kwargs:    additional arguments for json.loads()
+    :return: if successful, returns the parsed json message
     """
     if not isinstance(msg, str):
         # ensure to support any encoding supported by python
-        msg = msg.decode(encoding=encoding)
+        msg = msg.decode(encoding=encoding, errors=errors)
 
     return json.loads(msg, **loads_kwargs)
 

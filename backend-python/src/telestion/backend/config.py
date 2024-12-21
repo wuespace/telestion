@@ -38,7 +38,7 @@ def build_config(clazz: type[_TelestionConfigT] = None) -> _TelestionConfigT:
     def _from_env_or_cli(key: str):
         return cli_args.get(key, os.environ.get(key, None))
 
-    config_p = _from_env_or_cli('CONFIG_FILE')
+    config_path = _from_env_or_cli('CONFIG_FILE')
     config_key = _from_env_or_cli('CONFIG_KEY')
 
     config_assembly: dict[str, Any] = dict()
@@ -46,10 +46,10 @@ def build_config(clazz: type[_TelestionConfigT] = None) -> _TelestionConfigT:
         # 1. Add default config
         config_assembly.update(defaults())
 
-    if config_p is not None:
-        config_p = Path(config_p)
+    if config_path is not None:
+        config_path = Path(config_path)
         # 2. Insert config file
-        config_assembly.update(_parse_config_file(config_p, config_key))
+        config_assembly.update(_parse_config_file(config_path, config_key))
 
     # 3. Add Environment Variables
     config_assembly.update(os.environ)

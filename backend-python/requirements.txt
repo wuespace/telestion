@@ -1,2 +1,2 @@
-nats-py~=2.7.2  # TODO: decide if we want to specify versions
-pydantic~=2.6.4
+nats-py>=2.9.0,<3
+pydantic>=2.10.4,<3
