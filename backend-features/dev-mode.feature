@@ -6,7 +6,7 @@ Feature: Development mode
     Given I have no service configuration
     When I start the service with "--dev" without NATS
     Then the service should start
-    And the service should be configured with "NATS_URL" set to "localhost:4222"
+    And the service should be configured with "NATS_URL" set to either "localhost:4222" or "nats://localhost:4222"
     And the service should be configured with "NATS_USER" set to "undefined"
     And the service should be configured with "NATS_PASSWORD" set to "undefined"
 
@@ -18,4 +18,4 @@ Feature: Development mode
     Then the service should start
     And the service should connect to NATS
     And the service should be configured with "DATA_DIR" set to "/tmp"
-    And the service should be configured with "NATS_URL" set to "nats:4255"
+    And the service should be configured with "NATS_URL" set to either "nats:4255" or "nats://nats:4255"
