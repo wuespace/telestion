@@ -57,6 +57,14 @@ def assert_service_configured_with(context, key, expected_value):
             expected_value), f"Expected {key} to be {expected_value}, got {context.result['config'][key]}"
 
 
+@then(u'the service should be configured with "{key}" set to either "{expected_value}" or "{alternative}"')
+def assert_service_configured_with_alternative(context, key, expected_value, alternative):
+    try:
+        assert_service_configured_with(context, key, alternative)
+    except AssertionError:
+        assert_service_configured_with(context, key, expected_value)
+
+
 @then(u'the NATS connection API should be available to the service')
 def assert_nats_api_available(context):
     assert 'result' in context, 'Service must be started before checking connection'
