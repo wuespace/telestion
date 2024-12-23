@@ -1,5 +1,5 @@
 import json
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -7,7 +7,7 @@ import nats
 from nats.aio.client import Client as NatsClient, Msg as NatsMsg, DEFAULT_FLUSH_TIMEOUT  # mostly for type hinting
 from nats.aio.subscription import Subscription
 
-from telestion.backend.config import TelestionConfig, build_config, _TelestionConfigT
+from telestion.backend.config import build_config, _TelestionConfigT
 
 
 @dataclass
@@ -19,7 +19,7 @@ class Service:
     """Directory where all data (temporary and persistent) should be stored."""
     service_name: str
     """Name of this service. Note that it is not necessarily unique!"""
-    config: TelestionConfig
+    config: _TelestionConfigT
     """TelestionConfig instance for this service """
 
     # wrapper methods for NatsClient instance for convenience
@@ -92,7 +92,7 @@ def json_decode(msg: str | bytes | bytearray, encoding='utf-8', errors='strict',
     return json.loads(msg, **loads_kwargs)
 
 
-def _prepare_nats_url(config: TelestionConfig) -> str:
+def _prepare_nats_url(config: _TelestionConfigT) -> str:
     """
     Helper function that creates the valid url for the NATS client.
     Because the Python interface does not support user authentication out of the box with a separate design this is done
@@ -109,4 +109,4 @@ def _prepare_nats_url(config: TelestionConfig) -> str:
     if '://' in url:
         _, url = url.split('://', 1)
 
-    return f"nats://{config.username}:{config.password}@{url}"
+    return f"nats://{config.nats_user}:{config.nats_password}@{url}"

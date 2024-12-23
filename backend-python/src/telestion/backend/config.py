@@ -1,6 +1,8 @@
 import argparse
 import json
 import os
+import re
+import sys
 from pathlib import Path
 from typing import Any, TypeVar
 
@@ -17,8 +19,6 @@ class TelestionConfig(BaseModel):
     service_name: str = Field(alias="SERVICE_NAME")
     data_dir: Path = Field(alias="DATA_DIR")
 
-    unparsed_cli: list[str] = Field(alias="_telestion_validator_unparsed_cli")
-
     # To include all envs and config parts -> it is recommended to add a custom subtype
     model_config = ConfigDict(
         extra='allow'
@@ -33,7 +33,7 @@ def build_config(clazz: type[_TelestionConfigT] = None) -> _TelestionConfigT:
     if clazz is None:
         clazz = TelestionConfig
 
-    cli_args, additional_args = _parse_cli()
+    cli_args = _parse_cli()
 
     def _from_env_or_cli(key: str):
         return cli_args.get(key, os.environ.get(key, None))
@@ -57,9 +57,6 @@ def build_config(clazz: type[_TelestionConfigT] = None) -> _TelestionConfigT:
     # 4. Add CLI args
     config_assembly.update(cli_args)
 
-    # 5. Add args that cannot be parsed by the pipeline, i.e. service specific config
-    config_assembly['_telestion_validator_unparsed_cli'] = additional_args
-
     return clazz(**config_assembly)
 
 
@@ -71,7 +68,7 @@ def defaults() -> dict[str, Any]:
     }
 
 
-def _parse_cli() -> tuple[dict[str, Any], list[str]]:
+def _parse_cli() -> dict[str, Any]:
     description = "CLI Interface for the Telestion Services. This is one way to setup your Telestion application."
     epilog = "For more information please visit https://github.com/wuespace/telestion or \
     https://telestion.wuespace.de/"
@@ -79,7 +76,9 @@ def _parse_cli() -> tuple[dict[str, Any], list[str]]:
         description=description,
         epilog=epilog,
         prog="Telestion-CLI (Python)",
-        argument_default=argparse.SUPPRESS
+        argument_default=argparse.SUPPRESS,
+        add_help=True,
+        exit_on_error=False
     )
 
     parser.add_argument("--dev", action='store_true', help="If set, program will start in development mode")
@@ -96,8 +95,11 @@ def _parse_cli() -> tuple[dict[str, Any], list[str]]:
     parser.add_argument("--SERVICE_NAME", help="name of the service also used in the nats service registration")
     parser.add_argument("--DATA_DIR", help="path where the service can store persistent data", type=Path)
 
-    namespace, args = parser.parse_known_args()
-    return vars(namespace), args
+    namespace, unknown_args = parser.parse_known_args()
+    parsed_args = vars(namespace)
+
+    # parse also unknown args
+    return _parse_unknown_args(unknown_args, parsed_args)
 
 
 def _parse_config_file(config_p: Path, key: str = None) -> dict[str, Any]:
@@ -108,3 +110,37 @@ def _parse_config_file(config_p: Path, key: str = None) -> dict[str, Any]:
         return content
 
     return content[key]
+
+
+def _parse_unknown_args(unknown_args: list[str], parsed_args: dict[str, Any]) -> dict[str, Any]:
+    # cases to handle:
+    # 1. key == ""
+    # 2. key == "abc", vals == None
+    # 3. key == "abc", vals == 'abc'
+    # 4. key == "abc", vals == ['abc', 'foo', 'bar']
+
+    key: str = ""
+    for unknown_arg in unknown_args:
+        if unknown_arg.startswith("-"):
+            # handles 2.
+            if key not in parsed_args and key != "":
+                parsed_args[key] = True
+
+            key = unknown_arg[(2 if unknown_arg.startswith("--") else 1):]
+            continue
+
+        if key == "":   # handles 1.
+            raise ValueError("Parsing unknown arguments failed! Did you forget to specify a flag for the argument?")
+
+        if key in parsed_args:
+            if isinstance(parsed_args[key], list):
+                # handles 4.
+                parsed_args[key].append(unknown_arg)
+            else:
+                # handles 3.
+                parsed_args[key] = [parsed_args[key], unknown_arg]
+        else:
+            # handles 3. -> 4.
+            parsed_args[key] = unknown_arg
+
+    return parsed_args
