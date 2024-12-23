@@ -1,8 +1,6 @@
 import argparse
 import json
 import os
-import re
-import sys
 from pathlib import Path
 from typing import Any, TypeVar
 
@@ -29,7 +27,7 @@ class TelestionConfig(BaseModel):
 _TelestionConfigT = TypeVar("_TelestionConfigT", bound=TelestionConfig)
 
 
-def build_config(clazz: type[_TelestionConfigT] = None) -> _TelestionConfigT:
+def build_config(clazz: type[_TelestionConfigT] = None, **kwargs) -> _TelestionConfigT:
     if clazz is None:
         clazz = TelestionConfig
 
@@ -56,6 +54,9 @@ def build_config(clazz: type[_TelestionConfigT] = None) -> _TelestionConfigT:
 
     # 4. Add CLI args
     config_assembly.update(cli_args)
+
+    # 5. Add manual overwrites
+    config_assembly.update(kwargs)
 
     return clazz(**config_assembly)
 
@@ -122,6 +123,13 @@ def _parse_unknown_args(unknown_args: list[str], parsed_args: dict[str, Any]) ->
     key: str = ""
     for unknown_arg in unknown_args:
         if unknown_arg.startswith("-"):
+            if '=' in unknown_arg:
+                # handle case of equal signs in args
+                split = unknown_arg.split('=')
+                _parse_unknown_args([split[0], *split[1:]], parsed_args)
+                key = ""
+                continue
+
             # handles 2.
             if key not in parsed_args and key != "":
                 parsed_args[key] = True

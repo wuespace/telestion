@@ -48,12 +48,19 @@ class Service:
         await self.nc.close()
 
 
-async def start_service(nats_disabled: bool = False, config: _TelestionConfigT = None) -> Service:
+async def start_service(
+        nats_disabled: bool = False,
+        config: _TelestionConfigT = None,
+        nats_connecting_options: dict[str, Any] | None = None
+) -> Service:
     """Creates a Service with the parsed config and spins up a new NATS client if configured to do so."""
     if config is None:
-        config = build_config()
+        config = build_config(_nats_connecting_options=nats_connecting_options)
 
-    nc = None if nats_disabled else await nats.connect(servers=_prepare_nats_url(config))
+    if nats_connecting_options is None:
+        nats_connecting_options = {}
+
+    nc = None if nats_disabled else await nats.connect(servers=_prepare_nats_url(config), **nats_connecting_options)
     return Service(nc, config.data_dir, config.service_name, config)
 
 
