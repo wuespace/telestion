@@ -781,7 +781,7 @@
   
   
     <li class="md-nav__item">
-      <a href="https://deno.land/x/telestion/mod.ts" class="md-nav__link">
+      <a href="https://jsr.io/@wuespace/telestion@1.0.0-alpha.6/doc" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3179,7 +3179,7 @@
 
 <p>Everything you need for building and/or displaying widgets.</p>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>import { ... } from &#39;@wuespace/telestion/widget&#39;;
+<div class="language-tsx highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@wuespace/telestion/widget&#39;</span><span class="p">;</span>
 </span></code></pre></div>
 <h2 id="interfaces">Interfaces<a class="headerlink" href="#interfaces" title="Permanent link">&para;</a></h2>
 <p><a id="widgetrendererprops"></a></p>
@@ -3280,10 +3280,10 @@ into the setter are always validated and transformed by the widget&rsquo;s
 <h4 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">&para;</a></h4>
 <p><code>Element</code></p>
 <h4 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">&para;</a></h4>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>// Config: { enabled: boolean }
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>configElement: &lt;WidgetConfigWrapper&gt;
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  &lt;WidgetConfigCheckboxField label={&#39;Enabled&#39;} name={&#39;enabled&#39;} /&gt;
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>&lt;/WidgetConfigWrapper&gt;
+<div class="language-tsx highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">// Config: { enabled: boolean }</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nx">configElement</span><span class="o">:</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">WidgetConfigWrapper</span><span class="p">&gt;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="p">&lt;</span><span class="nt">WidgetConfigCheckboxField</span><span class="w"> </span><span class="na">label</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Enabled&#39;</span><span class="p">}</span><span class="w"> </span><span class="na">name</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;enabled&#39;</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="p">&lt;/</span><span class="nt">WidgetConfigWrapper</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <h4 id="see_1">See<a class="headerlink" href="#see_1" title="Permanent link">&para;</a></h4>
 <p>Widget.configElement</p>
@@ -3313,10 +3313,10 @@ into the setter are always validated and transformed by the widget&rsquo;s
 <h4 id="returns_6">Returns<a class="headerlink" href="#returns_6" title="Permanent link">&para;</a></h4>
 <p><code>Element</code></p>
 <h4 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">&para;</a></h4>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>// Config: { text: string }
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>configElement: &lt;WidgetConfigWrapper&gt;
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  &lt;WidgetConfigTextField label={&#39;Text&#39;} name={&#39;text&#39;} /&gt;
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>&lt;/WidgetConfigWrapper&gt;
+<div class="language-tsx highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">// Config: { text: string }</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nx">configElement</span><span class="o">:</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">WidgetConfigWrapper</span><span class="p">&gt;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="p">&lt;</span><span class="nt">WidgetConfigTextField</span><span class="w"> </span><span class="na">label</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Text&#39;</span><span class="p">}</span><span class="w"> </span><span class="na">name</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="p">&lt;/</span><span class="nt">WidgetConfigWrapper</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <h4 id="see_2">See<a class="headerlink" href="#see_2" title="Permanent link">&para;</a></h4>
 <p>Widget.configElement</p>
@@ -3379,7 +3379,7 @@ into the setter are always validated and transformed by the widget&rsquo;s
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 17, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 21, 2025</span>
   </span>
 
     
@@ -3389,7 +3389,7 @@ into the setter are always validated and transformed by the widget&rsquo;s
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 17, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 21, 2025</span>
   </span>
 
     
