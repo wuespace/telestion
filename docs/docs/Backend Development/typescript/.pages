@@ -5,4 +5,4 @@ nav:
   - message-bus.md
   - e2e-log-service.md
   - samples.md
-  - "API Reference ↗️": https://deno.land/x/telestion/mod.ts
+  - "API Reference ↗️": https://jsr.io/@wuespace/telestion@1.0.0-alpha.6/doc
