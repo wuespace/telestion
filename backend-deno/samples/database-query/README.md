@@ -14,7 +14,7 @@ The Database Query Service provides a request/reply interface for querying data 
 | `INFLUXDB_TOKEN` | Authentication token for InfluxDB | - | Yes |
 | `INFLUXDB_ORG` | InfluxDB organization name | - | Yes |
 | `INFLUXDB_BUCKET` | InfluxDB bucket name to query from | - | Yes |
-| `QUERY_SUBJECT` | The NATS subject pattern to listen for queries. Must end with `>` (e.g., `query.>`) | - | Yes |
+| `QUERY_SUBJECT` | The NATS subject to listen for queries (e.g., `query.database` or `db.query`) | - | Yes |
 
 ## Query Request Format
 
@@ -146,10 +146,7 @@ services:
       - influxdb-data:/var/lib/influxdb2
 
   database-query:
-    build:
-      context: ../
-      dockerfile: samples/Dockerfile
-    command: ["database-query/mod.ts"]
+    image: ghcr.io/wuespace/telestion-database-query:latest
     depends_on:
       - nats
       - influxdb
@@ -161,10 +158,22 @@ services:
       - INFLUXDB_TOKEN=my-super-secret-token
       - INFLUXDB_ORG=my-org
       - INFLUXDB_BUCKET=telemetry
-      - QUERY_SUBJECT=query.>
+      - QUERY_SUBJECT=query.database
 
 volumes:
   influxdb-data:
+```
+
+**Building from Source (Alternative)**
+
+To build from source instead of using the published image:
+
+```yaml
+  database-query:
+    build:
+      context: ./path/to/telestion/backend-deno
+      dockerfile: samples/database-query/Dockerfile
+    # ... rest of configuration
 ```
 
 ## Scalability

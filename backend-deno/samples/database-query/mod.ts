@@ -15,7 +15,7 @@ const {
   INFLUXDB_TOKEN: z.string(),
   INFLUXDB_ORG: z.string(),
   INFLUXDB_BUCKET: z.string(),
-  QUERY_SUBJECT: z.string().endsWith(">"),
+  QUERY_SUBJECT: z.string(),
 }).parse(config);
 
 console.log("Database query service started with config", {

@@ -46,10 +46,7 @@ volumes:
 
 ```yaml
   database:
-    build:
-      context: ./backend-deno
-      dockerfile: samples/Dockerfile
-    command: ["database/mod.ts"]
+    image: ghcr.io/wuespace/telestion-database:latest
     depends_on:
       - nats
       - influxdb
@@ -64,14 +61,14 @@ volumes:
       - DATA_SUBJECT=data.>
 ```
 
+> [!TIP]
+> To use a specific version instead of `latest`, use a version tag like `ghcr.io/wuespace/telestion-database:1.0.0`
+
 3. Add the Database Query Service:
 
 ```yaml
   database-query:
-    build:
-      context: ./backend-deno
-      dockerfile: samples/Dockerfile
-    command: ["database-query/mod.ts"]
+    image: ghcr.io/wuespace/telestion-database-query:latest
     depends_on:
       - nats
       - influxdb
@@ -83,13 +80,34 @@ volumes:
       - INFLUXDB_TOKEN=your-token
       - INFLUXDB_ORG=your-organization
       - INFLUXDB_BUCKET=telemetry
-      - QUERY_SUBJECT=query.>
+      - QUERY_SUBJECT=query.database
 ```
+
+> [!TIP]
+> To use a specific version instead of `latest`, use a version tag like `ghcr.io/wuespace/telestion-database-query:1.0.0`
 
 4. Start the services:
 
 ```bash
 docker-compose up -d
+```
+
+### Building from Source (Optional)
+
+If you need to customize the services or prefer to build from source, you can use the following configuration instead:
+
+```yaml
+  database:
+    build:
+      context: ./backend-deno
+      dockerfile: samples/database/Dockerfile
+    # ... rest of the configuration same as above
+
+  database-query:
+    build:
+      context: ./backend-deno
+      dockerfile: samples/database-query/Dockerfile
+    # ... rest of the configuration same as above
 ```
 
 ## Configuration
@@ -125,14 +143,14 @@ docker-compose up -d
 | `INFLUXDB_TOKEN` | Authentication token | `my-super-secret-token` |
 | `INFLUXDB_ORG` | Organization name | `my-ground-station` |
 | `INFLUXDB_BUCKET` | Bucket to query from | `telemetry` |
-| `QUERY_SUBJECT` | NATS subject pattern for queries | `query.>` |
+| `QUERY_SUBJECT` | NATS subject for queries | `query.database` |
 
 ### Subject Patterns
 
 The subject patterns determine how your services interact:
 
-- **DATA_SUBJECT**: Where the writer service listens for data (e.g., `data.>` listens to all subjects starting with `data.`)
-- **QUERY_SUBJECT**: Where the query service listens for requests (e.g., `query.>` listens to all subjects starting with `query.`)
+- **DATA_SUBJECT**: Where the writer service listens for data (e.g., `data.>` listens to all subjects starting with `data.`). The wildcard `>` allows the service to extract measurement names from the subject hierarchy.
+- **QUERY_SUBJECT**: Where the query service listens for requests (e.g., `query.database`). This should be a specific subject since query parameters are passed in the message body.
 
 ## Production Deployment
 
@@ -229,7 +247,9 @@ influxdb:
 
 ## Kubernetes Deployment
 
-For Kubernetes deployments, use StatefulSets for InfluxDB:
+For Kubernetes deployments, use StatefulSets for InfluxDB and Deployments for the database services:
+
+### InfluxDB StatefulSet
 
 ```yaml
 apiVersion: apps/v1
@@ -283,6 +303,90 @@ spec:
       resources:
         requests:
           storage: 50Gi
+```
+
+### Database Writer Service Deployment
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-writer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database-writer
+  template:
+    metadata:
+      labels:
+        app: database-writer
+    spec:
+      containers:
+      - name: database-writer
+        image: ghcr.io/wuespace/telestion-database:latest
+        env:
+        - name: NATS_URL
+          value: "nats:4222"
+        - name: SERVICE_NAME
+          value: "database-writer"
+        - name: DATA_DIR
+          value: "/data"
+        - name: INFLUXDB_URL
+          value: "http://influxdb:8086"
+        - name: INFLUXDB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-secrets
+              key: admin-token
+        - name: INFLUXDB_ORG
+          value: "telestion"
+        - name: INFLUXDB_BUCKET
+          value: "telemetry"
+        - name: DATA_SUBJECT
+          value: "data.>"
+```
+
+### Database Query Service Deployment
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-query
+spec:
+  replicas: 3  # Can be scaled horizontally
+  selector:
+    matchLabels:
+      app: database-query
+  template:
+    metadata:
+      labels:
+        app: database-query
+    spec:
+      containers:
+      - name: database-query
+        image: ghcr.io/wuespace/telestion-database-query:latest
+        env:
+        - name: NATS_URL
+          value: "nats:4222"
+        - name: SERVICE_NAME
+          value: "database-query"
+        - name: DATA_DIR
+          value: "/data"
+        - name: INFLUXDB_URL
+          value: "http://influxdb:8086"
+        - name: INFLUXDB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-secrets
+              key: admin-token
+        - name: INFLUXDB_ORG
+          value: "telestion"
+        - name: INFLUXDB_BUCKET
+          value: "telemetry"
+        - name: QUERY_SUBJECT
+          value: "query.database"
 ```
 
 ## Troubleshooting

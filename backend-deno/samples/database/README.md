@@ -107,10 +107,7 @@ services:
       - influxdb-data:/var/lib/influxdb2
 
   database:
-    build:
-      context: ../
-      dockerfile: samples/Dockerfile
-    command: ["database/mod.ts"]
+    image: ghcr.io/wuespace/telestion-database:latest
     depends_on:
       - nats
       - influxdb
@@ -126,6 +123,18 @@ services:
 
 volumes:
   influxdb-data:
+```
+
+**Building from Source (Alternative)**
+
+To build from source instead of using the published image:
+
+```yaml
+  database:
+    build:
+      context: ./path/to/telestion/backend-deno
+      dockerfile: samples/database/Dockerfile
+    # ... rest of configuration
 ```
 
 ## Scalability

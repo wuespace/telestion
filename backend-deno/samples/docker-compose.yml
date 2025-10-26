@@ -81,11 +81,12 @@ services:
       - .common.env
     environment:
       - SERVICE_NAME=logger
+  # Database services - using build for development/testing
+  # For production, use published images: ghcr.io/wuespace/telestion-database:latest
   database:
     build:
       context: ../
-      dockerfile: samples/Dockerfile
-    command: ["database/mod.ts"]
+      dockerfile: samples/database/Dockerfile
     depends_on:
       - nats
       - influxdb
@@ -101,8 +102,7 @@ services:
   database-query:
     build:
       context: ../
-      dockerfile: samples/Dockerfile
-    command: ["database-query/mod.ts"]
+      dockerfile: samples/database-query/Dockerfile
     depends_on:
       - nats
       - influxdb
@@ -114,7 +114,7 @@ services:
       - INFLUXDB_TOKEN=my-super-secret-token
       - INFLUXDB_ORG=telestion
       - INFLUXDB_BUCKET=telemetry
-      - QUERY_SUBJECT=query.>
+      - QUERY_SUBJECT=query.database
 
 volumes:
   influxdb-data:
