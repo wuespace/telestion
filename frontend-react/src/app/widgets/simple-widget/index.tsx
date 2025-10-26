@@ -24,7 +24,10 @@ export const simpleWidget: Widget<WidgetConfig> = {
 				text: z.string().catch('Initial Text'),
 				bool: z.boolean().catch(false)
 			})
-			.default({})
+			.default({
+				text: 'Initial text',
+				bool: false
+			})
 			.parse(input);
 	},
 

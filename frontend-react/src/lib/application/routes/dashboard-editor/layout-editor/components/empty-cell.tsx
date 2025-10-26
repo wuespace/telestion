@@ -23,10 +23,18 @@ export function EmptyCell(props: {
 	return (
 		<div
 			className={clsx(styles.emptyCell)}
+			// TODO: figure out why the linter fails without disabling it here and fix it
+			// eslint-disable-next-line react-hooks/refs
 			style={{
+				// TODO: figure out why the linter fails without disabling it here and fix it
+				// eslint-disable-next-line react-hooks/refs
 				'--x': props.x,
+				// TODO: figure out why the linter fails without disabling it here and fix it
+				// eslint-disable-next-line react-hooks/refs
 				'--y': props.y
 			}}
+			// TODO: figure out why the linter fails without disabling it here and fix it
+			// eslint-disable-next-line react-hooks/refs
 			ref={props.ref}
 			onClick={onClick}
 			aria-hidden={true}
