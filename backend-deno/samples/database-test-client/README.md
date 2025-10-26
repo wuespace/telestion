@@ -12,6 +12,14 @@ This service tests the complete database workflow:
 
 ## Usage
 
+### Configuration
+
+The test client accepts the following optional environment variable:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `INFLUXDB_BUCKET` | The InfluxDB bucket name to use in custom queries | `telemetry` |
+
 ### With Docker Compose
 
 Add this service to your `docker-compose.yml` (it will run the tests once and exit):
@@ -31,6 +39,7 @@ database-test-client:
     - .common.env
   environment:
     - SERVICE_NAME=database-test-client
+    - INFLUXDB_BUCKET=telemetry
 ```
 
 ### Standalone

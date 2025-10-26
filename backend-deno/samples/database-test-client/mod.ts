@@ -1,8 +1,14 @@
 import { startService } from "jsr:@wuespace/telestion";
+import { z } from "npm:zod";
 
-const { messageBus } = await startService();
+const { messageBus, config } = await startService();
+
+const { INFLUXDB_BUCKET = "telemetry" } = z.object({
+  INFLUXDB_BUCKET: z.string().default("telemetry"),
+}).parse(config);
 
 console.log("Database test client started");
+console.log("Using InfluxDB bucket:", INFLUXDB_BUCKET);
 
 // Test 1: Publish some test data
 console.log("\n=== Test 1: Publishing sample data ===");
@@ -94,7 +100,7 @@ try {
 console.log("\n=== Test 4: Custom Flux query (average) ===");
 try {
   const queryRequest = {
-    query: `from(bucket: "telemetry")
+    query: `from(bucket: "${INFLUXDB_BUCKET}")
   |> range(start: -5m)
   |> filter(fn: (r) => r._measurement == "telemetry.environment")
   |> filter(fn: (r) => r._field == "temperature")
