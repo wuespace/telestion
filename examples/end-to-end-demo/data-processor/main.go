@@ -9,6 +9,11 @@ import (
 	"github.com/nats-io/nats.go"
 )
 
+const (
+	// EarthRadius is the mean radius of Earth in kilometers
+	EarthRadius = 6371.0
+)
+
 // TelemetryData represents raw telemetry from the spacecraft
 type TelemetryData struct {
 	Timestamp      string  `json:"timestamp"`
@@ -94,8 +99,7 @@ func processTelemetry(data TelemetryData) ProcessedTelemetry {
 	}
 
 	// Calculate distance from Earth's center (Earth radius + altitude)
-	const earthRadius = 6371.0 // km
-	processed.Distance = earthRadius + data.Altitude
+	processed.Distance = EarthRadius + data.Altitude
 
 	// Validate data and generate warnings
 	if data.BatteryLevel < 20 {
