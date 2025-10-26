@@ -122,8 +122,16 @@ export function LayoutEditor(props: LayoutEditorProps) {
 					return state;
 				}
 
-				const widgetId = props.onCreateWidgetInstance();
-				return select(fillWith(state, widgetId, bounds), bounds);
+				try {
+					const widgetId = props.onCreateWidgetInstance();
+					return select(fillWith(state, widgetId, bounds), bounds);
+				} catch (err) {
+					console.error('Could not create widget instance.', {
+						code: 'e732b33a',
+						cause: err
+					});
+					return state;
+				}
 			});
 		},
 		[applyLayoutChange, props]

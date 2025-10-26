@@ -67,6 +67,9 @@ export function DashboardEditor() {
 	const onLayoutEditorCreateWidgetInstance = useCallback(() => {
 		const newId = generateDashboardId();
 		const widgetTypes = getWidgets();
+		if (widgetTypes.length === 0) {
+			throw new Error('No registered widget types found. Code: 9ca3dd78');
+		}
 		const widgetType = widgetTypes[0];
 
 		const configuration = widgetType.createConfig({});
@@ -262,6 +265,7 @@ function useDashboardEditorData() {
 		const { dashboardId, dashboard, widgetInstances } =
 			loaderSchema.parse(loaderData);
 
+		// eslint-disable-next-line react-hooks/set-state-in-effect
 		setLocalDashboard({
 			selection: {
 				x: 0,
