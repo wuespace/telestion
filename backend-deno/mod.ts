@@ -34,7 +34,7 @@ export interface StartServiceConfig {
   natsMock?: unknown;
 }
 
-const StartServiceConfigSchema: ZodType<StartServiceConfig> = z.object({
+const StartServiceConfigSchema: ZodType<StartServiceConfig, Partial<StartServiceConfig>> = z.object({
   nats: z.boolean().default(true),
   overwriteArgs: z.array(z.string()).optional(),
   natsMock: z.unknown().optional(),
@@ -100,7 +100,7 @@ export const MinimalConfigSchema: ZodType<MinimalConfig> = z.object({
   NATS_PASSWORD: z.string().optional(),
   SERVICE_NAME: z.string(),
   DATA_DIR: z.string(),
-}).passthrough();
+}).loose();
 
 /**
  * Starts the service and returns the APIs available to the Telestion service.
@@ -174,7 +174,7 @@ function assembleConfig() {
   const withoutConfigFile = z.object({
     CONFIG_FILE: z.string().optional(),
     CONFIG_KEY: z.string().optional(),
-  }).passthrough().parse({
+  }).loose().parse({
     ...getDefaultConfig(),
     ...Deno.env.toObject(),
     ...flags,
