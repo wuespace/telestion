@@ -8,9 +8,9 @@
 The message bus is a simple, lightweight, and fast way to send messages between different parts (_services_) of your application. It is a simple publish/subscribe system that allows you to send messages to a specific subject and have any listeners on that subject receive the message.
 
 !!! warning "Running NATS for development"
-	Now that we want to interact with the message bus, we need to have NATS running. If you're using the `--dev` mode for testing your service, it's sufficient to run the [`nats-server` executable](https://nats.io/download/){target=_blank} in a separate terminal window. This will start a local NATS server on port `4222` which is the default port for NATS.
-	
-	If you have a prdouction-like setup, you'll need to pass the `NATS_USER` and `NATS_PASSWORD` corresponding to your NATS configuration as configuration parameters to your service for authentication.
+ Now that we want to interact with the message bus, we need to have NATS running. If you're using the `--dev` mode for testing your service, it's sufficient to run the [`nats-server` executable](https://nats.io/download/){target=_blank} in a separate terminal window. This will start a local NATS server on port `4222` which is the default port for NATS.
+
+ If you have a prdouction-like setup, you'll need to pass the `NATS_USER` and `NATS_PASSWORD` corresponding to your NATS configuration as configuration parameters to your service for authentication.
 
 ## Connecting to the Message Bus
 
@@ -30,12 +30,12 @@ const {nc/* (1)! */} = await startService(/* (2)! */);
 2. Omit the `{ nats: false }` parameter from the `startService` function call since we want to connect to the message bus.
 
 !!! note
-	`startService` actually returns an object containing the NATS connection (`nc`) and a few other things. In our example, we use [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment){target=_blank} to only get the `nc` variable. This is equivalent to the following code:
-	
-	```typescript
-	const service = await startService();
-	const nc = service.nc;
-	```
+ `startService` actually returns an object containing the NATS connection (`nc`) and a few other things. In our example, we use [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment){target=_blank} to only get the `nc` variable. This is equivalent to the following code:
+
+ ```typescript
+ const service = await startService();
+ const nc = service.nc;
+ ```
 
 ## Publishing Messages
 
@@ -84,7 +84,7 @@ await nc.publish("subject", new Uint8Array([0x01, 0x02, 0x03]));
 ```
 
 !!! tip "Uint8Arrays"
-	You can learn more about how you can use `Uint8Array` on [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array#different_ways_to_create_a_uint8array){target=_blank}.
+ You can learn more about how you can use `Uint8Array` on [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array#different_ways_to_create_a_uint8array){target=_blank}.
 
 ## Subscribing to Messages
 
@@ -129,11 +129,11 @@ for await (const message of subjectSubscription) {
 2. Print the `foo` property of the decoded JSON message to the console.
 
 !!! danger
-	Can you spot the problem with this code? What happens if the message data doesn't contain a `foo` property? Or if it's not a JSON message at all? This would lead to our service crashing!
+ Can you spot the problem with this code? What happens if the message data doesn't contain a `foo` property? Or if it's not a JSON message at all? This would lead to our service crashing!
 
-	**Never assume a message's structure!**
+ **Never assume a message's structure!**
 
-	You should always validate the message data before using it. We'll cover this in the next section.
+ You should always validate the message data before using it. We'll cover this in the next section.
 
 ### Validating Messages
 
@@ -161,20 +161,20 @@ for await (const message of subjectSubscription) {
 3. Wrap the code that decodes the message in a `try`/`catch` block.
 
 !!! note "Binary Messages"
-	Since any messages get sent as binary messages (in fact, the `json()` function does nothing else than convert the JSON message from a `Uint8Array`), there's no way to validate that a message is supposed to be a binary message. This makes the next section even more important.
+ Since any messages get sent as binary messages (in fact, the `json()` function does nothing else than convert the JSON message from a `Uint8Array`), there's no way to validate that a message is supposed to be a binary message. This makes the next section even more important.
 
 #### Validating the message structure
 
 The second "layer" of validation is the message structure. This is where you validate that the message data contains all the properties you expect it to contain. For example, if you expect a message to contain a `foo` property, you must verify its existence before using it.
 
-For structured JSON data, we recommend that you use the `zod` library for validation. This is also used in our `lib.ts` file to validate the configuration. You can find more information about `zod` in the library's [GitHub repository](https://github.com/colinhacks/zod){target=_blank}.
+For structured JSON data, we recommend that you use the `zod` library for validation. This is also used in our `lib.ts` file to validate the configuration. You can find more information about `zod` on the library's [documentation site](https://zod.dev/api){target=_blank}.
 
 Let's create a `zod` schema for our JSON message in a new file called `foo-message.ts`:
 
 ```typescript title="foo-message.ts"
 import {
     z
-} from "https://deno.land/x/zod@v3.16.1/mod.ts";
+} from "jsr:@zod/zod";
 
 export const fooMessageSchema = z.object/*(1)!*/(({
     foo: z.string()/*(2)!*/,
@@ -188,19 +188,19 @@ export type FooMessage = z.infer<typeof fooMessageSchema>;//(4)!
 2. A `FooMessage` must have a `foo` property that is a string.
 3. A `FooMessage` must have a `bar` property that is a number and is greater than or equal to `-10`.
 4. This is a TypeScript type that represents the `FooMessage` type. While we won't use it in this example, it's good practice to create a type for each schema you create. This allows you to use the type anywhere in your code:
+
    ```typescript
    function foo(message: FooMessage) {
-   		console.log(message.foo);
+     console.log(message.foo);
    }
    
    // ...
    
    const fooMessage = fooMessageSchema.parse(
-   		jsonCodec.decode(message.data)
+     jsonCodec.decode(message.data)
    );
    foo(fooMessage); // This works now!
    ```
-
 
 Now we can use this schema to validate the message data:
 
@@ -228,18 +228,18 @@ for await (const message of subjectSubscription) {
 2. TypeScript now knows that `jsonMessage` is a valid `FooMessage` object. Therefore, we can access the `foo` property without any problems.
 
 !!! success
-	If your editor has great TypeScript support and has shown you warnings/errors before, they are now gone! This is because TypeScript now knows that the `jsonMessage` variable is a valid `FooMessage` object. In other words, your code is now safe from invalid messages!
+ If your editor has great TypeScript support and has shown you warnings/errors before, they are now gone! This is because TypeScript now knows that the `jsonMessage` variable is a valid `FooMessage` object. In other words, your code is now safe from invalid messages!
 
 !!! note "Binary Messages"
-	For binary messages, you can't use `zod` to validate the message structure. Instead, you should use the `Uint8Array` methods to validate the message structure. For example, you can check the length of the message data using the `length` property of the `Uint8Array`:
+ For binary messages, you can't use `zod` to validate the message structure. Instead, you should use the `Uint8Array` methods to validate the message structure. For example, you can check the length of the message data using the `length` property of the `Uint8Array`:
 
-	```typescript
-	if (message.data.length !== 3) {
-	    console.error("Received invalid message:", message);
-	}
-	```
+ ```typescript
+ if (message.data.length !== 3) {
+     console.error("Received invalid message:", message);
+ }
+ ```
 
-	However, the exact validation required completely depends on your use case. Just make sure that your code doesn't crash when it receives an invalid message.
+ However, the exact validation required completely depends on your use case. Just make sure that your code doesn't crash when it receives an invalid message.
 
 ### Subscribing to Multiple Topics
 
@@ -252,29 +252,29 @@ We can solve this by wrapping the `for await` loop in an `async` function and ca
 
 const subjectMessages = nc.subscribe("foo");
 (async () => {//(1)!
-	for await (const message of subjectMessages) {
-		// Handle messages from the "foo" subject
-	}
+ for await (const message of subjectMessages) {
+  // Handle messages from the "foo" subject
+ }
 })();
 
 // ... (2)
 ```
 
-1. Wrap the `for await` loop in an `async` function and call it immediately. This will start the subscription in parallel to the rest of the code. 
+1. Wrap the `for await` loop in an `async` function and call it immediately. This will start the subscription in parallel to the rest of the code.
 2. Do other things while we're waiting for messages.
 
 Note that we're storing the return value of `nc.subscribe` in a variable outside the `async` function. This is important so that we can close the subscription or check its status later.
 
 !!! note "Closing the Subscription"
-	You can close the subscription by calling the `unsubscribe` method on the subscription object:
-	
-	```typescript
-	const subjectMessages = nc.subscribe("foo");
-	// ...
-	subjectMessages.unsubscribe();
-	```
-	
-	**You must call `unsubscribe` on the subscription object.** Calling `nc.unsubscribe` will unsubscribe from **all** subscriptions!
+ You can close the subscription by calling the `unsubscribe` method on the subscription object:
+
+ ```typescript
+ const subjectMessages = nc.subscribe("foo");
+ // ...
+ subjectMessages.unsubscribe();
+ ```
+
+ **You must call `unsubscribe` on the subscription object.** Calling `nc.unsubscribe` will unsubscribe from **all** subscriptions!
 
 This now allows us to subscribe to multiple topics:
 
@@ -294,15 +294,15 @@ const barMessages = nc.subscribe("bar");//(2)!
         // Handle messages from the "bar" subject
         if (shouldUnsubscribeFoo(message))
             fooMessages.unsubscribe/*(3)!*/();
-		
-		if (shouldUnsubscribeBar(message))
-			barMessages.unsubscribe/*(4)!*/();
+  
+  if (shouldUnsubscribeBar(message))
+   barMessages.unsubscribe/*(4)!*/();
     }
 })();
 
 await Promise.all/*(5)!*/([
-	fooMessages.closed,
-	barMessages.closed
+ fooMessages.closed,
+ barMessages.closed
 ]);
 
 console.log("All subscriptions closed!");//(6)!
@@ -318,7 +318,7 @@ console.log("All subscriptions closed!");//(6)!
 ### Queue Groups
 
 !!! info
-	Queue groups are a way to distribute messages between multiple subscribers. If you have multiple subscribers to a subject, you can use queue groups to distribute messages between them. This is useful if you want to distribute messages between multiple instances of a service (for example, if you want to scale your service horizontally because processing a message takes too long).
+ Queue groups are a way to distribute messages between multiple subscribers. If you have multiple subscribers to a subject, you can use queue groups to distribute messages between them. This is useful if you want to distribute messages between multiple instances of a service (for example, if you want to scale your service horizontally because processing a message takes too long).
 
 All you have to do to use queue groups is to pass a `queue` option to the `subscribe` method. You can use any string as the queue name, but by its definition, the `SERVICE_NAME` configuration parameter works perfect for this. For convenience, this gets exposed as `serviceName` on the object returned by `startService`:
 
@@ -332,7 +332,7 @@ const {
 
 const fooMessages = nc.subscribe(
     "foo", 
-	{queue: serviceName/*(2)!*/}
+ {queue: serviceName/*(2)!*/}
 );
 (async () => {
     for await (const message of fooMessages) {
@@ -349,11 +349,11 @@ const fooMessages = nc.subscribe(
 If you now run multiple instances of your service, you'll see that messages are distributed between them. This is because the `queue` option tells the message bus to distribute messages between all subscribers with the same queue name.
 
 !!! warning "Service names in development mode"
-	When you run your service in development mode, the `serviceName` will be generated. This means that you'll get a different service name every time you start your service. To avoid this, you can either set the `SERVICE_NAME` environment variable or pass a service name via the CLI:
-	
-	```bash
-	deno run --allow-all service.ts --dev --SERVICE_NAME=foo
-	```
+ When you run your service in development mode, the `serviceName` will be generated. This means that you'll get a different service name every time you start your service. To avoid this, you can either set the `SERVICE_NAME` environment variable or pass a service name via the CLI:
+
+ ```bash
+ deno run --allow-all service.ts --dev --SERVICE_NAME=foo
+ ```
 
 ### Wildcards
 
@@ -407,7 +407,7 @@ In this example, we subscribe to the `foo.*` subject. We then use the `subject` 
 For example, if we send a message to the `foo.get.bar` subject, we'll get the value of the `bar` key in the `store` object. If we send a message to the `foo.set.bar` subject with the value `42`, we'll set the value of the `bar` key in the `store` object to `42`.
 
 !!! success
-	Woohoo! You've just re-implemented a key-value store using the message bus, which (with a few convenience features on top) is an essential part of Telestion's standard services! :tada:
+ Woohoo! You've just re-implemented a key-value store using the message bus, which (with a few convenience features on top) is an essential part of Telestion's standard services! :tada:
 
 ## Request/Reply
 
@@ -434,18 +434,18 @@ console.log(response.data);
 3. Encode the request message data using the `jsonCodec` codec. This is the same as we've done before.
 
 !!! tip "Tip: Specifying a timeout"
-	As it is, our code will wait forever for a response. This is probably not what we want. We can specify a timeout by passing a second argument to the `request` method:
-	
-	```typescript
-	const response = await nc.request(
-    	"fooRequest", 
-		JSON.stringify({foo: "bar"}),
-		{timeout: 1000}
-	);
-	```
-	
-	This will cause the `request` method to reject the `Promise` if no response is received within 1000 milliseconds. Make sure to handle the rejection by handling it appropriately.
-	
+ As it is, our code will wait forever for a response. This is probably not what we want. We can specify a timeout by passing a second argument to the `request` method:
+
+ ```typescript
+ const response = await nc.request(
+     "fooRequest", 
+  JSON.stringify({foo: "bar"}),
+  {timeout: 1000}
+ );
+ ```
+
+ This will cause the `request` method to reject the `Promise` if no response is received within 1000 milliseconds. Make sure to handle the rejection by handling it appropriately.
+
 ### Handling a Request
 
 Now that we know how to send a request, let's look at how we can handle a request. We can use the `subscribe` method on the `NatsConnection` object to subscribe to a subject. This allows us to handle requests:
@@ -456,9 +456,9 @@ Now that we know how to send a request, let's look at how we can handle a reques
 const requestMessages = nc.subscribe/*(1)!*/("fooRequest");
 
 (async () => {
-	for await (const message of requestMessages) {//(2)!
-		message.respond/*(3)!*/(JSON.stringify({bar: "baz"}));
-	}
+ for await (const message of requestMessages) {//(2)!
+  message.respond/*(3)!*/(JSON.stringify({bar: "baz"}));
+ }
 })();
 ```
 
@@ -467,8 +467,7 @@ const requestMessages = nc.subscribe/*(1)!*/("fooRequest");
 3. Respond to the request by calling the `respond` method on the message object. This method takes a single argument: the response message data. This is the same as we've done before.
 
 !!! tip
-	The `message` received from the `fooRequest` subject is the same as the `message` received from the `foo` subject. This means that we can use the same steps to handle the message as we've done before if we need the data to handle the request.
-
+ The `message` received from the `fooRequest` subject is the same as the `message` received from the `foo` subject. This means that we can use the same steps to handle the message as we've done before if we need the data to handle the request.
 
 ## Related Links
 
