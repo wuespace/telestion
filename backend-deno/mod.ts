@@ -3,7 +3,7 @@ import * as natsTransport from "@nats-io/transport-deno";
 import { parseArgs } from "@std/cli";
 import { parse as parseJSON } from "@std/jsonc";
 import { resolve } from "@std/path";
-import { z, type ZodSchema, type ZodTypeDef } from "zod";
+import { z, type ZodType } from "@zod/zod";
 
 let args = Deno.args;
 let natsModule = natsTransport;
@@ -34,11 +34,7 @@ export interface StartServiceConfig {
   natsMock?: unknown;
 }
 
-const StartServiceConfigSchema: ZodSchema<
-  StartServiceConfig,
-  ZodTypeDef,
-  Partial<StartServiceConfig>
-> = z.object({
+const StartServiceConfigSchema: ZodType<StartServiceConfig> = z.object({
   nats: z.boolean().default(true),
   overwriteArgs: z.array(z.string()).optional(),
   natsMock: z.unknown().optional(),
@@ -98,11 +94,7 @@ export interface MinimalConfig {
  * console.log(config.SERVICE_NAME); // "my-service"
  * ```
  */
-export const MinimalConfigSchema: ZodSchema<
-  MinimalConfig,
-  ZodTypeDef,
-  MinimalConfig
-> = z.object({
+export const MinimalConfigSchema: ZodType<MinimalConfig> = z.object({
   NATS_URL: z.string(),
   NATS_USER: z.string().optional(),
   NATS_PASSWORD: z.string().optional(),
