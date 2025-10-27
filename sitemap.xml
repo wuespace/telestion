@@ -2,154 +2,154 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.telestion.wuespace.de/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/getting-started/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/message-bus/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/project-folder-structure/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/service/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/other-languages/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/rust/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/service-behavior/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/service-behavior/auth/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/service-behavior/config/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/service-behavior/dev-mode/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/service-behavior/nats/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/service-behavior/service/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/typescript/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/typescript/configuration/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/typescript/e2e-log-service/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/typescript/message-bus/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Backend%20Development/typescript/samples/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Deployment/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Deployment/concepts/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Deployment/docker/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Deployment/kubernetes/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Deployment/local/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Deployment/local/local-nats/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Deployment/local/local-typescript-service/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Deployment/nats/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Frontend%20Development/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Frontend%20Development/concepts/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Frontend%20Development/developing-widgets/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Frontend%20Development/api/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Frontend%20Development/api/application/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Frontend%20Development/api/auth/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Frontend%20Development/api/nats/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Frontend%20Development/api/user-data/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Frontend%20Development/api/utils/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/Frontend%20Development/api/widget/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
     <url>
          <loc>https://docs.telestion.wuespace.de/_writers-guide/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-10-27</lastmod>
     </url>
 </urlset>
