@@ -75,11 +75,11 @@ Configuration sources and their order of precedence.
 
 Some configuration values are required for all services. These values are:
 
-* `NATS_URL`: The URL of the NATS server to connect to.
-* `NATS_USER` (if the NATS server requires authentication): The username to use when connecting to NATS.
-* `NATS_PASSWORD` (if the NATS user requires authentication): The password to use when connecting to NATS.
-* `SERVICE_NAME`: The name of the service. This is used to identify the service in the logs and in the NATS server. This is required for all services.
-* `DATA_DIR`: The directory where the service can store data. This is required for all services.
+- `NATS_URL`: The URL of the NATS server to connect to.
+- `NATS_USER` (if the NATS server requires authentication): The username to use when connecting to NATS.
+- `NATS_PASSWORD` (if the NATS user requires authentication): The password to use when connecting to NATS.
+- `SERVICE_NAME`: The name of the service. This is used to identify the service in the logs and in the NATS server. This is required for all services.
+- `DATA_DIR`: The directory where the service can store data. This is required for all services.
 
 !!! tip
     To make it easier to run your service during development, sensible defaults are used when you pass the `--dev` flag to the service:
@@ -116,7 +116,7 @@ Now, let's adjust the `service.ts` file to use the configuration:
 
 ```typescript title="service.ts"
 import { startService } from "jsr:@wuespace/telestion";
-import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";// (1)!
+import { z } from "jsr:@zod/zod";// (1)!
 
 const { config: rawConfig/* (2)! */} = await startService({
   nats: false,
