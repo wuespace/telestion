@@ -3,8 +3,8 @@ nav:
   - Overview:
       - index.md
       - Concepts:
-        - service.md
-        - message-bus.md
+          - service.md
+          - message-bus.md
       - project-folder-structure.md
   - Backend Development
   - Frontend Development
