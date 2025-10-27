@@ -52,7 +52,7 @@ The `telestion` framework will use Bootstrap for its components and UI.
 
 The new framework will be easier to understand and use.
 
-### Better Maintanability
+### Better Maintainability
 
 The new framework will be easier to maintain and extend.
 

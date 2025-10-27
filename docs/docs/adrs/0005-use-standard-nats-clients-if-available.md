@@ -22,7 +22,7 @@ Based on our evaluation, as of the time of this ADR's writing, the NATS client l
 ## Decision
 <!-- The change that we're proposing or have agreed to implement. -->
 
-W**e will use (and recommend the usage of) the NATS client libraries recommended by NATS.** We won't build our own client libraries unless none (that's suitable / that meets the technical requirements) exists for a targeted language/environment.
+**We will use (and recommend the usage of) the NATS client libraries recommended by NATS.** We won't build our own client libraries unless none (that's suitable / that meets the technical requirements) exists for a targeted language/environment.
 
 We will still be able to supersede this decision if, at any point in time, we have the resources to provide our own NATS client libraries and/or the advantages justify the effort.
 

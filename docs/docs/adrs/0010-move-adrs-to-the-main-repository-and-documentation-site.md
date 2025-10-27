@@ -13,7 +13,7 @@ Supersedes [ADR-0002: Use custom ADR management tooling](0002-use-custom-adr-man
 
 All repositories of the project apart from the `telestion-architecture` repository have been migrated to a monorepo structure. The ADRs were originally placed in a separate repository to keep them decoupled from the codebase. However, with the move to a monorepo, it is more practical to have the ADRs located within the main repository itself.
 
-With the integration into the bigger repository, the tooling used to manage ADRs in the separate repository is no viable, since it was tailored specifically for that repository structure.
+With the integration into the bigger repository, the tooling used to manage ADRs in the separate repository is no longer viable, since it was tailored specifically for that repository structure.
 
 ## Decision
 <!-- The change that we're proposing or have agreed to implement. -->
