@@ -1,5 +1,5 @@
 import { startService } from "jsr:@wuespace/telestion";
-import { z } from "npm:zod";
+import { z } from "jsr:@zod/zod";
 
 // Start the service
 const { config, serviceName, dataDir } = await startService({

@@ -1,4 +1,4 @@
-FROM denoland/deno:alpine-2.1.2
+FROM denoland/deno:alpine-2.5.4
 LABEL maintainer="WüSpace e. V. <telestion@wuespace.de>"
 
 # Add files

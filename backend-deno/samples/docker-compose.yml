@@ -2,8 +2,8 @@ services:
   nats:
     image: nats:latest
     ports:
-      - "4222:4222"
-      - "8222:8222"
+      - "4222"
+      - "8222"
     # volumes:
       # - ./nats.conf:/etc/nats.conf
   config:

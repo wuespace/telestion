@@ -1,5 +1,5 @@
 import { startService } from "jsr:@wuespace/telestion";
-import { z } from "npm:zod";
+import { z } from "jsr:@zod/zod";
 
 const { messageBus, config, serviceName } = await startService();
 
