@@ -5,3 +5,4 @@ nav:
     - Docker Deployment: docker
     - Kubernetes Deployment: kubernetes
     - NATS Configuration: nats
+    - Database Service: database-service.md

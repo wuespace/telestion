@@ -6,6 +6,19 @@ services:
       - "8222:8222"
     # volumes:
       # - ./nats.conf:/etc/nats.conf
+  influxdb:
+    image: influxdb:2.7
+    ports:
+      - "8086:8086"
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password123
+      - DOCKER_INFLUXDB_INIT_ORG=telestion
+      - DOCKER_INFLUXDB_INIT_BUCKET=telemetry
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-token
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
   config:
     build:
       context: ../
@@ -68,3 +81,40 @@ services:
       - .common.env
     environment:
       - SERVICE_NAME=logger
+  # Database services - using build for development/testing
+  # For production, use published images: ghcr.io/wuespace/telestion-database:latest
+  database:
+    build:
+      context: ../
+      dockerfile: samples/database/Dockerfile
+    depends_on:
+      - nats
+      - influxdb
+    env_file:
+      - .common.env
+    environment:
+      - SERVICE_NAME=database
+      - INFLUXDB_URL=http://influxdb:8086
+      - INFLUXDB_TOKEN=my-super-secret-token
+      - INFLUXDB_ORG=telestion
+      - INFLUXDB_BUCKET=telemetry
+      - DATA_SUBJECT=data.>
+  database-query:
+    build:
+      context: ../
+      dockerfile: samples/database-query/Dockerfile
+    depends_on:
+      - nats
+      - influxdb
+    env_file:
+      - .common.env
+    environment:
+      - SERVICE_NAME=database-query
+      - INFLUXDB_URL=http://influxdb:8086
+      - INFLUXDB_TOKEN=my-super-secret-token
+      - INFLUXDB_ORG=telestion
+      - INFLUXDB_BUCKET=telemetry
+      - QUERY_SUBJECT=query.database
+
+volumes:
+  influxdb-data:
