@@ -34,7 +34,7 @@ Telestion frontend applications can be built using any build tool that supports 
 
 Bootstrapping a new application consists of importing a single `initTelestion` (or similar) function from the `@wuespace/telestion` package and calling it.
 
-Adding a widget is as easy as calling a `regsiterWidget` (or similar) function from the same package.
+Adding a widget is as easy as calling a `registerWidget` (or similar) function from the same package.
 
 ### User Experience
 

@@ -59,7 +59,7 @@ s2[Service 2]
 s1 -- "data + headers" --> s2
 ```
 
-is can also handle this (and thus requires no knowledge of the data's origin):
+it can also handle this (and thus requires no knowledge of the data's origin):
 
 ```mermaid
 flowchart LR

@@ -10,7 +10,7 @@ Accepted
 
 <!-- The issue that is motivating this decision and any context that influences or constrains the decision. -->
 
-The original terminology of the Telestion project was based on Vert.x' EventBus, which was a good starting point but has become less relevant as the project has evolved. With the decision to use NATS as the distributed message bus for the project (as documented in [ADR-0003](.//0003-use-nats-as-distributed-message-bus.md)), it became clear that the terminology needed to be revised to be more independent of specific technologies.
+The original terminology of the Telestion project was based on Vert.x' EventBus, which was a good starting point but has become less relevant as the project has evolved. With the decision to use NATS as the distributed message bus for the project (as documented in [ADR-0003](./0003-use-nats-as-distributed-message-bus.md)), it became clear that the terminology needed to be revised to be more independent of specific technologies.
 
 One particular issue with the old terminology was the ambiguity in the client/server terminology. A Verticle could be both a client to other Verticles and a server for other Verticles, which was confusing and made it harder to understand the system architecture. With NATS, the only "server" is the NATS server itself, while the NATS client libraries are only clients to the NATS server (even when used on a server-side microservice).
 
