@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # NATS Message Broker
+  nats:
+    image: nats:2.10-alpine
+    ports:
+      - "4222:4222"  # Client connections
+      - "8222:8222"  # HTTP monitoring
+    command: ["-js", "-m", "8222"]
+    networks:
+      - telestion
+
+  # Data Generator Service (TypeScript/Deno)
+  data-generator:
+    build:
+      context: ./data-generator
+      dockerfile: Dockerfile
+    environment:
+      - NATS_URL=nats://nats:4222
+      - TC_CONFIG_OUTPUT_TOPIC=telemetry.raw
+      - TC_CONFIG_INTERVAL_MS=2000
+    depends_on:
+      - nats
+    networks:
+      - telestion
+    restart: unless-stopped
+
+  # Data Processor Service (Go)
+  data-processor:
+    build:
+      context: ./data-processor
+      dockerfile: Dockerfile
+    environment:
+      - NATS_URL=nats://nats:4222
+      - TC_CONFIG_INPUT_TOPIC=telemetry.raw
+      - TC_CONFIG_OUTPUT_TOPIC=telemetry.processed
+    depends_on:
+      - nats
+      - data-generator
+    networks:
+      - telestion
+    restart: unless-stopped
+
+  # Database Service (TypeScript/Deno)
+  database-service:
+    build:
+      context: ./database-service
+      dockerfile: Dockerfile
+    environment:
+      - NATS_URL=nats://nats:4222
+      - TC_CONFIG_INPUT_TOPIC=telemetry.processed
+      - TC_CONFIG_QUERY_TOPIC=database.query
+    depends_on:
+      - nats
+    networks:
+      - telestion
+    restart: unless-stopped
+
+networks:
+  telestion:
+    driver: bridge

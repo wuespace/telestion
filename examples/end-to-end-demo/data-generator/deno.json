@@ -1,0 +1,11 @@
+{
+  "name": "@telestion/example-data-generator",
+  "version": "1.0.0",
+  "exports": "./mod.ts",
+  "tasks": {
+    "start": "deno run --allow-net --allow-env mod.ts"
+  },
+  "imports": {
+    "@wuespace/telestion": "jsr:@wuespace/telestion@^1"
+  }
+}
