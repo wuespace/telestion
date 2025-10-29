@@ -14,5 +14,6 @@
 export * from './model.ts';
 export * from './state.ts';
 export * from './controller.ts';
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 export { attemptAutoLogin, setAutoLoginCredentials } from './auto-login.ts';
 export * from './hooks';

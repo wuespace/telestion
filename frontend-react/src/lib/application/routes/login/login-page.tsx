@@ -11,7 +11,7 @@ import styles from './login-page.module.css';
 import logo from '../../media/default-app-logo.png';
 
 const loaderSchema = z.object({
-	defaultBackendUrl: z.string().url().optional()
+	defaultBackendUrl: z.url().optional()
 });
 
 const actionSchema = z

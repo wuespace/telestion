@@ -19,7 +19,7 @@ export function loadFileContents(
 					// ArrayBuffer
 					return resolve(new TextDecoder(encoding).decode(reader.result));
 
-				resolve(reader.result.toString());
+				resolve(reader.result);
 			} else {
 				reject(
 					new Error('Empty file specified. Please select a non-empty file.')
