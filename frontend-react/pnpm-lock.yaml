@@ -103,7 +103,7 @@ importers:
         specifier: ^20.0.8
         version: 20.0.8
       prettier:
-        specifier: ^3.6.2
+        specifier: 3.6.2
         version: 3.6.2
       react:
         specifier: ^19.2.0
