@@ -2,7 +2,10 @@
   "name": "@wuespace/telestion",
   "license": "MIT",
   "version": "0.0.0-to-be-replaced-by-ci",
-  "exports": "./mod.ts",
+  "exports": {
+    ".": "./mod.ts",
+    "./telestionx": "./telestionx/mod.ts"
+  },
   "publish": {
     "include": ["mod.ts", "README.md", "LICENSE"]
   },
@@ -14,6 +17,7 @@
     "@std/jsonc": "jsr:@std/jsonc@^1.0.2",
     "@std/path": "jsr:@std/path@^1.1.2",
     "@zod/zod": "jsr:@zod/zod@^4.1.12",
-    "jsr:@wuespace/telestion": "./mod.ts"
+    "jsr:@wuespace/telestion": "./mod.ts",
+    "jsr:@wuespace/telestion/telestionx": "./telestionx/mod.ts"
   }
 }
