@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import banner from 'vite-plugin-banner';
 
-import packageJson from './package.json';
+import packageJson from './package.json' with { type: 'json' };
 
 const bannerText = {
 	name: packageJson.name,
